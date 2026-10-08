@@ -7,13 +7,18 @@
 <p style="text-align: center;"> •João Victor da Costa Silva - RGM: 4227238</p>
 <p style="text-align: center;"> •Paulo Henrique Camilo de Pascoa Souza - RGM: 47806745</p>
 
-## 1. Caracterização da Organização
-*(vale 7,5% — Dimensão Conceitual)*
+<h3> Nome doDistrito e da organização:</h3>
+ 52º Distrito Policial 
 
-- **Nome e natureza da organização:** 52º Distrito Policial — Parque São Jorge, unidade da Polícia Civil do Estado de São Paulo.
-- **Contexto e porte:** Instituição pública, sem fins lucrativos. A entrevista de campo foi realizada com a agente Ivani (35 anos de atuação) e com um complemento respondido pelo responsável pela unidade. A unidade conta com um delegado titular, um investigador/agente responsável pelo registro de ocorrências e 6 escrivães dedicados exclusivamente aos procedimentos de inquérito. O volume de trabalho é alto e crescente: cada delegado responde por, em média, 200 a 300 inquéritos por mês, e o número de ocorrências registradas não é previsível mês a mês, pois cresce ano a ano e é alimentado por dois canais simultâneos — presencial e online.
-- **Problemas e necessidades identificados:** A unidade opera com o sistema estadual DESP, que abrange todo o estado de São Paulo, mas apresenta quedas frequentes, prejudicando o registro e o acompanhamento do dia a dia. Não há uma forma estruturada e confiável de rastrear, em um único lugar, todo o ciclo de vida de um caso — desde o registro da ocorrência até a eventual abertura, instrução (depoimentos, evidências, movimentações) e conclusão do inquérito — nem de mensurar o volume real de ocorrências por canal, natureza ou status, já que a instabilidade do sistema atual dificulta esse controle.
-- **Justificativa da escolha:** A organização foi escolhida por ser uma instituição pública com processos bem delimitados (registro de ocorrência → possível abertura de inquérito → instrução → conclusão), volume de dados suficiente para sustentar um modelo relacional com múltiplas entidades relacionadas, e por o grupo ter conseguido acesso real a servidores da unidade para a pesquisa de campo (entrevista com a agente Ivani e complemento do responsável pela unidade).
+<h3>Contexto e porte:</h3>
+ É uma Instituição pública, sem fins lucrativos. A entrevista de campo foi realizada com a agente Ivani de 35 anos de atuação na area policial. A unidade conta com um delegado titular, um investigador e agente responsável pelo registro de ocorrências e 6 escrivães dedicados exclusivamente aos procedimentos de inquérito. Na fala da agente Ivani o volume de trabalho é alto e crescente: cada delegado responde por, em média, 200 a 300 inquéritos por mês, e o número de ocorrências registradas não é previsível mês a mês, pois cresce ano a ano e é alimentado por dois canais simultâneos, que são o presencial e o online.
+
+<h3>Problemas e necessidades identificados:</h3>
+
+ A unidade opera com o sistema estadual que se chama DESP, que abrange todo o estado de São Paulo. Que apresenta quedas frequentes, prejudicando o registro e o acompanhamento do dia a dia. Não há uma forma estruturada e confiável de rastrear, ja que é em um único lugar. Todas as etapas do caso desde o registro da ocorrência até a eventual abertura, instrução (depoimentos, evidências, movimentações) e conclusão do inquérito se encontram em um unico local. Que não mensurar o volume real de ocorrências por canal e natureza ou status, com a alta demanda provoca instabilidade no sistema atual dificulta esse controle.
+
+<h3>Qual foi o incentivo da escolha:</h3>
+ A organização foi escolhida por ser uma instituição pública com processos bem delimitados (registro de ocorrência → possível abertura de inquérito → instrução → conclusão), volume de dados suficiente para sustentar um modelo relacional com múltiplas entidades relacionadas, e por o grupo ter conseguido acesso real a servidores da unidade para a pesquisa de campo (entrevista com a agente Ivani e complemento do responsável pela unidade).
 - **Evidências da organização:** R. Dr. Coryntho Baldoíno Costa, 400 - Vila Zilda, São Paulo - SP, 03069-070
 
 ---
