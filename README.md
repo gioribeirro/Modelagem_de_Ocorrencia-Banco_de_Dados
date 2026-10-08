@@ -1,10 +1,11 @@
 
 <h3>Nomes dos alunos e RGM:</h3>
-- •Enzo Freire dos Santos - RGM: 47806303
-- •Eduardo Vinicius Ribeiro Costa - RGM: 048693855
-- •Giovanna Ribeiro Souza - RGM: 47952822
-- •João Victor da Costa Silva - RGM: 4227238
-- •Paulo Henrique Camilo de Pascoa Souza - RGM: 47806745
+
+<p style="text-align: center;"> •Enzo Freire dos Santos - RGM: 47806303</p>
+<p style="text-align: center;"> •Eduardo Vinicius Ribeiro Costa - RGM: 048693855</p>
+<p style="text-align: center;"> •Giovanna Ribeiro Souza - RGM: 47952822</p>
+<p style="text-align: center;"> •João Victor da Costa Silva - RGM: 4227238</p>
+<p style="text-align: center;"> •Paulo Henrique Camilo de Pascoa Souza - RGM: 47806745</p>
 
 ## 1. Caracterização da Organização
 *(vale 7,5% — Dimensão Conceitual)*
