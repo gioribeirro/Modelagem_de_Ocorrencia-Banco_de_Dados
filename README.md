@@ -40,7 +40,7 @@ Escolhemos o 52º DP por ser uma instituição pública com processos bem delimi
 <a href="https://maps.app.goo.gl/KpnnQxBFQmJx874c8">R. Dr. Coryntho Baldoíno Costa, 400 - Vila Zilda, São Paulo - SP, 03069-070</a>
 
 <p align="center">
-  <img src="./assets/engaja.png" alt="Captura de tela do projeto Engaja" width="80%">
+  <img src="Registro 1.jpeg" alt="Captura de tela do projeto Engaja" width="80%">
 </p>
 <a href="Registro 1"> Registro da Entrevista</a>
 
