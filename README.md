@@ -50,9 +50,10 @@ Escolhemos o 52º DP por ser uma instituição pública com processos bem delimi
 <a href="Registro 2"> Registro da Entrevista</a>
 
 <p align="center">
-  <img src="Registro 3.jpeg" alt="Captura de tela do projeto Engaja" width="80%">
+  <img src="Registro 3.jpeg" alt="Captura de tela do projeto Engaja" width="40%">
 </p>
 <a href="Registro 3"> Registro da Entrevista</a>
+
 <a href="Audio da entrevista 1.mp4"> Registro em Audio</a>
 
 
