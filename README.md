@@ -1,19 +1,272 @@
 
 <h3>Nomes dos alunos e RGM:</h3>
 
-<p style="text-align: center;"> •Enzo Freire dos Santos - RGM: 47806303</p>
-<p style="text-align: center;"> •Eduardo Vinicius Ribeiro Costa - RGM: 048693855</p>
-<p style="text-align: center;"> •Giovanna Ribeiro Souza - RGM: 47952822</p>
-<p style="text-align: center;"> •João Victor da Costa Silva - RGM: 4227238</p>
-<p style="text-align: center;"> •Paulo Henrique Camilo de Pascoa Souza - RGM: 47806745</p>
+<p align= style="text-align: center;">• Enzo Freire dos Santos - RGM: 47806303</p>
+<p align= style="text-align: center;">• Eduardo Vinicius Ribeiro Costa - RGM: 048693855</p>
+<p align= style="text-align: center;">• Giovanna Ribeiro Souza - RGM: 47952822</p>
+<p align= style="text-align: center;">• João Victor da Costa Silva - RGM: 4227238</p>
+<p align= style="text-align: center;">• Paulo Henrique Camilo de Pascoa Souza - RGM: 47806745</p>
 
-<h3> Nome doDistrito e da organização:</h3>
- 52º Distrito Policial 
+<h2 id="modelagem-de-banco-de-dados-para-o-52-dp">Modelagem de Banco de Dados para o 52º Distrito Policial</h2>
+
+<h3>Introdução:</h3>
+
+Neste trabalho fizemos a modelagem conceitual de um banco de dados para o 52º Distrito Policial de São Paulo. A ideia é organizar o caminho que um caso percorre dentro da delegacia: o registro da ocorrência, a eventual abertura de inquérito, a instrução (depoimentos, evidências e movimentações) e a conclusão.
+
+Para entender como isso funciona na prática, entrevistamos a agente Ivani, que tem 35 anos de atuação na área policial, e depois complementamos com informações do responsável pela unidade. O principal problema que apareceu foi a dependência do DESP, o sistema estadual usado em todo o estado de São Paulo, que cai com frequência e atrapalha o registro e o acompanhamento do dia a dia.
+
+<h2 id="desenvolvimento">Desenvolvimento</h2>
+
+<h3>Nome do Distrito e da organização:</h3>
+
+52º Distrito Policial
 
 <h3>Contexto e porte:</h3>
- É uma Instituição pública, sem fins lucrativos. A entrevista de campo foi realizada com a agente Ivani de 35 anos de atuação na area policial. A unidade conta com um delegado titular, um investigador e agente responsável pelo registro de ocorrências e 6 escrivães dedicados exclusivamente aos procedimentos de inquérito. Na fala da agente Ivani o volume de trabalho é alto e crescente: cada delegado responde por, em média, 200 a 300 inquéritos por mês, e o número de ocorrências registradas não é previsível mês a mês, pois cresce ano a ano e é alimentado por dois canais simultâneos, que são o presencial e o online.
+
+É uma instituição pública, sem fins lucrativos. A entrevista de campo foi realizada com a agente Ivani, de 35 anos de atuação na área policial. A unidade conta com um delegado titular, um investigador/agente responsável pelo registro de ocorrências e 6 escrivães dedicados exclusivamente aos procedimentos de inquérito. Segundo a agente Ivani, o volume de trabalho é alto e crescente: cada delegado responde, em média, por 200 a 300 inquéritos por mês. O número de ocorrências registradas não é previsível mês a mês, pois cresce ano a ano e é alimentado por dois canais simultâneos, o presencial e o online.
 
 <h3>Problemas e necessidades identificados:</h3>
+
+A unidade opera com o DESP, sistema estadual que abrange todo o estado de São Paulo e apresenta quedas frequentes, prejudicando o registro e o acompanhamento do dia a dia.
+
+Também não há uma forma estruturada e confiável de rastrear os casos. Todas as etapas, do registro da ocorrência até a abertura, a instrução (depoimentos, evidências, movimentações) e a conclusão do inquérito, ficam concentradas em um único lugar. Com a alta demanda, o sistema fica instável, e isso dificulta medir o volume real de ocorrências por canal, por natureza e por status.
+
+<h3>Qual foi o incentivo da escolha:</h3>
+
+Escolhemos o 52º DP por ser uma instituição pública com processos bem delimitados (registro de ocorrência, possível abertura de inquérito, instrução e conclusão), por ter volume de dados suficiente para sustentar um modelo relacional com várias entidades relacionadas e porque o grupo conseguiu acesso real a servidores da unidade para a pesquisa de campo (entrevista com a agente Ivani e complemento do responsável pela unidade).
+
+<h3>Evidências da organização:</h3>
+
+R. Dr. Coryntho Baldoíno Costa, 400 - Vila Zilda, São Paulo - SP, 03069-070
+
+<h2 id="processos-de-negócio">Processos de Negócio</h2>
+
+<h3>1. Registro de ocorrência:</h3>
+
+Qualquer servidor autorizado pode registrar uma ocorrência, não só os escrivães. O registro reúne os relatos e fatos de forma imparcial, pelo canal presencial ou online, e as pessoas envolvidas (vítima, testemunha, comunicante) são vinculadas à ocorrência, cada uma com o seu papel.
+
+<h3>2. Análise e conversão em inquérito:</h3>
+
+O delegado titular analisa o boletim de ocorrência. A ocorrência só é convertida em inquérito quando há indício ou prova materializada dos fatos. Sem essa comprovação, o caso permanece "em investigação" e não gera inquérito.
+
+<h3>3. Instrução do inquérito:</h3>
+
+Coleta de depoimentos (da vítima e, por meio de advogado, do acusado) e de evidências, sempre conduzida pelo escrivão e pelo delegado, tanto no procedimento físico quanto no digital.
+
+<h3>4. Movimentação processual:</h3>
+
+Distribuição e demais movimentações do inquérito, registradas pelos 6 escrivães da unidade ou pelo delegado. Os escrivães atuam somente em inquéritos, nunca no registro de ocorrências.
+
+<h3>5. Acompanhamento do caso:</h3>
+
+A vítima pode acompanhar diretamente o andamento do inquérito. O acusado só pode acompanhá-lo por meio de advogado.
+
+<h3>6. Conclusão do inquérito:</h3>
+
+Encerramento do procedimento com registro de status e data de conclusão.
+
+<h2 id="requisitos-do-sistema">Requisitos do Sistema</h2>
+
+<h3>Requisitos Funcionais (RF):</h3>
+
+- **RF01:** registrar uma ocorrência com unidade, servidor responsável, natureza do fato, canal (presencial ou online) e relato dos fatos.
+- **RF02:** vincular uma ou mais pessoas a uma ocorrência, indicando o papel de cada uma (vítima, testemunha etc.).
+- **RF03:** abrir um inquérito a partir de uma ocorrência, apenas quando houver prova materializada dos fatos.
+- **RF04:** registrar depoimentos ligados a um inquérito e à pessoa que depôs.
+- **RF05:** registrar evidências de um inquérito, com tipo, descrição, data de apreensão e status da cadeia de custódia.
+- **RF06:** registrar as movimentações de um inquérito, com o servidor responsável (escrivão ou delegado).
+- **RF07:** consultar o status de uma ocorrência ou de um inquérito a qualquer momento.
+- **RF08:** gerar relatórios gerenciais, como total de ocorrências por natureza e por canal, e total de inquéritos por status.
+- **RF09:** atualizar o status e a data de conclusão de um inquérito.
+
+<h3>Requisitos Não Funcionais (RNF):</h3>
+
+- **Disponibilidade:** o sistema deve ficar no ar de forma contínua, corrigindo a instabilidade observada hoje no DESP.
+- **Confiabilidade dos dados:** os relatos devem ser registrados de forma íntegra e imparcial, sem alteração posterior sem deixar rastro.
+- **Segurança e privacidade:** dados de vítimas, testemunhas e servidores com acesso restrito e auditável, respeitando o sigilo dos procedimentos policiais.
+- **Rastreabilidade:** toda movimentação de inquérito registra data e responsável, permitindo auditoria completa do histórico do caso.
+- **Usabilidade:** registrar uma ocorrência deve ser simples o bastante para qualquer servidor autorizado, não só para escrivães.
+- **Escalabilidade:** o modelo deve suportar o crescimento do volume de ocorrências ano a ano, sem previsibilidade mensal.
+
+<h2 id="regras-de-negócio">Regras de Negócio</h2>
+
+<h3>Regras operacionais:</h3>
+
+- Uma ocorrência só pode ser convertida em inquérito quando há prova materializada dos fatos; caso contrário, permanece "em investigação".
+- Qualquer servidor autorizado pode registrar uma ocorrência. Esse registro não é exclusivo dos escrivães.
+- Escrivães atuam exclusivamente em procedimentos de inquérito (depoimentos, evidências, movimentações), nunca no registro de ocorrências.
+- A vítima acompanha o inquérito diretamente; o acusado, só por meio de advogado.
+- A data de conclusão de um inquérito só pode ser preenchida quando for igual ou posterior à data de abertura.
+- Toda ocorrência deve ter o relato dos fatos registrado, mesmo antes de uma eventual conversão em inquérito.
+- O canal de registro (presencial ou online) deve sempre ser informado, já que os dois coexistem e influenciam o volume de casos.
+
+<h3>Restrições organizacionais:</h3>
+
+- A unidade segue um roteiro institucional de perguntas padronizado, usado na entrevista. Por isso o complemento do responsável pela unidade (perguntas 10, 11, 13 e 14) foi registrado em um bloco separado, para não conflitar com a numeração da entrevista com a agente Ivani.
+- A quantidade fixa de escrivães (6) e a atuação deles apenas em inquéritos é uma limitação real da unidade, refletida na modelagem do responsável pelas movimentações.
+- Por se tratar de dados de uma unidade policial, todos os dados de pessoas (vítimas, servidores) usados como exemplo no projeto são fictícios, por privacidade e proteção de dados sensíveis.
+
+<h2 id="dicionário-de-dados-conceitual">Dicionário de Dados Conceitual (Preliminar)</h2>
+
+<h3>UNIDADE_POLICIAL</h3>
+
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| id_unidade | Identificador único da unidade policial | Gerado automaticamente; chave primária |
+| nome | Nome oficial da unidade (ex.: 52º Distrito Policial) | Obrigatório |
+| endereco | Endereço físico completo | Obrigatório |
+| tipo_unidade | Classificação da unidade (ex.: Polícia Civil) | Obrigatório |
+| cidade | Cidade/UF da unidade | Obrigatório |
+
+<h3>SERVIDOR</h3>
+
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| id_servidor | Identificador único do servidor | Gerado automaticamente; chave primária |
+| id_unidade | Unidade à qual o servidor pertence | Obrigatório; chave estrangeira para UNIDADE_POLICIAL |
+| nome_ficticio | Nome fictício do servidor | Dado real substituído por privacidade; obrigatório |
+| cargo | Função exercida | Delegado, Escrivão ou Investigador/Agente; escrivães atuam só em inquéritos |
+| matricula_ficticia | Matrícula funcional fictícia | Obrigatório |
+
+<h3>PESSOA <small>(generalização de vítima, testemunha, comunicante etc.)</small></h3>
+
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| id_pessoa | Identificador único da pessoa | Gerado automaticamente; chave primária |
+| nome_ficticio | Nome fictício da pessoa | Obrigatório |
+| documento_ficticio | Documento de identificação fictício | Obrigatório |
+| observacao | Observações adicionais | Opcional |
+| contato_ficticio | Dado de contato | Obrigatório |
+
+<h3>NATUREZA_FATO</h3>
+
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| id_natureza | Identificador único do tipo de fato | Gerado automaticamente; chave primária |
+| descricao | Natureza do fato (ex.: Furto, Estelionato) | Obrigatório; estelionato é o tipo mais frequente, com destaque para golpes do amor e falsas delegacias |
+| gravidade | Nível de gravidade do fato | Obrigatório |
+
+<h3>OCORRENCIA</h3>
+
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| id_ocorrencia | Identificador único da ocorrência | Gerado automaticamente; chave primária |
+| id_unidade | Unidade onde foi registrada | Obrigatório; chave estrangeira para UNIDADE_POLICIAL |
+| id_natureza | Natureza do fato | Obrigatório; chave estrangeira para NATUREZA_FATO |
+| id_servidor_registro | Servidor que fez o registro | Obrigatório; chave estrangeira para SERVIDOR; qualquer servidor autorizado pode registrar |
+| canal_registro | Presencial ou online | Obrigatório; os dois canais coexistem, o que explica o volume mensal imprevisível |
+| data_registro | Data e hora do registro | Obrigatório |
+| localidade | Local onde o fato aconteceu | Obrigatório |
+| status | Situação (ex.: Em análise, Em investigação, Convertida em inquérito) | Só vira "Convertida em inquérito" com prova materializada |
+| relato_fatos | Descrição textual e imparcial dos fatos | Obrigatório |
+
+<h3>ENVOLVIMENTO_OCORRENCIA <small>(entidade associativa entre pessoa e ocorrência)</small></h3>
+
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| id_pessoa | Pessoa envolvida | Chave primária composta; chave estrangeira para PESSOA |
+| id_ocorrencia | Ocorrência | Chave primária composta; chave estrangeira para OCORRENCIA |
+| papel | Função da pessoa (ex.: Vítima, Testemunha) | Obrigatório |
+
+<h3>INQUERITO</h3>
+
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| id_inquerito | Identificador único do inquérito | Gerado automaticamente; chave primária |
+| id_ocorrencia | Ocorrência que originou o inquérito | Obrigatório; chave estrangeira para OCORRENCIA; só existe com prova materializada |
+| data_abertura | Data de abertura | Obrigatório |
+| data_conclusao | Data de conclusão | Opcional enquanto em andamento; se preenchida, deve ser maior ou igual à data de abertura |
+| status | Situação (ex.: Em investigação, Concluído) | Obrigatório |
+| prioridade | Nível de prioridade | Obrigatório |
+
+<h3>DEPOIMENTO</h3>
+
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| id_depoimento | Identificador único do depoimento | Gerado automaticamente; chave primária |
+| id_inquerito | Inquérito do depoimento | Obrigatório; chave estrangeira para INQUERITO |
+| id_pessoa | Pessoa que depôs | Obrigatório; chave estrangeira para PESSOA |
+| data_depoimento | Data do depoimento | Obrigatório |
+| resumo_ficticio | Resumo fictício do conteúdo | Obrigatório |
+
+<h3>EVIDENCIA</h3>
+
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| id_evidencia | Identificador único da evidência | Gerado automaticamente; chave primária |
+| id_inquerito | Inquérito da evidência | Obrigatório; chave estrangeira para INQUERITO |
+| tipo_evidencia | Tipo (documento, objeto etc.) | Obrigatório |
+| descricao | Descrição da evidência | Obrigatório |
+| data_apreensao | Data da apreensão | Obrigatório |
+| status_custodia | Situação da cadeia de custódia | Obrigatório |
+
+<h3>MOVIMENTACAO</h3>
+
+| Atributo | Descrição | Regra de negócio associada |
+|----------|-----------|------------------------------|
+| id_movimentacao | Identificador único da movimentação | Gerado automaticamente; chave primária |
+| id_inquerito | Inquérito da movimentação | Obrigatório; chave estrangeira para INQUERITO |
+| id_servidor | Servidor responsável | Obrigatório; chave estrangeira para SERVIDOR; restrito aos 6 escrivães e ao delegado |
+| data_movimentacao | Data da movimentação | Obrigatório |
+| tipo_movimentacao | Tipo (ex.: Distribuição) | Obrigatório |
+| descricao | Descrição da movimentação | Obrigatório |
+
+<h2 id="modelagem-conceitual">Modelagem Conceitual</h2>
+
+<h3>Entidades reconhecidas:</h3>
+
+- **UNIDADE_POLICIAL:** a delegacia (o 52º DP). Está no modelo para permitir expandir para várias unidades no futuro.
+- **SERVIDOR:** delegados, escrivães e investigadores/agentes, ligados a uma unidade.
+- **PESSOA:** qualquer pessoa civil envolvida (vítima, testemunha, comunicante).
+- **NATUREZA_FATO:** tabela de domínio que classifica o tipo de fato (furto, estelionato etc.).
+- **OCORRENCIA:** o boletim inicial, ponto de partida de todo o processo.
+- **ENVOLVIMENTO_OCORRENCIA:** liga pessoas e ocorrências (N:N) e guarda o papel de cada uma.
+- **INQUERITO:** procedimento formal aberto a partir de uma ocorrência com prova materializada.
+- **DEPOIMENTO:** depoimentos colhidos na instrução do inquérito.
+- **EVIDENCIA:** evidências do inquérito, com controle de custódia.
+- **MOVIMENTACAO:** histórico de tramitação do inquérito, usado também para auditoria.
+
+<h3>Relacionamentos e cardinalidades:</h3>
+
+- **UNIDADE_POLICIAL (1) — (N) SERVIDOR**
+- **UNIDADE_POLICIAL (1) — (N) OCORRENCIA**
+- **NATUREZA_FATO (1) — (N) OCORRENCIA**
+- **SERVIDOR (1) — (N) OCORRENCIA** (servidor de registro)
+- **OCORRENCIA (1) — (N) ENVOLVIMENTO_OCORRENCIA (N) — (1) PESSOA**
+- **OCORRENCIA (1) — (0,1) INQUERITO**
+- **INQUERITO (1) — (N) DEPOIMENTO (N) — (1) PESSOA**
+- **INQUERITO (1) — (N) EVIDENCIA**
+- **INQUERITO (1) — (N) MOVIMENTACAO**
+- **SERVIDOR (1) — (N) MOVIMENTACAO**
+
+<h3>Diagrama Entidade-Relacionamento (DER):</h3>
+
+<p align="center"><a href="DER_52DP.png"><img src="DER_52DP.png" alt="Diagrama Entidade-Relacionamento - 52º DP" width="100%"></a></p>
+
+<h2 id="justificativa-técnica">Justificativa Técnica</h2>
+
+Usamos **PESSOA** como uma entidade única para vítimas, testemunhas e comunicantes, em vez de criar uma para cada papel. Assim não repetimos nome, documento e contato em várias tabelas. O papel de cada pessoa fica na **ENVOLVIMENTO_OCORRENCIA**, o que permite que a mesma pessoa tenha papéis diferentes em ocorrências diferentes, algo comum na rotina policial.
+
+Separamos **OCORRENCIA** e **INQUERITO** porque, como a entrevista confirmou, nem toda ocorrência vira inquérito, só as que têm prova materializada. Com duas entidades ligadas por 1:0/1, evitamos campos de inquérito vazios em ocorrências que nunca avançaram.
+
+**DEPOIMENTO**, **EVIDENCIA** e **MOVIMENTACAO** ficam ligadas ao **INQUERITO**, e não à ocorrência, porque essas atividades só acontecem durante a instrução, conduzidas por escrivães e pelo delegado.
+
+A regra de que só escrivães e o delegado movimentam inquéritos (campo `cargo` de SERVIDOR com a chave `id_servidor` de MOVIMENTACAO) ficou documentada como regra de negócio e não como restrição rígida do banco. A aplicação é quem vai garantir isso, o que deixa o modelo mais flexível.
+
+Todas as chaves primárias são chaves substitutas simples (um campo inteiro por entidade). Isso facilitou a verificação da 1ª, 2ª e 3ª formas normais, que conferimos para as dez entidades. A única exceção é a tabela associativa ENVOLVIMENTO_OCORRENCIA, cujo atributo `papel` depende do par completo `id_pessoa + id_ocorrencia`.
+
+<h2 id="uso-de-inteligência-artificial">Uso de Inteligência Artificial</h2>
+
+| **Item** | **O que registrar** |
+| --- | --- |
+| **Ferramenta e etapa** | Claude. Usado para gerar o script SQL do banco (`db_52dp_v2`), converter o script e o dicionário de dados/entrevista em documentos HTML e redigir este README a partir do esqueleto do professor. |
+| **Motivação** | Organizar em SQL as tabelas definidas a partir do dicionário de dados, ter versões em HTML mais fáceis de consultar e estruturar o README no modelo exigido pela disciplina. |
+| **Prompt(s) utilizados** | Entre outros: "deixe esse documento em html", "deixa o fundo todo preto pfvr", "complete o readme" (a partir do script SQL e do HTML com a entrevista e o dicionário que já tínhamos). |
+| **Resposta recebida** | Uma página HTML estilizada com o script SQL (DDL, INSERTs, consultas, UPDATE/DELETE e relatórios) e um rascunho do README com caracterização, processos, requisitos, regras de negócio, dicionário de dados, modelagem e justificativa. |
+| **Fontes consultadas e verificadas** | Nenhuma fonte externa. O conteúdo veio da entrevista de campo e do dicionário de dados feitos pelo grupo. |
+| **Trechos rejeitados ou corrigidos** | *[preencher pelo grupo: o que foi revisado, editado ou removido do rascunho antes da entrega, incluindo nomes/RGM e evidências da organização]* |
+| **Justificativa da escolha final** | *[preencher pelo grupo: por que o conteúdo foi mantido, adaptado ou descartado]* |
+| **Reflexão crítica** | A IA não teve acesso à organização, então tudo depende do que registramos na entrevista e no dicionário. Pontos como o momento exato em que uma ocorrência vira inquérito precisam ser conferidos por nós na fonte original antes da entrega. |
 
  A unidade opera com o sistema estadual que se chama DESP, que abrange todo o estado de São Paulo. Que apresenta quedas frequentes, prejudicando o registro e o acompanhamento do dia a dia. Não há uma forma estruturada e confiável de rastrear, ja que é em um único lugar. Todas as etapas do caso desde o registro da ocorrência até a eventual abertura, instrução (depoimentos, evidências, movimentações) e conclusão do inquérito se encontram em um unico local. Que não mensurar o volume real de ocorrências por canal e natureza ou status, com a alta demanda provoca instabilidade no sistema atual dificulta esse controle.
 
@@ -24,7 +277,6 @@
 ---
 
 ## 2. Processos de Negócio
-*(vale 10% — Dimensão Procedimental)*
 
 - **Principais processos mapeados:**
   1. **Registro de ocorrência** — qualquer pessoa autorizada na delegacia pode registrar uma ocorrência (não é exclusivo dos escrivães), reunindo os relatos e fatos de forma imparcial, pelo canal presencial ou online.
@@ -212,8 +464,6 @@
 
 ## 7. Diagrama Entidade-Relacionamento (DER)
 
-*(vale 20% — é o item de maior peso da entrega)*
-
 - Anexe o DER (em imagem).
 - O diagrama deve representar corretamente:
   - Entidades
@@ -248,30 +498,6 @@ O grupo utilizou a IA Claude (Anthropic) em etapas de apoio à organização e f
 | **Prompt(s) utilizados** | Entre outros: "deixe esse documento em html", "deixa o fundo todo preto pfvr", "complete o readme" — a partir do script SQL e do documento HTML com a entrevista/dicionário de dados já produzidos pelo grupo. |
 | **Resposta recebida** | A IA gerou uma página HTML estilizada com o script SQL (DDL, INSERTs, consultas, UPDATE/DELETE e relatórios gerenciais) e, nesta etapa, um rascunho completo do README com as seções de caracterização, processos, requisitos, regras de negócio, dicionário de dados, modelagem conceitual e justificativa técnica, com base no conteúdo já levantado pelo grupo na entrevista e no dicionário de dados. |
 | **Fontes consultadas e verificadas** | Nenhuma fonte externa foi usada pela IA — todo o conteúdo do README foi gerado a partir dos documentos produzidos pelo próprio grupo (entrevista de campo e dicionário de dados), não de pesquisa na internet. |
-| **Trechos rejeitados ou corrigidos** | *[preencher pelo grupo — registrar o que foi revisado, editado ou removido do rascunho gerado pela IA antes da entrega final, incluindo os metadados (nomes/RGM) e as evidências da organização, que precisam ser preenchidos manualmente]* |
-| **Justificativa da escolha final** | *[preencher pelo grupo — por que o conteúdo gerado foi mantido, adaptado ou descartado]* |
+| **Trechos rejeitados ou corrigidos** | Mantivemos o conteúdo gerado porque ele reproduz as informações que levantamos na entrevista de campo e no dicionário de dados, sem acrescentar fatos novos. A IA foi usada para organizar, padronizar e formatar o material, e as decisões de modelagem (entidades, atributos e cardinalidades) foram nossas. O que não condizia com a entrevista ou com o modelo (como o número de entidades) foi corrigido.|
+| **Justificativa da escolha final** | a Mantivemos a maior parte do que a IA organizou porque era o que a gente já tinha levantado: a entrevista com a agente Ivani, o dicionário de dados, as cardinalidades e as regras de negócio. Ela só ajudou a pôr tudo no formato certo, então não fazia sentido mexer no conteúdo.<br><br>O que a gente adaptou foi o texto. Reescrevemos em uma linguagem mais nossa, arrumamos erros de digitação e frases que ficaram quebradas, e corrigimos o número de entidades para dez, que é o que realmente tem no dicionário. Também deixamos a regra de que só escrivães e o delegado fazem movimentações como regra de negócio, e não como trava do banco.<br><br>E o que a gente tirou foram as anotações do roteiro do professor que vieram junto no rascunho (pesos, instruções de entrega, critérios atitudinais), porque isso não faz parte do trabalho.<br><br>No fim, as decisões do modelo (quais entidades, quais atributos e como elas se relacionam) foram nossas, com base no que vimos na delegacia. A IA ajudou a organizar e escrever, mas a conferência final foi do grupo.  |
 | **Reflexão crítica** | A IA não teve acesso direto à organização; todo o conteúdo depende inteiramente da precisão do que o grupo registrou na entrevista e no dicionário de dados. Eventuais lacunas ou imprecisões na interpretação das regras de negócio (ex.: nuances sobre quando exatamente uma ocorrência se torna inquérito) devem ser conferidas pelo grupo com a fonte original da entrevista antes da entrega. |
-
-*Caso o grupo tenha usado outra ferramenta de IA em etapas anteriores (pesquisa sobre o setor, redação de partes específicas, revisão ortográfica), registrar aqui, seguindo o mesmo formato de tabela.*
-
----
-
-## Critérios Atitudinais (20%)
-Avaliados via **Avaliação 360º** entre os integrantes e, para Colaboração, também pelo histórico de commits do GitHub — não preenchidos neste documento.
-
-- **Participação (5%)**
-- **Comprometimento (5%)**
-- **Colaboração (5%)**
-- **Autonomia (5%)**
-
----
-
-## Resumo dos Pesos
-
-| Dimensão | Peso total |
-|----------|-----------|
-| Conceitual (contexto, requisitos/regras, modelagem, justificativa técnica) | 30% |
-| Procedimental (requisitos, fluxogramas, dicionário de dados, DER) | 50% |
-| Atitudinal (participação, comprometimento, colaboração, autonomia) | 20% |
-
-**Entrega final:** README.md completo + DER + Dicionário de Dados em HTML anexado no repositório GitHub do grupo.
