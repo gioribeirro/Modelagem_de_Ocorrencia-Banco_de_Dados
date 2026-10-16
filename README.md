@@ -509,7 +509,7 @@ O grupo utilizou a IA Claude (Anthropic) em etapas de apoio à organização e f
 
 | Item | Registro |
 |------|------------------|
-| **Ferramenta e etapa** | Claude — geração do script SQL do banco de dados (`db_52dp_v2`), conversão do script e do dicionário de dados/entrevista para documentos HTML de apoio, e redação deste README a partir do esqueleto fornecido pelo professor. |
+| **Ferramenta e etapa** | Claude — geração do script SQL do banco de dados (`db_52dp_v2`), conversão do script e do dicionário de dados/entrevista para documentos HTML de apoio, e redação deste README a partir do esqueleto fornecido pelo professor. Replit — Para auxiliar no Der, e suas ligações; Organização do README. ChatGPT — Desenvolvimento do SQL.  |
 | **Motivação** | Organizar em SQL as tabelas definidas a partir do dicionário de dados levantado na entrevista de campo, produzir versões em HTML mais legíveis desses materiais para consulta do grupo, e estruturar a redação do README dentro do modelo exigido pela disciplina. |
 | **Prompt(s) utilizados** | Entre outros: "deixe esse documento em html", "deixa o fundo todo preto pfvr", "complete o readme" — a partir do script SQL e do documento HTML com a entrevista/dicionário de dados já produzidos pelo grupo. |
 | **Resposta recebida** | A IA gerou uma página HTML estilizada com o script SQL (DDL, INSERTs, consultas, UPDATE/DELETE e relatórios gerenciais) e, nesta etapa, um rascunho completo do README com as seções de caracterização, processos, requisitos, regras de negócio, dicionário de dados, modelagem conceitual e justificativa técnica, com base no conteúdo já levantado pelo grupo na entrevista e no dicionário de dados. |
