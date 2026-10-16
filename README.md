@@ -484,14 +484,10 @@ Todas as chaves primárias são chaves substitutas simples (um campo inteiro por
 
 ## 7. Diagrama Entidade-Relacionamento (DER)
 
-- Anexe o DER (em imagem).
-- O diagrama deve representar corretamente:
-  - Entidades
-  - Atributos
-  - Relacionamentos
-  - **Cardinalidades**
-- O modelo deve ser **consistente** e já demonstrar potencial de **escalabilidade e integração** (pensando nas próximas etapas do projeto).
----
+ <img src="[Der.png](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/e15710ca277e3c155379f56c97585c02abed7d82/Der.png)" width="40%">
+<a href="Der.png"> Diagrama </a>
+<br>
+<br>
 
 ## 8. Justificativa Técnica
 
