@@ -484,7 +484,7 @@ Todas as chaves primárias são chaves substitutas simples (um campo inteiro por
 
 ## 7. Diagrama Entidade-Relacionamento (DER)
 
- <img src="" width="40%">
+ <img src="Der.png" width="40%">
 <a href="Der.png"> Diagrama </a>
 <br>
 <br>
