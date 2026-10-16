@@ -484,7 +484,7 @@ Todas as chaves primárias são chaves substitutas simples (um campo inteiro por
 
 ## 7. Diagrama Entidade-Relacionamento (DER)
 
- <img src="[Der.png](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/e15710ca277e3c155379f56c97585c02abed7d82/Der.png)" width="40%">
+ <img src="" width="40%">
 <a href="Der.png"> Diagrama </a>
 <br>
 <br>
