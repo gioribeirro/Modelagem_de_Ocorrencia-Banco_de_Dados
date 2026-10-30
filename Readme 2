@@ -1,0 +1,488 @@
+# Modelagem de Banco de Dados para o 52º Distrito Policial — Entrega 2
+
+> **Como ler os avisos:** tudo marcado com ⚠️ **PENDENTE** é algo que não deu para fechar com o material disponível e que o grupo precisa completar ou confirmar. Apague os avisos antes de entregar.
+
+## Integrantes
+
+| Nome completo | RGM | Usuário do GitHub |
+|---|---|---|
+| Enzo Freire dos Santos | 47806303 | [`enzofreire-cmd`](https://github.com/enzofreire-cmd) |
+| Eduardo Vinicius Ribeiro Costa | 048693855 | [`EduardoRibeiro-007`](https://github.com/EduardoRibeiro-007) |
+| Giovanna Ribeiro Souza | 47952822 | [`gioribeirro`](https://github.com/gioribeirro) |
+| João Victor da Costa Silva | 4227238 | [`thevic69`](https://github.com/thevic69) |
+| Paulo Henrique Camilo de Pascoa Souza | 47806745 | [`phpascoa`](https://github.com/phpascoa) |
+
+## Introdução
+
+Este trabalho modela o banco de dados do 52º Distrito Policial de São Paulo. A ideia é organizar o caminho que um caso percorre na delegacia: o registro da ocorrência, a eventual abertura de inquérito, a instrução (depoimentos, evidências e movimentações) e a conclusão. Para entender a rotina, o grupo entrevistou a Agente Ivani (35 anos de atuação na área policial) e complementou com informações de quem atua na unidade. O principal problema apontado foi a instabilidade do DESP, o sistema estadual usado em todo o estado.
+
+## Índice de artefatos
+
+| Artefato | Arquivo | Situação |
+|---|---|---|
+| DER conceitual | [`Der.png`](Der.png) | ⚠️ **Desatualizado e fora da notação** (ver 1.1) |
+| Modelo lógico (brModelo) | ⚠️ `docs/modelo_logico.png` | Não existe |
+| Dicionário de dados (HTML) | [`Dicionario_de_Dados_52_DP_REVISADO (2).html`](Dicionario_de_Dados_52_DP_REVISADO%20%282%29.html) | OK (11 entidades, 56 atributos) |
+| Levantamento | ⚠️ `levantamento/levantamento.md` | Não existe (o conteúdo está no Anexo A do dicionário e pode ser reaproveitado) |
+| Script SQL | ⚠️ `docs/script.sql` | Existe só em HTML |
+| Massa de dados | ⚠️ `docs/massa_de_dados.sql` | Volume insuficiente (seção 4) |
+| Fotos | [`Registro 1.jpeg`](Registro%201.jpeg), [`Registro 2.jpeg`](Registro%202.jpeg), [`Registro 3.jpeg`](Registro%203.jpeg) | Existem |
+| Áudio da entrevista | [`Audio da entrevista 1.mp4`](Audio%20da%20entrevista%201.mp4) | Existe (apoio; não substitui o levantamento) |
+| Slides | ⚠️ | Não fornecidos |
+
+**Softwares:** ⚠️ PENDENTE — informar em que software o DER e o modelo lógico foram feitos (o enunciado pede brModelo).
+
+---
+
+## 1.1 Revisão do Modelo Conceitual
+
+### Caracterização da organização
+
+**Nome e natureza:** 52º Distrito Policial de São Paulo, unidade da Polícia Civil (instituição pública de segurança).
+
+**Contexto e porte:**
+
+- Instituição pública, sem fins lucrativos.
+- **Equipe:** 1 delegado titular e 6 escrivães, que atuam só em inquéritos. As ocorrências são registradas pela entrevistada e por mais um colega (resposta C14 do complemento).
+- **Volume:** de 200 a 300 inquéritos por mês por delegado, "dependendo do lugar" (C13). O número de ocorrências **não é conhecido**: a própria unidade informou que não dá para saber quantas são registradas por mês, porque o número cresce a cada ano e varia entre o registro físico e o online (C10).
+- **Natureza mais frequente:** estelionato, em especial golpe do amor e falsa delegacia.
+
+> ⚠️ **PENDENTE — duas divergências a resolver:**
+> 1. O README anterior dizia "um investigador/agente responsável pelo registro", mas a resposta C14 diz que as ocorrências são feitas pela entrevistada **e mais um colega** (2 pessoas). Confirmar quantos servidores registram e qual o cargo deles.
+> 2. A frase "cada delegado" (C13) vem com "dependendo do lugar", ou seja, pode ser um número geral e não o do 52º DP, que tem um único delegado titular. Confirmar se os 200–300 valem para a unidade.
+
+**Problemas e necessidades identificados:**
+
+> Para não confundir com as perguntas da entrevista (P1–P10 no dicionário), as perguntas são citadas aqui como "Pergunta N", e os problemas como P1 e P2.
+
+- **P1 — Dependência de um sistema externo instável.** O DESP (sistema estadual unificado) cai constantemente e dificulta o registro e o acompanhamento diário.
+- **P2 — Falta de rastreamento estruturado dos casos.** Do registro da ocorrência à conclusão do inquérito (depoimentos, evidências, movimentações) não há uma forma centralizada de acompanhar, e isso impede medir o volume por canal, natureza e status.
+
+> ⚠️ **PENDENTE (decisão do grupo):** o enunciado exige problema de **gestão de informações** com consulta gerencial no script. P1 como está ("o sistema cai") é de infraestrutura, e o próprio dicionário (8.5) diz que o DESP tem "sem efeito estrutural no modelo". Sugestão: reescrever P1 como *"a unidade não dispõe de base local própria para consultar ocorrências e inquéritos quando o DESP está fora do ar"*, que passa a ser atendido por G05 e G08 (seção 1.6). A sugestão da entrevistada de filtrar melhor as ocorrências e criar um espaço de apoio para relatos de menor gravidade também fica fora do escopo de banco de dados.
+
+**Escopo do sistema:** o banco cobre o fluxo inteiro da unidade: cadastro de unidade, servidores, pessoas e advogados; registro de ocorrências e envolvidos; abertura de inquérito; depoimentos, evidências e movimentações; conclusão. O **acompanhamento do caso** (vítima direto, acusado por advogado) é tratado como política de acesso (matriz da seção 7 do dicionário) e não como tabela; o banco não tem usuários nem perfis.
+
+**Justificativa da escolha:** instituição pública com fluxos bem delimitados (registro → conversão opcional em inquérito → instrução → conclusão), volume que justifica um modelo relacional com várias entidades e acesso a servidores da unidade para a pesquisa de campo.
+
+> ⚠️ **PENDENTE:** declarar se algum integrante tem vínculo com a unidade (ou escrever "nenhum integrante possui vínculo").
+
+**Evidências da organização:**
+
+- Endereço: R. Dr. Coryntho Baldoíno Costa, 400 – Vila Zilda, São Paulo – SP, 03069-070
+- Google Maps: <https://maps.app.goo.gl/KpnnQxBFQmJx874c8>
+
+![Registro 1 — local da entrevista: calçada em frente ao 52º DP, ao lado do banner da unidade](Registro%201.jpeg)
+![Registro 2 — local da entrevista: calçada em frente ao 52º DP, ao lado do banner da unidade](Registro%202.jpeg)
+![Registro 3 — local da entrevista: entrada do 52º Distrito Policial, com a placa "Polícia Civil – 52º Distrito"](Registro%203.jpeg)
+
+Áudio da entrevista: [`Audio da entrevista 1.mp4`](Audio%20da%20entrevista%201.mp4)
+
+> ⚠️ **PENDENTE:** (a) telefone ou e-mail de contato da unidade; (b) confirmar se o link do Maps é o perfil do Google Meu Negócio; (c) as fotos foram tiradas no local onde a entrevista foi feita (calçada e entrada do 52º DP). Como o enunciado pede entrevista "no ambiente da organização", escreva isso explicitamente na legenda e no relato (ex.: "entrevista realizada na entrada da unidade") e, se houver foto de dentro da unidade, acrescente; (d) renomear `.jpeg` para `.jpg` por segurança.
+
+**Responsável pela organização:** Agente Ivani (35 anos de atuação), com complemento de quem atua na unidade (perguntas C10, C11, C13 e C14).
+
+> ⚠️ **PENDENTE:** telefone da Agente Ivani (ou do responsável) para o professor confirmar, e o nome completo do responsável pelo complemento.
+
+### Relato da entrevista
+
+- **Quem:** Agente Ivani e um responsável pela unidade (complemento). ⚠️ PENDENTE: quais integrantes participaram (as fotos mostram três pessoas; o grupo tem cinco).
+- **Quando e onde:** presencialmente, na entrada do 52º DP (local mostrado nas fotos). Data: o metadado do arquivo de áudio indica gravação em **24/09/2026** (⚠️ confirmar a data).
+- **Comprovação:** fotos `Registro 1` a `Registro 3` (local da entrevista) e o áudio da entrevista (2 min 36 s).
+
+> ⚠️ **PENDENTE:** o enunciado diz que áudio não vale como levantamento: o grupo precisa de um `levantamento/levantamento.md` escrito por vocês (o Anexo A do dicionário já tem o conteúdo). Observação: eu não consegui ouvir o áudio, então o resumo das respostas acima vem do dicionário.
+
+**O que foi levantado — respostas da entrevistada (roteiro principal):**
+
+| Pergunta | Resposta resumida |
+|---|---|
+| 1. Função do inquérito | Apurar os fatos, ouvir os dois lados e verificar a veracidade das informações. |
+| 2. Como a ocorrência é registrada | Com imparcialidade, reunindo os fatos; verifica-se a materialidade e, se não comprovada, o procedimento pode ser cancelado. |
+| 3. O que é anotado | Relatos e fatos, principalmente os do momento da situação. |
+| 4. Quem registra | Qualquer pessoa autorizada da delegacia (os escrivães participam do procedimento junto com o delegado). |
+| 5. Frequência | Muito frequente, sobretudo estelionato (golpe do amor, falsa delegacia). |
+| 6. Quando vira inquérito | Quando há versões conflitantes ou a investigação confirma indícios. |
+| 7. Quem responde pelo inquérito | O delegado titular, que redireciona cada caso conforme a natureza. |
+| 8. Depoimentos e evidências | No inquérito físico e no digital, por escrivão e delegado. |
+| 9. Acompanhamento | A vítima acompanha; o acusado, só por advogado. |
+| 10. Relatórios | O delegado analisa o boletim e instaura o inquérito se identifica indícios de crime. |
+
+**Complemento:** C10 (ocorrências por mês: imprevisível e crescente, físico + online); C11 (só vira inquérito com prova materializada); C13 (200–300 inquéritos/mês por delegado); C14 (6 escrivães, só em inquéritos; ocorrências feitas pela entrevistada e mais um colega).
+
+**Conflitos entre respostas e a decisão adotada** (dicionário, 8.2): Pergunta 6 e Pergunta 10 divergem de C11 sobre quando há inquérito → vale **C11**; Pergunta 4 diz que escrivães participam ativamente e C14 diz que só atuam em inquéritos → vale **C14**.
+
+**Achados da observação presencial:** o grupo precisa registrar aqui só o que **viu** na unidade (ex.: como o registro é feito, quais terminais, que papéis circulam). O texto da Entrega 1 afirma que a separação de funções dos escrivães foi "constatada in loco", mas o dicionário a atribui à resposta C14.
+
+> ⚠️ **PENDENTE:** separar claramente observação de resposta e relatar o que mudou desde a Entrega 1 (o dicionário seção 11 lista as mudanças de modelagem, mas não diz se houve nova visita).
+
+Levantamento completo: [`levantamento/levantamento.md`](levantamento/levantamento.md) ⚠️ (a criar).
+
+### Processos de negócio
+
+| # | Processo | Dados envolvidos |
+|---|---|---|
+| 1 | **Registro de ocorrência** (presencial ou online), por qualquer servidor autorizado | unidade, servidor, natureza do fato, canal, data e hora, localidade, relato, status |
+| 2 | **Vinculação das pessoas envolvidas** | pessoa (nome, documento, contato, observação), papel (Vítima, Testemunha, Comunicante, Acusado) e advogado (`id_oab`) quando houver |
+| 3 | **Verificação de materialidade** — se não comprovada, a ocorrência fica "Em investigação" ou é "Cancelada" | status da ocorrência |
+| 4 | **Conversão em inquérito** — o delegado determina, só com prova materializada | data de abertura, status, prioridade |
+| 5 | **Instrução** — depoimentos e evidências, por escrivão e delegado (físico e digital) | depoimento (pessoa, data, resumo); evidência (tipo, descrição, data de apreensão, custódia) |
+| 6 | **Movimentação / distribuição do inquérito**, só por escrivães ou delegado | servidor, data, tipo (ex.: Distribuição), descrição |
+| 7 | **Acompanhamento do caso** — vítima direto; acusado por advogado | política de acesso (matriz do dicionário); sem tabela própria |
+| 8 | **Conclusão do inquérito** | status e data de conclusão (≥ abertura) |
+
+**Processos e funcionalidades não incluídos (justificativa):**
+
+- **Distinção entre inquérito físico e digital:** a entrevista (Pergunta 8) cita os dois meios, mas o modelo não os distingue (dicionário 8.5). ⚠️ O grupo deve justificar por que isso não é necessário.
+- **Histórico de troca de advogado e vários advogados simultâneos:** fora do escopo (dicionário R10); exigiria uma entidade de representação.
+- **Filtro de ocorrências e espaço de apoio para relatos leves:** sugestão da entrevistada, sem efeito estrutural no banco.
+- ⚠️ **PENDENTE:** confirmar com a Agente Ivani outros processos comuns de delegacia que ficaram de fora (ex.: encaminhamento ao Ministério Público/Judiciário, perícias, flagrante e custódia, medidas protetivas, escala de plantão, guarda de objetos apreendidos) e escrever por que cada um não foi modelado.
+
+### Requisitos
+
+**Requisitos funcionais**
+
+- **RF01** — Registrar uma ocorrência com unidade, servidor responsável pelo registro, natureza do fato, canal (presencial ou online), data e hora, localidade e relato dos fatos.
+- **RF02** — Vincular uma ou mais pessoas a uma ocorrência com o papel de cada uma e, quando houver, o advogado (nº OAB).
+- **RF03** — Abrir um inquérito a partir de uma ocorrência, com data de abertura, status e prioridade, somente com prova materializada.
+- **RF04** — Registrar depoimentos de um inquérito, com a pessoa que depôs, a data e o resumo.
+- **RF05** — Registrar evidências de um inquérito com tipo, descrição, data de apreensão e status da cadeia de custódia.
+- **RF06** — Registrar movimentações de um inquérito com servidor responsável (escrivão ou delegado), data, tipo e descrição.
+- **RF07** — Consultar o status atualizado de uma ocorrência ou de um inquérito.
+- **RF08** — Gerar relatórios gerenciais: ocorrências por natureza, canal e status; inquéritos por status.
+- **RF09** — Atualizar o status e a data de conclusão de um inquérito.
+- **RF10** *(novo)* — Cadastrar pessoa com nome, documento, contato e observação opcional.
+- **RF11** *(novo)* — Cadastrar servidor ligado a uma pessoa e a uma unidade, com cargo (Delegado, Escrivão ou Investigador/Agente) e matrícula.
+- **RF12** *(novo)* — Cadastrar advogado ligado a uma pessoa, identificado pelo nº da OAB.
+- **RF13** *(novo)* — Cadastrar unidade policial (nome, endereço, tipo, cidade) e natureza do fato (descrição e gravidade).
+
+> RF10–RF13 foram acrescentados a partir das tabelas e da matriz de acesso do dicionário (que prevê "cadastro administrativo por servidor autorizado", classificado como decisão de modelagem e não como fala da entrevista). ⚠️ Confirmar se o grupo mantém.
+
+**Requisitos não funcionais**
+
+- **RNF01 (Disponibilidade)** — Alta disponibilidade, mitigando as quedas do DESP.
+- **RNF02 (Confiabilidade)** — Integridade dos registros, sem alteração retroativa sem rastro. Em linha com a matriz do dicionário, nenhum perfil apaga registros.
+- **RNF03 (Segurança e privacidade)** — Acesso restrito por perfil (matriz da seção 7 do dicionário), com acesso contextual do advogado e sigilo policial. O dicionário (8.4) registra que o tratamento de dados para investigação penal é regido por legislação específica (LGPD, art. 4º, III e § 1º).
+- **RNF04 (Rastreabilidade)** — Toda movimentação de inquérito registra data e servidor responsável.
+- **RNF05 (Usabilidade)** — Registro inicial simples para qualquer servidor autorizado.
+- **RNF06 (Escalabilidade)** — Suportar o crescimento anual de ocorrências e inquéritos.
+
+> ⚠️ **PENDENTE:** o dicionário (seção 6) diz que o **mecanismo de log de acesso não foi informado**. Portanto RNF03 e RNF04 só estão parcialmente atendidos (MOVIMENTACAO guarda data e servidor, mas não a hora nem alterações em outras tabelas). Explicar essa limitação e justificar os requisitos comuns não incluídos (backup, integração com o DESP, autenticação).
+
+### Regras de negócio
+
+Os códigos RN01–RN06 são os da Entrega 1. A coluna "Dicionário" liga cada regra à numeração R1–R14 do dicionário.
+
+| Código | Regra | Dicionário |
+|---|---|---|
+| RN01 | Uma ocorrência só vira inquérito com prova materializada; sem prova, fica "Em investigação". | R3 (C11) |
+| RN02 | Qualquer servidor autorizado pode registrar ocorrência; vítimas e qualquer pessoa com conhecimento dos fatos podem comunicá-la. | R1 |
+| RN03 | Escrivães atuam só em inquéritos e não registram ocorrências. | R2 (C14) |
+| RN04 | A vítima acompanha o inquérito diretamente; o acusado só por advogado. O acesso do advogado é contextual, limitado ao envolvimento em que consta o seu `id_oab`. | R13 (P9), R12 |
+| RN05 | A data de conclusão do inquérito é igual ou posterior à de abertura. | ⚠️ não consta no dicionário |
+| RN06 | Toda ocorrência tem relato dos fatos e canal de entrada (Presencial ou Online). | R6 (C10) |
+| RN07 *(novo)* | `papel` classifica só a pessoa; nunca recebe o valor "Advogado". | R8 |
+| RN08 *(novo)* | Status da ocorrência: Em análise, Em investigação, Convertida em inquérito ou Cancelada. | R4 |
+| RN09 *(novo)* | Cargo do servidor: Delegado, Escrivão ou Investigador/Agente. | R7 |
+| RN10 *(novo)* | Uma pessoa pode ser servidor, advogado, ambos ou nenhum, uma vez em cada especialização. | 2.1 |
+| RN11 *(novo)* | Uma ocorrência origina no máximo um inquérito. | 2.2 |
+| RN12 *(novo)* | O envolvimento guarda um único papel e, no máximo, o advogado atualmente vinculado; não há histórico de troca. | R9, R10 |
+| RN13 *(novo)* | `id_oab` só prova que o advogado está cadastrado; não prova procuração nem regularidade da inscrição. | R11 |
+| RN14 *(novo)* | Movimentações, depoimentos e evidências são registrados só por escrivão ou delegado. | C14, matriz 7.1 |
+| RN15 *(novo)* | Nenhum perfil apaga registros. | matriz 7 |
+
+> ⚠️ **PENDENTE:** a RN05 está no README da Entrega 1 e no script (CHECK), mas **não está no dicionário**; acrescente-a lá. As regras R5 (estelionato é o mais frequente) e R14 (200–300 inquéritos) do dicionário são observações, não regras, por isso ficaram de fora desta tabela. Justificar regras comuns não incluídas (ex.: prazo para conclusão do inquérito).
+>
+> O dicionário (8.3) fundamenta o acesso do advogado na Súmula Vinculante 14 do STF e no art. 7º, XIV e §§ 10 e 11, da Lei 8.906/1994, como complemento normativo e não como fala da entrevista.
+
+### Notação e DER conceitual
+
+![DER (versão atual do arquivo — desatualizada)](Der.png)
+
+> ⚠️ **PENDENTE (crítico) — o `Der.png` não corresponde ao dicionário revisado e não está na notação pedida.** Ele mostra chaves estrangeiras e tipos de dados (o conceitual não pode ter FK) e não está em brModelo. Diferenças em relação ao dicionário:
+>
+> | No `Der.png` | No dicionário |
+> |---|---|
+> | Não existe ADVOGADO | ADVOGADO (`id_oab`, `id_pessoa`), especialização de PESSOA |
+> | ENVOLVIMENTO com PK própria `idenvolvimento` | PK composta (`id_pessoa`, `id_ocorrencia`) |
+> | ENVOLVIMENTO sem `id_oab` | `id_oab` opcional |
+> | SERVIDOR com `nome` | `nome_ficticio` só em PESSOA (herdado) |
+> | PESSOA com `nome` e `documento`, sem contato | `nome_ficticio`, `documento_ficticio`, `contato_ficticio` |
+> | OCORRENCIA sem `canal_registro` e sem `relato_fatos` | os dois são obrigatórios (RN06) |
+> | OCORRENCIA com `id_servidor_registro` | `id_servidor` |
+> | Colunas `status_2` (OCORRENCIA e INQUERITO) | `status` |
+> | Datas `TIMESTAMP`; descrição/resumo `TEXT` | `DATE`/`DATETIME`; `VARCHAR(200)` e `VARCHAR(255)` |
+> | PKs como `idpessoa`, `idunidade_policial` | `id_pessoa`, `id_unidade` |
+>
+> Refazer o DER em brModelo (sem FKs, com cardinalidade (mín, máx) nos dois lados, generalização PESSOA → SERVIDOR/ADVOGADO e ENVOLVIMENTO como entidade associativa com o atributo `papel` ligado ao losango). O desenho atual pode servir de base para o **modelo lógico**, depois de corrigido.
+
+**Entidades do modelo (11):**
+
+| Entidade | Descrição |
+|---|---|
+| UNIDADE_POLICIAL | A delegacia (52º DP); permite expandir para outras unidades no futuro. |
+| SERVIDOR | Delegado, Escrivão ou Investigador/Agente, ligado a uma unidade e a uma PESSOA. |
+| PESSOA | Superentidade: dados comuns de qualquer pessoa envolvida (vítima, testemunha, comunicante, acusado, servidor, advogado). |
+| ADVOGADO | Especialização de PESSOA, identificada pelo nº da OAB. |
+| ENVOLVIMENTO | Entidade associativa PESSOA × OCORRENCIA: guarda o papel e, opcionalmente, o advogado vinculado. |
+| NATUREZA_FATO | Tabela de domínio com o tipo do fato (furto, estelionato etc.) e a gravidade. |
+| OCORRENCIA | O boletim inicial, ponto de partida de todo o processo; pode originar um inquérito. |
+| INQUERITO | Procedimento aberto a partir de uma ocorrência com prova materializada. |
+| DEPOIMENTO | Declaração de uma pessoa no inquérito (entidade própria, PK simples). |
+| EVIDENCIA | Elemento material do inquérito, com controle de custódia. |
+| MOVIMENTACAO | Histórico de tramitação do inquérito, usado também para auditoria. |
+
+**Relacionamentos e cardinalidades** (inferidas pelo grupo, conforme dicionário 2.2):
+
+| Entidade A | Card. A | Entidade B | Card. B | FK |
+|---|---|---|---|---|
+| UNIDADE_POLICIAL | (0, n) | SERVIDOR | (1, 1) | `SERVIDOR.id_unidade` |
+| UNIDADE_POLICIAL | (0, n) | OCORRENCIA | (1, 1) | `OCORRENCIA.id_unidade` |
+| NATUREZA_FATO | (0, n) | OCORRENCIA | (1, 1) | `OCORRENCIA.id_natureza` |
+| SERVIDOR | (0, n) | OCORRENCIA | ‡ | `OCORRENCIA.id_servidor` (obrigatoriedade não declarada) |
+| PESSOA | (0, n) | ENVOLVIMENTO | (1, 1) | `ENVOLVIMENTO.id_pessoa` |
+| OCORRENCIA | (0, n) | ENVOLVIMENTO | (1, 1) | `ENVOLVIMENTO.id_ocorrencia` |
+| ADVOGADO | (0, n) | ENVOLVIMENTO | (0, 1) | `ENVOLVIMENTO.id_oab` |
+| OCORRENCIA | (0, 1) | INQUERITO | (1, 1) | `INQUERITO.id_ocorrencia` (UNIQUE) |
+| INQUERITO | (0, n) | DEPOIMENTO / EVIDENCIA / MOVIMENTACAO | (1, 1) | `id_inquerito` |
+| PESSOA | (0, n) | DEPOIMENTO | (1, 1) | `DEPOIMENTO.id_pessoa` |
+| SERVIDOR | (0, n) | MOVIMENTACAO | ‡ | `MOVIMENTACAO.id_servidor` (obrigatoriedade não declarada) |
+| PESSOA | (0, 1) | SERVIDOR / ADVOGADO | (1, 1) | `id_pessoa` + UNIQUE (generalização parcial e sobreposta) |
+
+> ⚠️ **PENDENTE:** os campos marcados ‡ (`OCORRENCIA.id_servidor`, `MOVIMENTACAO.id_servidor`, `SERVIDOR.cargo`, `OCORRENCIA.status`) continuam sem decisão de obrigatoriedade, e o script os deixa aceitando NULL. O grupo deve decidir e atualizar dicionário, DER e script. Pela regra RN02/RN14, `id_servidor` parece ser obrigatório em ambos.
+
+### Caso A — apontamentos da correção da Entrega 1
+
+> ⚠️ **PENDENTE:** não tive acesso à correção da Entrega 1, então a coluna "Apontamento" precisa ser copiada dela. O dicionário (seção 11) já lista as mudanças e o motivo de cada uma, que usei nas outras colunas; as linhas marcadas "(inferido)" têm o apontamento deduzido por mim. Apontamento que não estiver na tabela conta como não corrigido.
+
+| Apontamento da correção da E1 | O que mudou no trabalho | Por quê |
+|---|---|---|
+| (inferido) falta de especialização/generalização coerente | PESSOA virou superentidade; criadas as especializações SERVIDOR e ADVOGADO (FK + UNIQUE); `nome_ficticio` saiu de SERVIDOR | Evita repetir dados pessoais; uma pessoa pode ser servidor, advogado, ambos ou nenhum (dic. 11 nº 2–4) |
+| (inferido) papel do advogado | Criada ADVOGADO e acrescentado `id_oab` opcional em ENVOLVIMENTO; `papel` nunca vale "Advogado" | O acusado só acompanha o caso por advogado (Pergunta 9) |
+| (inferido) DEPOIMENTO tratado como associativa | DEPOIMENTO ficou entidade própria, com PK simples | Só ENVOLVIMENTO é associativa (dic. 11 nº 19) |
+| (inferido) ENVOLVIMENTO ausente da normalização/chaves | ENVOLVIMENTO (antes ENVOLVIMENTO_OCORRENCIA) entrou na normalização e nas chaves; total passou de 9 para 11 entidades | Estava de fora da análise (dic. 11 nº 5, 15, 20) |
+| (inferido) cardinalidades ausentes | Criadas e justificadas na seção 2.2 do dicionário | A fonte não as declarava (dic. 11 nº 8) |
+| (inferido) nomes e tipos inconsistentes | `id_servidor_registro` → `id_servidor`; `relato_fatos` padronizado como TEXT | Nome único em todo o documento (dic. 11 nº 16–17) |
+| (inferido) regras conflitantes da entrevista | C11 prevalece sobre as Perguntas 6 e 10; C14 prevalece sobre a Pergunta 4; "Cancelada" incluído no domínio de status | Registrado em dic. 8.2 e R4 |
+| (inferido) FKs no conceitual | Remover FKs do DER | FK é decisão do modelo lógico — ⚠️ o `Der.png` atual ainda as mostra |
+
+---
+
+## 1.2 Conversão do Modelo Conceitual para o Modelo Lógico
+
+- **Entidades → Tabelas:** cada uma das 11 entidades virou uma tabela de mesmo nome.
+- **Atributos → Colunas:** tipos `INTEGER`, `VARCHAR(n)`, `DATE`, `DATETIME` e `TEXT`; atributos opcionais viraram colunas que aceitam NULL (`PESSOA.observacao`, `INQUERITO.data_conclusao`, `ENVOLVIMENTO.id_oab`).
+- **Relacionamentos → Chaves:** os relacionamentos 1:0..N e 1:0..1 viram FK no lado dependente; o único N:N (PESSOA ↔ OCORRENCIA) vira a tabela ENVOLVIMENTO.
+- **Cardinalidades:**
+  - **1:N** — FK no lado "muitos" (ex.: `OCORRENCIA.id_natureza`, `DEPOIMENTO.id_inquerito`).
+  - **1:0..1** — FK com UNIQUE (`INQUERITO.id_ocorrencia`).
+  - **N:N** — ENVOLVIMENTO, PK composta (`id_pessoa`, `id_ocorrencia`) e atributo `papel`.
+- **Generalização/especialização:** estratégia de **uma tabela por entidade** (PESSOA + SERVIDOR + ADVOGADO, com `id_pessoa` FK + UNIQUE). Escolhida porque a especialização é parcial e sobreposta e cada especialização tem atributos próprios (tabela única geraria colunas vazias; só as especializadas perderiam os dados comuns).
+
+## 1.3 Chaves Primárias e Estrangeiras
+
+| Tabela | PK | FKs |
+|---|---|---|
+| UNIDADE_POLICIAL | `id_unidade` | — |
+| PESSOA | `id_pessoa` | — |
+| SERVIDOR | `id_servidor` | `id_pessoa` → PESSOA (UNIQUE); `id_unidade` → UNIDADE_POLICIAL |
+| ADVOGADO | `id_oab` | `id_pessoa` → PESSOA (UNIQUE) |
+| NATUREZA_FATO | `id_natureza` | — |
+| OCORRENCIA | `id_ocorrencia` | `id_unidade`, `id_natureza`, `id_servidor` (NULL) |
+| ENVOLVIMENTO | (`id_pessoa`, `id_ocorrencia`) | `id_pessoa`, `id_ocorrencia`, `id_oab` (NULL) |
+| INQUERITO | `id_inquerito` | `id_ocorrencia` → OCORRENCIA (UNIQUE) |
+| DEPOIMENTO | `id_depoimento` | `id_inquerito`, `id_pessoa` |
+| EVIDENCIA | `id_evidencia` | `id_inquerito` |
+| MOVIMENTACAO | `id_movimentacao` | `id_inquerito`, `id_servidor` (NULL) |
+
+## 1.4 Processo de Normalização (1FN, 2FN e 3FN)
+
+- **1FN:** atributos atômicos, sem grupos repetitivos. O que seria multivalorado (várias pessoas por ocorrência; vários depoimentos, evidências e movimentações por inquérito) foi separado em tabelas.
+- **2FN:** as 10 tabelas de PK simples a atendem por construção. Em ENVOLVIMENTO (PK composta), `papel` e `id_oab` dependem do par completo (`id_pessoa`, `id_ocorrencia`): o papel é da pessoa *naquela ocorrência* e o advogado é o vinculado *àquele envolvimento*.
+- **3FN:** não há dependência transitiva. Gravidade fica em NATUREZA_FATO, dados da unidade em UNIDADE_POLICIAL, dados pessoais de servidores e advogados em PESSOA. `id_pessoa` (em SERVIDOR e ADVOGADO) e `id_ocorrencia` (em INQUERITO) são chaves candidatas.
+- **Resultado:** as 11 entidades atendem 1FN, 2FN e 3FN (dicionário, seção 9).
+- **Justificativa:** a 1FN separou as relações 1:N; a 2FN só exigiu análise em ENVOLVIMENTO; a 3FN evitou repetir dados de pessoa, unidade e natureza em cada registro.
+
+> ⚠️ **PENDENTE:** acrescentar 1–2 exemplos de anomalia **do projeto** (ex.: o que ocorreria se nome e contato fossem repetidos em cada depoimento). Risco a justificar: `OCORRENCIA.status = 'Convertida em inquérito'` é derivável da existência de um INQUERITO (redundância controlada; auditar com A01/A08).
+
+## 1.5 Justificativas Técnicas das Decisões
+
+**Chaves primárias**
+
+- `id_*` inteiro autoincrementado (chave substituta) em 10 tabelas: identificador estável, curto e independente de dados que mudam.
+- `ADVOGADO.id_oab` `VARCHAR(20)`: o nº da OAB já é o identificador natural e único do advogado (tipo adotado por decisão de modelagem, pois a fonte não informou).
+- ENVOLVIMENTO com PK composta: impede repetir a pessoa na mesma ocorrência e garante um papel por pessoa/ocorrência (RN12).
+
+**Chaves estrangeiras**
+
+- `SERVIDOR.id_unidade`, `OCORRENCIA.id_unidade`: lotação e unidade de registro.
+- `OCORRENCIA.id_natureza`: classificação do fato (tabela de domínio).
+- `OCORRENCIA.id_servidor` e `MOVIMENTACAO.id_servidor`: quem registrou/movimentou (RN02, RN14).
+- `ENVOLVIMENTO.*`: implementa o N:N; `id_oab` liga o advogado vinculado (RN04, RN12).
+- `INQUERITO.id_ocorrencia` + UNIQUE: no máximo um inquérito por ocorrência (RN11).
+- `DEPOIMENTO`, `EVIDENCIA`, `MOVIMENTACAO` → INQUERITO: a instrução pertence ao inquérito, não à ocorrência.
+- `SERVIDOR.id_pessoa`, `ADVOGADO.id_pessoa` + UNIQUE: especialização (RN10).
+
+**Restrições aplicadas no script**
+
+| Restrição | Regra |
+|---|---|
+| `CHECK (cargo IS NULL OR cargo IN ('Delegado','Escrivão','Investigador/Agente'))` | RN09 |
+| `CHECK (status IS NULL OR status IN ('Em análise','Em investigação','Convertida em inquérito','Cancelada'))` | RN08 |
+| `CHECK (canal_registro IN ('Presencial','Online'))`, `relato_fatos NOT NULL` | RN06 |
+| `CHECK (papel <> 'Advogado')` | RN07 |
+| `CHECK (data_conclusao IS NULL OR data_conclusao >= data_abertura)` | RN05 |
+| `UNIQUE` em `INQUERITO.id_ocorrencia` | RN11 |
+| `UNIQUE` em `SERVIDOR.id_pessoa` e `ADVOGADO.id_pessoa` | RN10 |
+| `NOT NULL` nos campos obrigatórios do dicionário | RN06 e demais |
+
+**Regras que o banco NÃO impõe** (precisam de trigger, aplicação ou consulta de auditoria): RN01, RN03, RN04, RN13, RN14 e RN15. Em RN14, a regra "só escrivão/delegado movimenta" depende de `SERVIDOR.cargo`, e o próprio dicionário a trata como regra do modelo. No script, a exclusão (DELETE) aparece apenas como teste administrativo em registro temporário, coerente com RN15.
+
+**Decisões arquiteturais gerais:** separar OCORRENCIA de INQUERITO (nem toda ocorrência vira inquérito); PESSOA única com especializações; NATUREZA_FATO como tabela de domínio; MOVIMENTACAO como histórico de tramitação; dados de pessoas fictícios (campos `*_ficticio`) por privacidade e sigilo.
+
+## 1.6 Proposta de Arquitetura Analítica para BI e IA
+
+**Informações estratégicas:** onde e por qual canal a demanda cresce; quais naturezas dominam (estelionato); quanto das ocorrências vira inquérito; quanto tempo um inquérito leva; como a carga se distribui entre escrivães; quantos inquéritos estão parados.
+
+**KPIs propostos**
+
+| KPI | Fórmula | Período | Meta |
+|---|---|---|---|
+| KPI-01 Ocorrências por natureza | `COUNT(ocorrência)` por natureza | mês | — |
+| KPI-02 Ocorrências por canal | `COUNT(ocorrência)` por canal | mês | — |
+| KPI-03 Ocorrências por status | `COUNT(ocorrência)` por status | mês | — |
+| KPI-04 Inquéritos por status | `COUNT(inquérito)` por status | mês | — |
+| KPI-05 Volume mensal de ocorrências | `COUNT(ocorrência)` por mês e canal | mês | — |
+| KPI-06 Taxa de conversão em inquérito | `inquéritos / ocorrências × 100` | mês | — |
+| KPI-07 Tempo médio de conclusão | `AVG(data_conclusao − data_abertura)` | mês de conclusão | — |
+| KPI-08 Inquéritos em andamento por prioridade | `COUNT` com `data_conclusao IS NULL` | semana | — |
+| KPI-09 Movimentações por servidor | `COUNT(movimentação)` por servidor | mês | — |
+| KPI-10 Evidências por status de custódia | `COUNT(evidência)` por status | mês | — |
+| KPI-11 Ocorrências paradas | ocorrências "Em investigação" sem inquérito há mais de 30 dias | semana | — |
+
+> ⚠️ **PENDENTE:** as metas ficaram vazias de propósito; precisam vir da unidade (ex.: prazo-alvo de conclusão). KPI-05 ganha importância porque a unidade admite que **não conhece** o volume mensal de ocorrências (C10): o banco passaria a medi-lo.
+
+**Potencial para BI:** série mensal de ocorrências por canal e natureza, funil ocorrência → inquérito → conclusão, painel de carga por escrivão, painel de inquéritos por prioridade e idade. Dimensões: tempo, natureza, canal, status, servidor, localidade.
+
+**Aplicações analíticas e de IA:**
+
+- Previsão do volume mensal por canal (séries temporais), para dimensionar a equipe diante dos picos imprevisíveis.
+- Classificação da natureza e agrupamento de relatos (`relato_fatos`) para detectar padrões de golpe, como golpe do amor e falsa delegacia.
+- Priorização de inquéritos com risco de ficar parados.
+- Mapa de calor por `localidade`.
+- Cuidados: dados sensíveis (o dicionário 8.4 lembra que a LGPD não cobre integralmente o tratamento para investigação penal, que tem legislação própria), viés de modelos preditivos e revisão humana das decisões.
+
+**Rastreabilidade**
+
+| Problema ou KPI | Tabelas envolvidas | Consulta no script |
+|---|---|---|
+| P1 — base local de consulta quando o DESP cai | OCORRENCIA, INQUERITO | G05, G08 ⚠️ |
+| P2 — rastreio por canal, natureza e status | OCORRENCIA, NATUREZA_FATO, INQUERITO | G01, G02, G03, G04 |
+| KPI-01 por natureza | OCORRENCIA, NATUREZA_FATO | G01 |
+| KPI-02 por canal | OCORRENCIA | G02 |
+| KPI-03 por status | OCORRENCIA | G03 |
+| KPI-04 inquéritos por status | INQUERITO | G04 |
+| KPI-05 volume mensal | OCORRENCIA | G05 ⚠️ a criar |
+| KPI-06 taxa de conversão | OCORRENCIA, INQUERITO | G06 ⚠️ a criar |
+| KPI-07 tempo médio de conclusão | INQUERITO | G07 ⚠️ a criar |
+| KPI-08 em andamento por prioridade | INQUERITO | G08 ⚠️ a criar |
+| KPI-09 movimentações por servidor | MOVIMENTACAO, SERVIDOR, PESSOA | G09 ⚠️ a criar |
+| KPI-10 evidências por custódia | EVIDENCIA | G10 ⚠️ a criar |
+| KPI-11 ocorrências paradas | OCORRENCIA, INQUERITO | G11 ⚠️ a criar |
+
+**Consultas de auditoria propostas (⚠️ todas a criar)**
+
+| Código | Pergunta | Verifica |
+|---|---|---|
+| A01 | Existe inquérito cuja ocorrência não está "Convertida em inquérito"? | RN01 |
+| A02 | Existe movimentação, depoimento ou evidência registrado por servidor que não é Escrivão nem Delegado? (depoimento e evidência não guardam o servidor; ⚠️ ver nota abaixo) | RN14 |
+| A03 | Existe ocorrência registrada por servidor com cargo Escrivão? | RN03 |
+| A04 | Existe inquérito com conclusão anterior à abertura? | RN05 |
+| A05 | Existe ocorrência sem relato ou sem canal? | RN06 |
+| A06 | Existe envolvimento com papel "Advogado"? | RN07 |
+| A07 | Existe inquérito "Concluído" sem data de conclusão (ou o inverso)? | RN05 |
+| A08 | Existe ocorrência "Convertida em inquérito" sem inquérito? | RN01 |
+
+> ⚠️ **PENDENTE (crítico):** o script atual **não tem cabeçalhos G/A** e tem 4 consultas gerenciais (G01–G04, na ordem em que aparecem) e nenhuma auditoria de regra. Cada consulta precisa de `-- G01 — pergunta` e `-- Atende: P2` (ou `-- Verifica: RN01`). Nota sobre A02: só MOVIMENTACAO guarda o servidor, então RN14 só é auditável nessa tabela; ajustar o texto da RN14 ou limitá-la a movimentações.
+
+---
+
+## 2. Modelo Lógico Relacional
+
+Diagrama: ⚠️ PENDENTE — `docs/modelo_logico.png` (brModelo).
+
+> ⚠️ **PENDENTE:** o diagrama não existe. Ele deve mostrar tabelas, colunas com tipo, PK/FK (e PK, FK juntas em ENVOLVIMENTO), e (mín, máx) nas pontas. Os nomes e tipos devem seguir o dicionário (ver tabela de diferenças do `Der.png` na seção 1.1).
+
+## 3. Script SQL
+
+Arquivo: [`docs/script.sql`](docs/script.sql) ⚠️ (a criar). SGBD: MySQL 8.0.16+ (necessário para os `CHECK`). Banco: `db_52dp_v3`.
+
+O script atual cobre `CREATE DATABASE`, 11 `CREATE TABLE` com constraints, `INSERT`, `SELECT` com `JOIN`, `UPDATE`, `DELETE` e consultas gerenciais, na ordem pedida e batendo com o dicionário (tabelas, colunas, tipos e restrições).
+
+> ⚠️ **PENDENTE:** (1) existe só em HTML; exportar para `.sql`. (2) Faltam cabeçalhos G/A e consultas de auditoria. (3) Remover `SHOW TABLES`/`SHOW CREATE TABLE` do final, ou justificar. (4) O README anterior citava `db_52dp_v2`; padronizar em `db_52dp_v3`. (5) Testar do zero em banco vazio.
+
+## 4. Massa de Dados
+
+Dados **totalmente fictícios**, como no dicionário (campos `*_ficticio`).
+
+**Situação atual:** 1 unidade, 6 pessoas, 2 servidores, 1 advogado, 2 naturezas, 3 ocorrências, 4 envolvimentos, 1 inquérito, 2 depoimentos, 1 evidência, 1 movimentação.
+
+> ⚠️ **PENDENTE — insuficiente.** Faltam servidores (a unidade tem pelo menos 1 delegado + 6 escrivães + os que registram), naturezas (estelionato com golpe do amor e falsa delegacia, furto, etc.), e variedade: ocorrências canceladas, em análise, em investigação sem inquérito; inquéritos em andamento e concluídos, com prioridades diferentes; evidências com custódias diferentes; pessoa com papéis diferentes em ocorrências diferentes.
+
+**Como o volume real justifica a massa.** A unidade informou que **não sabe quantas ocorrências registra por mês** (C10), então o volume de ocorrências não pode ser justificado por um número oficial. O que existe são estes dados: 6 escrivães só em inquéritos, 200–300 inquéritos por mês por delegado (C13, ⚠️ a confirmar), estelionato como natureza mais frequente (Pergunta 5) e a regra de que só uma parte das ocorrências vira inquérito (C11). A proposta é uma amostra reduzida e proporcional:
+
+| Tabela | Registros-alvo | Justificativa |
+|---|---|---|
+| UNIDADE_POLICIAL | 1 | o 52º DP |
+| SERVIDOR | ≈9 | 1 delegado + 6 escrivães + 2 que registram ocorrências (⚠️ confirmar) |
+| NATUREZA_FATO | ≈10 | estelionato (com subtipos) em maior volume, furto, roubo, ameaça etc. |
+| PESSOA | ≈150–200 | envolvidos, depoentes, servidores e advogados |
+| ADVOGADO | ≈10–15 | só acusados tendem a ter advogado |
+| OCORRENCIA | ≈100–150 | alguns meses, nos 2 canais, com estelionato como maioria |
+| INQUERITO | ≈40–60 | só parte das ocorrências vira inquérito (C11) |
+| DEPOIMENTO / EVIDENCIA / MOVIMENTACAO | ≈2 / 1,5 / 4 por inquérito | refletem a instrução |
+
+Arquivo: ⚠️ `docs/massa_de_dados.sql` (ou dentro de `docs/script.sql`).
+
+## 5. Repositório GitHub
+
+- Relatório técnico: este `README.md`.
+- Dicionário (HTML): [arquivo](Dicionario_de_Dados_52_DP_REVISADO%20%282%29.html).
+- Diagramas: `Der.png` (⚠️ desatualizado) e modelo lógico (⚠️ ausente).
+- Evidências: 3 fotos e o áudio. Script e massa: ⚠️ ausentes em `.sql`.
+
+> ⚠️ **PENDENTE:** (a) distribuição dos commits entre os integrantes (não consegui verificar; o repositório tinha 23 commits); (b) organizar em `docs/`, `levantamento/` e `imagens/`; (c) renomear arquivos com espaços e parênteses; (d) corrigir o link `DER_52DP.png` do README anterior, que não existe.
+
+## 6. Uso de Inteligência Artificial
+
+### Uso 1 — Claude, Replit e ChatGPT (registro já feito pelo grupo)
+
+| Item | Registro |
+|---|---|
+| **Ferramenta e etapa** | Claude: script SQL (`db_52dp_v2`), conversão do script e do dicionário/entrevista em HTML e redação do README a partir do esqueleto do professor. Replit: apoio ao DER e às ligações, e organização do README. ChatGPT: desenvolvimento do SQL. |
+| **Motivação** | Organizar em SQL as tabelas definidas a partir do dicionário, ter versões em HTML mais fáceis de consultar e estruturar o README no modelo exigido. |
+| **Prompt(s) utilizados** | Entre outros: "deixe esse documento em html", "deixa o fundo todo preto pfvr", "complete o readme" (a partir do script SQL e do HTML com a entrevista e o dicionário). |
+| **Resposta recebida** | Página HTML estilizada com o script SQL (DDL, INSERTs, consultas, UPDATE/DELETE e relatórios) e rascunho do README com caracterização, processos, requisitos, regras, dicionário, modelagem e justificativa. |
+| **Fontes consultadas e verificadas** | Nenhuma fonte externa. O conteúdo veio da entrevista de campo e do dicionário feitos pelo grupo. |
+| **Trechos rejeitados ou corrigidos** | Mantivemos o conteúdo porque reproduz o que levantamos na entrevista e no dicionário, sem fatos novos. As decisões de modelagem (entidades, atributos, cardinalidades) foram do grupo. Corrigimos o que não condizia com a entrevista ou com o modelo (como o número de entidades) e removemos do rascunho as anotações do roteiro do professor (pesos, instruções de entrega, critérios atitudinais). |
+| **Justificativa da escolha final** | Era o que o grupo já tinha levantado (entrevista com a Agente Ivani, dicionário, cardinalidades e regras); a IA só ajudou a pôr no formato certo. O grupo reescreveu o texto em linguagem própria, corrigiu erros de digitação e deixou a regra "só escrivães e delegado movimentam" como regra de negócio, e não como trava do banco. |
+| **Reflexão crítica** | A IA não teve acesso à organização; tudo depende do que o grupo registrou. Nuances como o momento exato em que uma ocorrência vira inquérito devem ser conferidas na fonte original. |
+
+> ⚠️ **PENDENTE:** os prompts exatos do Replit e do ChatGPT não estão registrados (só os do Claude). Atenção: o texto antigo falava em "dez entidades"; o modelo atual tem **11**.
+
+### Uso 2 — Claude, preenchimento e revisão deste README (Entrega 2)
+
+| Item | Registro |
+|---|---|
+| **Ferramenta e etapa** | Claude: redação e duas revisões do README da Entrega 2, a partir do esqueleto do professor, do relatório da Entrega 1, do modelo lógico/normalização, do script, do dicionário de dados, do `Der.png`, do README anterior e das fotos. |
+| **Motivação** | Reunir tudo no formato exigido e apontar o que ainda falta. |
+| **Prompt(s) utilizados** | "vou te mandar um repositório e 3 documentos com o intuito que você preencha o texto do readme2 e me sinalize aonde não conseguiu"; "ai oh agr revisa de novo" (com os arquivos do repositório anexados). |
+| **Resposta recebida** | README com marcações de pendência e lista das inconsistências entre DER, dicionário, script e README. |
+| **Fontes consultadas e verificadas** | Nenhuma fonte externa. As leis citadas (Súmula Vinculante 14, Lei 8.906/1994, LGPD) vêm do dicionário do grupo e não foram conferidas pela IA. |
+| **Trechos rejeitados ou corrigidos** | ⚠️ PENDENTE — o grupo deve registrar o que alterou, em especial RF10–RF13, RN07–RN15, KPIs e volume-alvo, que são **propostas** da IA. |
+| **Justificativa da escolha final** | ⚠️ PENDENTE |
+| **Reflexão crítica** | A IA não conseguiu ouvir o áudio, não viu a correção da Entrega 1 nem verificou commits; deduziu os "apontamentos" do Caso A a partir do dicionário. Os códigos RN do README e R do dicionário podem divergir. Metas de KPI e justificativas de processos não incluídos não foram inventadas. |
+
+> ⚠️ **PENDENTE:** registrar também o uso de IA para levantar processos, requisitos, regras e KPIs típicos e para gerar a massa de dados (ferramenta, prompts exatos, ajustes manuais), ou declarar explicitamente que não houve.
+
+## 7. Apresentação Final
+
+⚠️ PENDENTE — slides não fornecidos. Roteiro: problema → solução → modelo lógico → SQL rodando → consultas G/A (as mesmas do script) → BI e IA → benefícios. 8 minutos; todos presentes na defesa.
