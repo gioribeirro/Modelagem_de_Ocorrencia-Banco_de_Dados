@@ -1,11 +1,11 @@
 
 <h3>Nomes dos alunos e RGM:</h3>
 
-<p align= style="text-align: center;">• Enzo Freire dos Santos - RGM: 47806303</p>
-<p align= style="text-align: center;">• Eduardo Vinicius Ribeiro Costa - RGM: 48693855</p>
-<p align= style="text-align: center;">• Giovanna Ribeiro Souza - RGM: 47952822</p>
-<p align= style="text-align: center;">• João Victor da Costa Silva - RGM: 49227238</p>
-<p align= style="text-align: center;">• Paulo Henrique Camilo de Pascoa Souza - RGM: 47806745</p>
+<p align= style="text-align: center;">• Enzo Freire dos Santos - RGM: 47806303 Github: enzofreire-cmd</p> 
+<p align= style="text-align: center;">• Eduardo Vinicius Ribeiro Costa - RGM: 48693855 Github:EduardoRibeiro-007</p>
+<p align= style="text-align: center;">• Giovanna Ribeiro Souza - RGM: 47952822 Github: gioribeirro</p>
+<p align= style="text-align: center;">• João Victor da Costa Silva - RGM: 49227238 Github: Thevic69</p>
+<p align= style="text-align: center;">• Paulo Henrique Camilo de Pascoa Souza - RGM: 47806745 Github:phpascoa</p>
 
 <h2 id="modelagem-de-banco-de-dados-para-o-52-dp">Modelagem de Banco de Dados para o 52º Distrito Policial</h2>
 
