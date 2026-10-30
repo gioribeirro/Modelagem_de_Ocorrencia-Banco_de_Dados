@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelo Lógico + Documentação</title>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 36px 18px; background: #f2f4f7;
+  color: #20242a; font-family: Arial, Helvetica, sans-serif; line-height: 1.6;
+}
+main {
+  max-width: 1050px; margin: 0 auto; padding: 48px 56px;
+  background: #fff; border: 1px solid #e1e5ea; border-radius: 10px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.06);
+}
+h1 { color: #172b4d; font-size: 2rem; margin: 0 0 28px; }
+h2 { color: #173b67; font-size: 1.45rem; margin: 34px 0 14px; border-bottom: 2px solid #d9e2ef; padding-bottom: 7px; }
+h3 { color: #244d78; font-size: 1.15rem; margin: 25px 0 10px; }
+p { margin: 8px 0 12px; }
+.bullet { padding-left: 12px; }
+.table-wrap { overflow-x: auto; margin: 16px 0 24px; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { border: 1px solid #cbd3dd; padding: 9px 11px; text-align: left; vertical-align: top; }
+th { background: #eaf0f7; color: #173b67; font-weight: 700; }
+tr:nth-child(even) td { background: #fafbfd; }
+@media (max-width: 700px) {
+  body { padding: 10px; }
+  main { padding: 24px 18px; }
+  h1 { font-size: 1.6rem; }
+  table { min-width: 650px; }
+}
+@media print {
+  body { background: #fff; padding: 0; }
+  main { max-width: none; border: 0; box-shadow: none; padding: 15mm; }
+}
+</style>
+</head>
+<body>
+<main>
+<h2><strong>1. Modelo lógico de dados</strong></h2>
+<h2><strong>1.1 Convenções</strong></h2>
+<p>@ = chave primária; + = obrigatório; ( ) = opcional; ‡ = obrigatoriedade não declarada na fonte, por isso fica sem + e sem ( ).</p>
+<p>PK = chave primária; FK = chave estrangeira; UQ = restrição UNIQUE.</p>
+<p>Os nomes dos campos existentes na fonte foram preservados, como manda a política de nomenclatura (seção 4.2 do Dicionário).</p>
+<h2><strong>1.2 Resolução do conceitual para o lógico</strong></h2>
+<p><strong>Especialização (parcial e sobreposta).</strong> PESSOA é a superentidade. Cada especialização vira tabela própria com FK para PESSOA e UNIQUE nessa FK (decisão de modelagem do Dicionário).</p>
+<div class="table-wrap"><table><tr><th>Superentidade</th><th>Especialização</th><th>Cardinalidade</th><th>Implementação</th></tr><tr><td>PESSOA</td><td>SERVIDOR</td><td>1:0..1</td><td>SERVIDOR.id_pessoa FK + UQ</td></tr><tr><td>PESSOA</td><td>ADVOGADO</td><td>1:0..1</td><td>ADVOGADO.id_pessoa FK + UQ</td></tr></table></div>
+<p>Uma PESSOA pode ser SERVIDOR, ADVOGADO, ambos ou nenhum. ADVOGADO não é cargo de SERVIDOR.</p>
+<p><strong>Relacionamentos.</strong> As cardinalidades são inferências do Dicionário, que não as declarou na fonte. Todos os relacionamentos 1:0..N e 1:0..1 viram FK no lado “muitos” (ou no lado dependente), e o único N:M vira tabela intermediária.</p>
+<div class="table-wrap"><table><tr><th>Relacionamento</th><th>Cardinalidade</th><th>Resolução lógica</th></tr><tr><td>UNIDADE_POLICIAL → SERVIDOR</td><td>1:0..N</td><td>SERVIDOR.id_unidade (FK, obrigatória)</td></tr><tr><td>UNIDADE_POLICIAL → OCORRENCIA</td><td>1:0..N</td><td>OCORRENCIA.id_unidade (FK, obrigatória)</td></tr><tr><td>SERVIDOR → OCORRENCIA</td><td>1:0..N</td><td>OCORRENCIA.id_servidor (FK, ‡)</td></tr><tr><td>NATUREZA_FATO → OCORRENCIA</td><td>1:0..N</td><td>OCORRENCIA.id_natureza (FK, obrigatória)</td></tr><tr><td>PESSOA ↔ OCORRENCIA</td><td>N:M</td><td>Tabela intermediária ENVOLVIMENTO, com PK composta (id_pessoa, id_ocorrencia). São duas relações 1:0..N: PESSOA→ENVOLVIMENTO e OCORRENCIA→ENVOLVIMENTO.</td></tr><tr><td>ADVOGADO → ENVOLVIMENTO</td><td>1:0..N</td><td>ENVOLVIMENTO.id_oab (FK opcional, aceita NULL)</td></tr><tr><td>OCORRENCIA → INQUERITO</td><td>1:0..1</td><td>INQUERITO.id_ocorrencia (FK + UQ)</td></tr><tr><td>INQUERITO → DEPOIMENTO</td><td>1:0..N</td><td>DEPOIMENTO.id_inquerito (FK)</td></tr><tr><td>PESSOA → DEPOIMENTO</td><td>1:0..N</td><td>DEPOIMENTO.id_pessoa (FK)</td></tr><tr><td>INQUERITO → EVIDENCIA</td><td>1:0..N</td><td>EVIDENCIA.id_inquerito (FK)</td></tr><tr><td>INQUERITO → MOVIMENTACAO</td><td>1:0..N</td><td>MOVIMENTACAO.id_inquerito (FK)</td></tr><tr><td>SERVIDOR → MOVIMENTACAO</td><td>1:0..N</td><td>MOVIMENTACAO.id_servidor (FK, ‡)</td></tr></table></div>
+<p>DEPOIMENTO tem duas FKs, mas <strong>não é associativa</strong>: sua PK é simples (id_depoimento) e ela tem atributos próprios. A única associativa do modelo é ENVOLVIMENTO.</p>
+<h2><strong>1.3 Tabelas</strong></h2>
+<p><strong>UNIDADE_POLICIAL</strong></p>
+<p>UNIDADE_POLICIAL = @id_unidade + nome + endereco + tipo_unidade + cidade</p>
+<div class="table-wrap"><table><tr><th>Atributo</th><th>Tipo</th><th>Obrig.</th><th>Chave</th><th>Restrições</th></tr><tr><td>id_unidade</td><td>INTEGER</td><td>Sim</td><td>PK</td><td>Gerado automaticamente</td></tr><tr><td>nome</td><td>VARCHAR(120)</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>endereco</td><td>VARCHAR(150)</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>tipo_unidade</td><td>VARCHAR(60)</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>cidade</td><td>VARCHAR(80)</td><td>Sim</td><td>—</td><td>—</td></tr></table></div>
+<p><strong>PESSOA (superentidade)</strong></p>
+<p>PESSOA = @id_pessoa + nome_ficticio + documento_ficticio + (observacao) + contato_ficticio</p>
+<div class="table-wrap"><table><tr><th>Atributo</th><th>Tipo</th><th>Obrig.</th><th>Chave</th><th>Restrições</th></tr><tr><td>id_pessoa</td><td>INTEGER</td><td>Sim</td><td>PK</td><td>Gerado automaticamente</td></tr><tr><td>nome_ficticio</td><td>VARCHAR(120)</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>documento_ficticio</td><td>VARCHAR(30)</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>observacao</td><td>VARCHAR(200)</td><td>Não</td><td>—</td><td>Opcional</td></tr><tr><td>contato_ficticio</td><td>VARCHAR(20)</td><td>Sim</td><td>—</td><td>—</td></tr></table></div>
+<p><strong>SERVIDOR (especialização de PESSOA)</strong></p>
+<p>SERVIDOR = @id_servidor + id_pessoa + id_unidade + matricula_ficticia</p>
+<p>           cargo‡</p>
+<div class="table-wrap"><table><tr><th>Atributo</th><th>Tipo</th><th>Obrig.</th><th>Chave</th><th>Restrições</th></tr><tr><td>id_servidor</td><td>INTEGER</td><td>Sim</td><td>PK</td><td>Gerado automaticamente</td></tr><tr><td>id_pessoa</td><td>INTEGER</td><td>Sim</td><td>FK → PESSOA</td><td>UNIQUE</td></tr><tr><td>id_unidade</td><td>INTEGER</td><td>Sim</td><td>FK → UNIDADE_POLICIAL</td><td>—</td></tr><tr><td>cargo</td><td>VARCHAR(60)</td><td>‡</td><td>—</td><td>Domínio: Delegado, Escrivão ou Investigador/Agente (ADVOGADO não é cargo)</td></tr><tr><td>matricula_ficticia</td><td>VARCHAR(20)</td><td>Sim</td><td>—</td><td>—</td></tr></table></div>
+<p>nome_ficticio não existe aqui, porque é herdado de PESSOA.</p>
+<p><strong>ADVOGADO (especialização de PESSOA)</strong></p>
+<p>ADVOGADO = @id_oab + id_pessoa</p>
+<div class="table-wrap"><table><tr><th>Atributo</th><th>Tipo</th><th>Obrig.</th><th>Chave</th><th>Restrições</th></tr><tr><td>id_oab</td><td>VARCHAR(20)</td><td>Sim</td><td>PK</td><td>Tipo adotado por decisão de modelagem</td></tr><tr><td>id_pessoa</td><td>INTEGER</td><td>Sim</td><td>FK → PESSOA</td><td>UNIQUE</td></tr></table></div>
+<p>ADVOGADO não tem papel, nem id_servidor.</p>
+<p><strong>NATUREZA_FATO</strong></p>
+<p>NATUREZA_FATO = @id_natureza + descricao + gravidade</p>
+<div class="table-wrap"><table><tr><th>Atributo</th><th>Tipo</th><th>Obrig.</th><th>Chave</th><th>Restrições</th></tr><tr><td>id_natureza</td><td>INTEGER</td><td>Sim</td><td>PK</td><td>Gerado automaticamente</td></tr><tr><td>descricao</td><td>VARCHAR(100)</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>gravidade</td><td>VARCHAR(20)</td><td>Sim</td><td>—</td><td>—</td></tr></table></div>
+<p><strong>OCORRENCIA</strong></p>
+<p>OCORRENCIA = @id_ocorrencia + id_unidade + id_natureza + canal_registro</p>
+<p>             + data_registro + localidade + relato_fatos</p>
+<p>             id_servidor‡</p>
+<p>             status‡</p>
+<div class="table-wrap"><table><tr><th>Atributo</th><th>Tipo</th><th>Obrig.</th><th>Chave</th><th>Restrições</th></tr><tr><td>id_ocorrencia</td><td>INTEGER</td><td>Sim</td><td>PK</td><td>Gerado automaticamente</td></tr><tr><td>id_unidade</td><td>INTEGER</td><td>Sim</td><td>FK → UNIDADE_POLICIAL</td><td>—</td></tr><tr><td>id_natureza</td><td>INTEGER</td><td>Sim</td><td>FK → NATUREZA_FATO</td><td>—</td></tr><tr><td>id_servidor</td><td>INTEGER</td><td>‡</td><td>FK → SERVIDOR</td><td>Qualquer servidor autorizado registra; Escrivão não registra ocorrência (C14)</td></tr><tr><td>canal_registro</td><td>VARCHAR(20)</td><td>Sim</td><td>—</td><td>Presencial ou online (C10)</td></tr><tr><td>data_registro</td><td>DATETIME</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>localidade</td><td>VARCHAR(120)</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>status</td><td>VARCHAR(30)</td><td>‡</td><td>—</td><td>Domínio (R4): Em análise, Em investigação, Convertida em inquérito, Cancelada. Só vira “Convertida em inquérito” com prova materializada (C11).</td></tr><tr><td>relato_fatos</td><td>TEXT</td><td>Sim</td><td>—</td><td>—</td></tr></table></div>
+<p><strong>INQUERITO</strong></p>
+<p>INQUERITO = @id_inquerito + id_ocorrencia + data_abertura + (data_conclusao)</p>
+<p>            + status + prioridade</p>
+<div class="table-wrap"><table><tr><th>Atributo</th><th>Tipo</th><th>Obrig.</th><th>Chave</th><th>Restrições</th></tr><tr><td>id_inquerito</td><td>INTEGER</td><td>Sim</td><td>PK</td><td>Gerado automaticamente</td></tr><tr><td>id_ocorrencia</td><td>INTEGER</td><td>Sim</td><td>FK → OCORRENCIA</td><td>UNIQUE (sustenta 1:0..1). Só existe com prova materializada (C11).</td></tr><tr><td>data_abertura</td><td>DATE</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>data_conclusao</td><td>DATE</td><td>Não</td><td>—</td><td>Pode ficar em branco enquanto o inquérito estiver em andamento</td></tr><tr><td>status</td><td>VARCHAR(30)</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>prioridade</td><td>VARCHAR(20)</td><td>Sim</td><td>—</td><td>—</td></tr></table></div>
+<p><strong>ENVOLVIMENTO (tabela intermediária PESSOA ↔ OCORRENCIA)</strong></p>
+<p>ENVOLVIMENTO = @id_pessoa + @id_ocorrencia + (id_oab) + papel</p>
+<p>Os dois @ formam <strong>uma única PK composta</strong>.</p>
+<div class="table-wrap"><table><tr><th>Atributo</th><th>Tipo</th><th>Obrig.</th><th>Chave</th><th>Restrições</th></tr><tr><td>id_pessoa</td><td>INTEGER</td><td>Sim</td><td>PK (composta) + FK → PESSOA</td><td>—</td></tr><tr><td>id_ocorrencia</td><td>INTEGER</td><td>Sim</td><td>PK (composta) + FK → OCORRENCIA</td><td>—</td></tr><tr><td>id_oab</td><td>VARCHAR(20)</td><td>Não</td><td>FK → ADVOGADO</td><td>Aceita NULL. Guarda só o advogado atualmente vinculado (R10).</td></tr><tr><td>papel</td><td>VARCHAR(30)</td><td>Sim</td><td>—</td><td>Classifica só a PESSOA (Vítima, Testemunha, Acusado…). Nunca recebe o valor “Advogado” (R8).</td></tr></table></div>
+<p><strong>DEPOIMENTO</strong></p>
+<p>DEPOIMENTO = @id_depoimento + id_inquerito + id_pessoa + data_depoimento + resumo_ficticio</p>
+<div class="table-wrap"><table><tr><th>Atributo</th><th>Tipo</th><th>Obrig.</th><th>Chave</th><th>Restrições</th></tr><tr><td>id_depoimento</td><td>INTEGER</td><td>Sim</td><td>PK</td><td>Gerado automaticamente</td></tr><tr><td>id_inquerito</td><td>INTEGER</td><td>Sim</td><td>FK → INQUERITO</td><td>—</td></tr><tr><td>id_pessoa</td><td>INTEGER</td><td>Sim</td><td>FK → PESSOA</td><td>—</td></tr><tr><td>data_depoimento</td><td>DATE</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>resumo_ficticio</td><td>VARCHAR(255)</td><td>Sim</td><td>—</td><td>—</td></tr></table></div>
+<p><strong>EVIDENCIA</strong></p>
+<p>EVIDENCIA = @id_evidencia + id_inquerito + tipo_evidencia + descricao</p>
+<p>            + data_apreensao + status_custodia</p>
+<div class="table-wrap"><table><tr><th>Atributo</th><th>Tipo</th><th>Obrig.</th><th>Chave</th><th>Restrições</th></tr><tr><td>id_evidencia</td><td>INTEGER</td><td>Sim</td><td>PK</td><td>Gerado automaticamente</td></tr><tr><td>id_inquerito</td><td>INTEGER</td><td>Sim</td><td>FK → INQUERITO</td><td>—</td></tr><tr><td>tipo_evidencia</td><td>VARCHAR(60)</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>descricao</td><td>VARCHAR(200)</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>data_apreensao</td><td>DATE</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>status_custodia</td><td>VARCHAR(30)</td><td>Sim</td><td>—</td><td>—</td></tr></table></div>
+<p><strong>MOVIMENTACAO</strong></p>
+<p>MOVIMENTACAO = @id_movimentacao + id_inquerito + data_movimentacao</p>
+<p>               + tipo_movimentacao + descricao</p>
+<p>               id_servidor‡</p>
+<div class="table-wrap"><table><tr><th>Atributo</th><th>Tipo</th><th>Obrig.</th><th>Chave</th><th>Restrições</th></tr><tr><td>id_movimentacao</td><td>INTEGER</td><td>Sim</td><td>PK</td><td>Gerado automaticamente</td></tr><tr><td>id_inquerito</td><td>INTEGER</td><td>Sim</td><td>FK → INQUERITO</td><td>—</td></tr><tr><td>id_servidor</td><td>INTEGER</td><td>‡</td><td>FK → SERVIDOR</td><td>Restrito aos escrivães (6 na unidade) e ao delegado (C14)</td></tr><tr><td>data_movimentacao</td><td>DATE</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>tipo_movimentacao</td><td>VARCHAR(60)</td><td>Sim</td><td>—</td><td>—</td></tr><tr><td>descricao</td><td>VARCHAR(200)</td><td>Sim</td><td>—</td><td>—</td></tr></table></div>
+<h2><strong>1.4 Resumo de chaves e restrições</strong></h2>
+<p><strong>PKs simples (10 tabelas):</strong> id_unidade, id_servidor, id_pessoa, id_oab, id_natureza, id_ocorrencia, id_inquerito, id_depoimento, id_evidencia, id_movimentacao.</p>
+<p><strong>PK composta (1 tabela):</strong> ENVOLVIMENTO (id_pessoa, id_ocorrencia).</p>
+<p><strong>UNIQUE:</strong> SERVIDOR.id_pessoa, ADVOGADO.id_pessoa, INQUERITO.id_ocorrencia.</p>
+<p><strong>FK que aceita NULL por regra declarada:</strong> ENVOLVIMENTO.id_oab.</p>
+<p><strong>FKs de nulabilidade não declarada (‡):</strong> OCORRENCIA.id_servidor e MOVIMENTACAO.id_servidor. Os campos SERVIDOR.cargo e OCORRENCIA.status também têm obrigatoriedade ‡, mas não são FKs. A fonte não define a nulabilidade de nenhum deles, e eu também não a defini; ela fica como pendência de definição.</p>
+<p><strong>Limite da FK </strong><strong>id_oab</strong><strong>:</strong> ela só garante que existe um ADVOGADO cadastrado. Não comprova procuração nem a regularidade da inscrição (R11).</p>
+<h2><strong>2. Normalização (1FN, 2FN e 3FN)</strong></h2>
+<p><strong>Critérios.</strong></p>
+<h2><strong>1FN:</strong> atributos atômicos, sem grupos repetitivos.</h2>
+<p><strong>2FN:</strong> sem dependência parcial em relação à PK. Nas 10 tabelas de PK simples ela é atendida automaticamente; só ENVOLVIMENTO precisa de análise.</p>
+<h2><strong>3FN:</strong> sem dependência transitiva entre atributos não-chave.</h2>
+<p>As dependências funcionais (DFs) vêm dos atributos e regras do Dicionário. A tabela só diz “Sim” quando a DF listada sustenta o resultado.</p>
+<div class="table-wrap"><table><tr><th>Entidade</th><th>1FN</th><th>2FN</th><th>3FN</th><th>DFs e justificativa</th></tr><tr><td>UNIDADE_POLICIAL</td><td>Sim</td><td>Sim</td><td>Sim</td><td>id_unidade → nome, endereco, tipo_unidade, cidade. Atributos atômicos e nenhum descritivo determina outro.</td></tr><tr><td>SERVIDOR</td><td>Sim</td><td>Sim</td><td>Sim</td><td>id_servidor → id_pessoa, id_unidade, cargo, matricula_ficticia. id_pessoa é chave candidata (UQ), então id_pessoa → id_servidor, o que não é dependência transitiva. Os dados gerais da pessoa ficam em PESSOA e não se repetem aqui.</td></tr><tr><td>PESSOA</td><td>Sim</td><td>Sim</td><td>Sim</td><td>id_pessoa → nome_ficticio, documento_ficticio, observacao, contato_ficticio. contato_ficticio é um único dado de comunicação (interpretação da descrição da fonte), logo atômico.</td></tr><tr><td>ADVOGADO</td><td>Sim</td><td>Sim</td><td>Sim</td><td>id_oab → id_pessoa e id_pessoa → id_oab (chaves candidatas entre si). Não há outros atributos, portanto não há dependência parcial nem transitiva.</td></tr><tr><td>ENVOLVIMENTO</td><td>Sim</td><td>Sim</td><td>Sim</td><td>PK composta. (id_pessoa, id_ocorrencia) → papel e (id_pessoa, id_ocorrencia) → id_oab. O papel é da pessoa naquela ocorrência, e o advogado é o vinculado àquele envolvimento. Nenhum dos dois é determinado só por id_pessoa nem só por id_ocorrencia, então não há dependência parcial (2FN). Dados de ADVOGADO e PESSOA não são armazenados aqui, então não há dependência transitiva (3FN).</td></tr><tr><td>NATUREZA_FATO</td><td>Sim</td><td>Sim</td><td>Sim</td><td>id_natureza → descricao, gravidade. A fonte não declara descricao como única. Se for, vira chave candidata e a 3FN continua valendo.</td></tr><tr><td>OCORRENCIA</td><td>Sim</td><td>Sim</td><td>Sim</td><td>id_ocorrencia → id_unidade, id_natureza, id_servidor, canal_registro, data_registro, localidade, status, relato_fatos. A gravidade fica em NATUREZA_FATO e os dados da unidade ficam em UNIDADE_POLICIAL, referenciados só por FK, sem repetição. relato_fatos (TEXT) é um único relato.</td></tr><tr><td>INQUERITO</td><td>Sim</td><td>Sim</td><td>Sim</td><td>id_inquerito → id_ocorrencia, data_abertura, data_conclusao, status, prioridade. id_ocorrencia é chave candidata (UQ), e os demais atributos dependem do inquérito, não da ocorrência.</td></tr><tr><td>DEPOIMENTO</td><td>Sim</td><td>Sim</td><td>Sim</td><td>id_depoimento → id_inquerito, id_pessoa, data_depoimento, resumo_ficticio. Inquérito e pessoa entram só por FK.</td></tr><tr><td>EVIDENCIA</td><td>Sim</td><td>Sim</td><td>Sim</td><td>id_evidencia → id_inquerito, tipo_evidencia, descricao, data_apreensao, status_custodia. Os atributos dependem da evidência, não do inquérito.</td></tr><tr><td>MOVIMENTACAO</td><td>Sim</td><td>Sim</td><td>Sim</td><td>id_movimentacao → id_inquerito, id_servidor, data_movimentacao, tipo_movimentacao, descricao. descricao é texto livre, não derivado de tipo_movimentacao, então não há dependência transitiva.</td></tr></table></div>
+</main>
+</body>
+</html>
