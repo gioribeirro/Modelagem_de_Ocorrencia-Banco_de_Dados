@@ -261,7 +261,7 @@ Encerramento do procedimento com registro de status e data de conclusão.
 
 <h3>Diagrama Entidade-Relacionamento (DER):</h3>
 
-<p align="center"><a href="DER_52DP.png"><img src="DER_52DP.png" alt="Diagrama Entidade-Relacionamento - 52º DP" width="100%"></a></p>
+<p align="center"><a href="DER Modelo Conceitual.png"><img src="DER Modelo Conceitual.png" alt="Diagrama Entidade-Relacionamento - 52º DP" width="100%"></a></p>
 
 <h2 id="justificativa-técnica">Justificativa Técnica</h2>
 
