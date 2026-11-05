@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prefixos reais dos atributos | Dicionário de Dados — 52º DP</title>
+  <style>
+    :root {
+      --navy: #173653;
+      --navy-2: #2c587a;
+      --ink: #202b36;
+      --muted: #637181;
+      --line: #d8e0e8;
+      --paper: #fff;
+      --wash: #f2f6fa;
+      --blue: #e8f1f8;
+      --amber: #f7f1e6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 22px;
+      color: var(--ink);
+      background: #edf1f5;
+      font: 13px/1.42 "Segoe UI", Arial, sans-serif;
+    }
+    .page {
+      width: min(900px, 100%);
+      margin: 0 auto;
+      padding: 34px 40px 26px;
+      background: var(--paper);
+      box-shadow: 0 8px 30px rgba(23, 54, 83, .10);
+      border-top: 7px solid var(--navy);
+    }
+    header { padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--navy-2);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 27px;
+      line-height: 1.12;
+      letter-spacing: -.5px;
+    }
+    .subtitle { margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+    .intro { margin: 14px 0 15px; color: #485665; font-size: 12px; }
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 17px 0 9px;
+      color: var(--navy);
+      font-size: 15px;
+    }
+    h2 .num {
+      display: inline-grid;
+      width: 21px;
+      height: 21px;
+      place-items: center;
+      border-radius: 5px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 10px;
+    }
+    .section-note { margin: -2px 0 9px; color: var(--muted); font-size: 10.5px; }
+    .prefix-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+    }
+    .item {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      align-items: start;
+      min-height: 48px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+    }
+    code {
+      display: inline-block;
+      width: fit-content;
+      padding: 4px 6px;
+      border-radius: 4px;
+      background: var(--blue);
+      color: var(--navy);
+      font: 700 12px/1.15 Consolas, "Courier New", monospace;
+    }
+    .meaning { font-size: 11.5px; font-weight: 700; }
+    .detail { display: block; margin-top: 2px; color: var(--muted); font-size: 9.7px; font-weight: 400; line-height: 1.35; }
+    .plain-fields {
+      padding: 9px 11px;
+      border: 1px solid #e7dcc8;
+      border-radius: 6px;
+      background: #fffdfa;
+      color: #4e4a42;
+      font-size: 10.5px;
+      line-height: 1.6;
+    }
+    .plain-fields code { background: var(--amber); color: #6d542b; font-size: 10.5px; margin: 2px 2px 2px 0; }
+    .note {
+      margin-top: 12px;
+      padding: 9px 11px;
+      border-left: 3px solid var(--navy-2);
+      border-radius: 0 5px 5px 0;
+      background: var(--wash);
+      color: #4b5967;
+      font-size: 10.5px;
+    }
+    .note strong { color: var(--navy); }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 15px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      color: #7a8793;
+      font-size: 9px;
+    }
+    @media (max-width: 620px) {
+      body { padding: 0; background: #fff; }
+      .page { min-height: 100vh; padding: 25px 18px; box-shadow: none; }
+      h1 { font-size: 24px; }
+      .prefix-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; }
+    }
+    @page { size: A4 portrait; margin: 10mm; }
+    @media print {
+      body { padding: 0; background: #fff; font-size: 10px; }
+      .page { width: auto; margin: 0; padding: 6mm 6mm 4mm; box-shadow: none; border-top-width: 4px; }
+      header { padding-bottom: 9px; }
+      h1 { font-size: 23px; }
+      .intro { margin: 10px 0 10px; }
+      h2 { margin-top: 12px; margin-bottom: 7px; }
+      .prefix-grid { gap: 5px; }
+      .item { min-height: 42px; padding: 5px 7px; }
+      .detail { font-size: 9px; }
+      .note { margin-top: 9px; padding: 7px 9px; }
+      footer { margin-top: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Banco de dados · Padronização de nomenclatura</p>
+      <h1>Prefixos de Nomenclatura</h1>
+      <p class="subtitle">Dicionário de Dados — 52º Distrito Policial</p>
+    </header>
+
+    <p class="intro">
+      Relação extraída dos nomes dos 56 atributos listados nas tabelas do dicionário.
+      Considera-se prefixo o segmento inicial que aparece antes do primeiro sublinhado (_).
+      A lista abaixo contém somente prefixos encontrados nos atributos do modelo.
+    </p>
+
+    <section aria-labelledby="prefixos">
+      <h2 id="prefixos"><span class="num">1</span> Prefixos encontrados</h2>
+      <p class="section-note">Os exemplos correspondem aos nomes efetivamente presentes no dicionário.</p>
+      <div class="prefix-grid">
+        <div class="item"><code>id_</code><div class="meaning">Identificador<span class="detail">Ex.: id_unidade, id_pessoa, id_inquerito, id_oab, id_evidencia.</span></div></div>
+        <div class="item"><code>nome_</code><div class="meaning">Nome<span class="detail">Ex.: nome_ficticio.</span></div></div>
+        <div class="item"><code>tipo_</code><div class="meaning">Tipo / classificação<span class="detail">Ex.: tipo_unidade, tipo_evidencia, tipo_movimentacao.</span></div></div>
+        <div class="item"><code>data_</code><div class="meaning">Data<span class="detail">Ex.: data_registro, data_abertura, data_conclusao, data_depoimento, data_apreensao, data_movimentacao.</span></div></div>
+        <div class="item"><code>documento_</code><div class="meaning">Documento<span class="detail">Ex.: documento_ficticio.</span></div></div>
+        <div class="item"><code>contato_</code><div class="meaning">Contato<span class="detail">Ex.: contato_ficticio.</span></div></div>
+        <div class="item"><code>matricula_</code><div class="meaning">Matrícula<span class="detail">Ex.: matricula_ficticia.</span></div></div>
+        <div class="item"><code>canal_</code><div class="meaning">Canal<span class="detail">Ex.: canal_registro.</span></div></div>
+        <div class="item"><code>relato_</code><div class="meaning">Relato<span class="detail">Ex.: relato_fatos.</span></div></div>
+        <div class="item"><code>resumo_</code><div class="meaning">Resumo<span class="detail">Ex.: resumo_ficticio.</span></div></div>
+        <div class="item"><code>status_</code><div class="meaning">Status / situação<span class="detail">Ex.: status_custodia.</span></div></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="sem-prefixo">
+      <h2 id="sem-prefixo"><span class="num">2</span> Atributos sem prefixo explícito</h2>
+      <p class="section-note">Estes nomes não possuem sublinhado separando um prefixo inicial.</p>
+      <div class="plain-fields">
+        <code>nome</code> <code>endereco</code> <code>cidade</code> <code>cargo</code>
+        <code>observacao</code> <code>papel</code> <code>descricao</code> <code>gravidade</code>
+        <code>localidade</code> <code>status</code> <code>prioridade</code>
+      </div>
+    </section>
+
+    <aside class="note">
+      <strong>Critério de leitura:</strong> o prefixo é identificado pelo nome real do atributo, não por uma convenção sugerida.
+      Assim, <code>nome_ficticio</code> utiliza <code>nome_</code>, <code>id_inquerito</code> utiliza <code>id_</code>
+      e <code>tipo_evidencia</code> utiliza <code>tipo_</code>. Já <code>nome</code> e <code>status</code>, sem sublinhado,
+      são atributos sem prefixo explícito. Não foram incluídos prefixos apenas mencionados como referência ou proposta.
+    </aside>
+
+    <footer>
+      <span>Fonte: Dicionário de Dados — 52º Distrito Policial, atributos das 11 entidades.</span>
+      <span>Resumo de consulta · 1 página</span>
+    </footer>
+  </main>
+</body>
+</html>
