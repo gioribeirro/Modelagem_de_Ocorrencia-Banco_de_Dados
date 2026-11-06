@@ -123,19 +123,6 @@ Resultado: modelo final com 11 entidades.
 
 ---
 
-## 8. Pendências e divergências  resolver
-
-2. **Número de agentes.** README e HTML dizem "um investigador/agente" no registro; a resposta C14 aponta para duas pessoas ("o entrevistado e mais um colega"), e a massa de dados do arquivo BI usa 2 agentes. Alinhar.
-3. **Quem é o "responsável pela unidade".** O Anexo A e o README o descrevem como responsável, mas as respostas dele indicam um servidor do registro. Identificar o cargo.
-4. **Cancelamento versus "fica em investigação".** P2 fala em cancelar; C11 e a RN01 dizem que o caso permanece em investigação. O status `Cancelada` existe no script. Definir quando cada um se aplica.
-5. **Conversão por versões conflitantes (P6).** A RN01 cita só prova materializada. Decidir se "versões conflitantes" entra como regra.
-6. **RN02 e RN03.** A RN02 diz que qualquer servidor autorizado registra; a RN03 afasta os escrivães do registro. Escrever como: qualquer servidor autorizado, exceto escrivães.
-7. **Horários da visita e data de cada pergunta.** Confirmar (seção 3).
-8. **Processos típicos de delegacia.** Não há registro de conferência de processos comuns a delegacias que não aparecem no modelo (arquivamento, remessa ao Judiciário ou ao Ministério Público, conclusão do inquérito). Se não são feitos na unidade, justificar a exclusão no README.
-9. **Endereço da unidade.** Padronizar a grafia "Coryntho" em README, HTML e script.
-
----
-
-## 9. Resumo para o README
+## 8. Resumo para o README
 
 O levantamento foi feito em duas visitas ao 52º DP (04/09/2026 e 24/09/2026), com entrevista a uma agente de 35 anos de atuação e complemento de servidor que atua no registro de ocorrências. A unidade tem 6 escrivães dedicados a inquéritos, cada delegado responde por 200 a 300 inquéritos por mês, e o volume de ocorrências cresce a cada ano, com registros presenciais e online. O DESP, sistema estadual, cai com frequência. Uma ocorrência só vira inquérito com prova materializada. Observação presencial e mudanças entre as entregas estão em `levantamento/levantamento.md`.
