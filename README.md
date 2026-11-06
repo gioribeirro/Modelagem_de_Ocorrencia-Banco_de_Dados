@@ -263,6 +263,20 @@ Encerramento do procedimento com registro de status e data de conclusão.
 
 <p align="center"><a href="DER Modelo Conceitual.png"><img src="DER Modelo Conceitual.png" alt="Diagrama Entidade-Relacionamento - 52º DP" width="100%"></a></p>
 
+### Justificativa da inclusão da entidade ADVOGADO
+
+Durante a revisão do modelo conceitual, identificamos, a partir da pergunta 9 da entrevista, a necessidade de representar o vínculo entre a pessoa acusada e o advogado que a representa no acompanhamento do inquérito. Essa informação já aparecia no levantamento, mas não estava representada no modelo inicial.
+
+Incluímos **ADVOGADO** como uma especialização de **PESSOA**, permitindo registrar separadamente sua identificação e inscrição na OAB. O vínculo com a pessoa representada é registrado em **ENVOLVIMENTO**, junto à ocorrência correspondente: `id_pessoa` identifica a pessoa envolvida, `id_ocorrencia` identifica a ocorrência e `id_oab` identifica o advogado associado. O papel da pessoa permanece registrado em `papel` — por exemplo, “Acusado” — e não como “Advogado”.
+
+Essa estrutura evita confundir o advogado com a pessoa representada ou com um servidor da unidade e permite registrar a representação no contexto de cada ocorrência. Com a inclusão de ADVOGADO, o modelo final possui **11 entidades**; as referências a 10 entidades devem ser atualizadas no README e nos demais artefatos.
+
+A decisão é compatível com o art. 3º do Estatuto da Advocacia, que reserva o exercício da advocacia e a denominação de advogado a inscritos na OAB, e com o art. 7º, XIV, da Lei nº 8.906/1994. O § 10 do mesmo artigo prevê a apresentação de procuração para o exercício desse direito em autos sigilosos; o § 11 permite delimitar o acesso a elementos relacionados a diligências em andamento e ainda não documentadas quando houver risco de comprometê-las. A Súmula Vinculante 14 do STF assegura ao defensor, no interesse do representado, acesso aos elementos de prova já documentados que sejam pertinentes ao direito de defesa.
+
+**Limite do modelo:** o campo `id_oab` registra uma associação, mas, por si só, não comprova a procuração nem implementa as regras de autorização de acesso. No modelo atual, a validação dessas condições deve ser tratada como regra da aplicação e/ou consulta de auditoria, não como algo garantido apenas pela chave estrangeira.
+
+**Fontes oficiais:** [Lei nº 8.906/1994, texto atualizado — Câmara dos Deputados](https://www2.camara.leg.br/legin/fed/lei/1994/lei-8906-4-julho-1994-349751-normaatualizada-pl.html); [Súmula Vinculante 14 — STF](https://portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=26%20&sumula=1230).
+
 <h2 id="justificativa-técnica">Justificativa Técnica</h2>
 
 Usamos **PESSOA** como uma entidade única para vítimas, testemunhas e comunicantes, em vez de criar uma para cada papel. Assim não repetimos nome, documento e contato em várias tabelas. O papel de cada pessoa fica na **ENVOLVIMENTO_OCORRENCIA**, o que permite que a mesma pessoa tenha papéis diferentes em ocorrências diferentes, algo comum na rotina policial.
