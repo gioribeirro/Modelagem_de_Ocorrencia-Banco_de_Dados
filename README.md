@@ -60,10 +60,25 @@ Outro fator importante foi a possibilidade de acesso real a servidores da unidad
 
 **Registros da pesquisa de campo:**
 
-- [Áudio da entrevista](Audio%20da%20entrevista%201.mp4)
-- [Registro fotográfico 1](Registro%201.jpeg)
-- [Registro fotográfico 2](Registro%202.jpeg)
-- [Registro fotográfico 3](Registro%203.jpeg)
+<a href="Audio da entrevista 1.mp4"> Registro em Audio</a>
+<br>
+<br>
+
+<!-- <p align="center"></p> -->
+  <img src="Registro 1.jpeg" width="40%">
+
+<a href="Registro 1"> Registro da Entrevista</a>
+<br>
+<br>
+<!-- <p align="center"></p> -->
+  <img src="Registro 2.jpeg" width="40%">
+
+<a href="Registro 2"> Registro da Entrevista</a>
+<br>
+<br>
+<!-- <p align="center"></p> -->
+  <img src="Registro 3.jpeg" width="40%">
+<a href="Registro 3" > Registro da Entrevista</a>
 
 ---
 
