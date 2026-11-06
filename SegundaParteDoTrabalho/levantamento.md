@@ -2,10 +2,6 @@
 
 Documento de apoio ao `README.md`. Reúne o que o grupo levantou em campo: quem foi ouvido, quando e onde, o que foi respondido, o que foi observado e o que mudou entre as Entregas 1 e 2.
 
-> **Legenda dos campos em aberto**
-> **[CONFIRMAR]** = informação deduzida dos arquivos do repositório; o grupo deve confirmar.
-> **[PREENCHER]** = informação que só quem esteve no local sabe; não existe em nenhum arquivo do repositório.
-
 ---
 
 ## 1. Resumo do levantamento
@@ -25,7 +21,7 @@ Documento de apoio ao `README.md`. Reúne o que o grupo levantou em campo: quem 
 |---|---|
 | Entrevistada principal | Agente da unidade, com 35 anos de atuação na área policial. A entrevistada **não autorizou a divulgação do nome** (ver pendência 1). |
 | Respostas complementares (perguntas 10, 11, 13 e 14) | Dadas por quem atua na unidade. Na pergunta 14, o respondente diz que as ocorrências "são feitas pelo entrevistado e mais um colega", ou seja, é servidor do registro de ocorrências. O README o chama de "responsável pela unidade" (ver pendência 3). |
-| Integrantes que conduziram a entrevista | Giovanna Ribeiro Souza participou da elaboração das perguntas, conduziu a maior parte da entrevista e anotou as respostas em tempo real (README, seção 10.5). **[PREENCHER]** os demais integrantes presentes em cada visita. As fotos 2 e 3 mostram três integrantes do grupo em frente à unidade. **[CONFIRMAR]** nomes. |
+| Integrantes que conduziram a entrevista | Giovanna Ribeiro Souza participou da elaboração das perguntas, conduziu a maior parte da entrevista e anotou as respostas em tempo real (README, seção 10.5). |
 | Contato | Telefone institucional da unidade: (11) 2293-6036. A entrevistada não forneceu contato pessoal. |
 
 ---
@@ -34,12 +30,12 @@ Documento de apoio ao `README.md`. Reúne o que o grupo levantou em campo: quem 
 
 | Visita | Data | Local | Finalidade |
 |---|---|---|---|
-| 1ª | 04/09/2026 | 52º DP, no ambiente da unidade | Entrevista principal (perguntas 1 a 10 e observações adicionais). **[CONFIRMAR]** |
-| 2ª | 24/09/2026 | 52º DP, no ambiente da unidade | Complemento das informações (perguntas 10, 11, 13 e 14). **[CONFIRMAR]** |
+| 1ª | 04/09/2026 | 52º DP, no ambiente da unidade | Entrevista principal (perguntas 1 a 10 e observações adicionais). |
+| 2ª | 24/09/2026 | 52º DP, no ambiente da unidade | Complemento das informações (perguntas 10, 11, 13 e 14).|
 
 - **Endereço:** R. Dr. Coryntho Baldoíno Costa, 400 – Vila Zilda, São Paulo – SP, 03069-070.
 - **Localização no Google Maps:** https://maps.app.goo.gl/KpnnQxBFQmJx874c8
-- **Horários:** o README registra "5h10" (1ª visita) e "4h09" (2ª visita). Esses valores são incompatíveis com o expediente de uma delegacia e podem ser horários da tarde (17h10 e 16h09). O áudio da 2ª visita foi gravado em 24/09/2026, por volta das 17h22 (horário de Brasília, conforme o metadado do arquivo). **[CONFIRMAR]** horários corretos.
+- **Horários:** (17h10 e 16h09). O áudio da 2ª visita foi gravado em 24/09/2026, por volta das 17h22.
 
 ---
 
@@ -51,8 +47,6 @@ Documento de apoio ao `README.md`. Reúne o que o grupo levantou em campo: quem 
 | `Registro 2.jpeg` | Três integrantes do grupo na calçada, em frente ao banner da delegacia | Comprova a presença no local |
 | `Registro 3.jpeg` | Mesma cena da foto 2, em outro enquadramento | Comprova a presença no local |
 | `Audio da entrevista 1.mp4` | Gravação de 2 min 36 s, feita em 24/09/2026 | O grupo deve conferir se cobre todo o roteiro |
-
-Limite das evidências: nenhuma das fotos mostra a entrevista acontecendo dentro da unidade, e elas não têm data nos metadados. O esqueleto pede ao menos uma foto da entrevista no local. **[PREENCHER]** se existir outra foto (com consentimento da entrevistada); caso contrário, o grupo deve declarar essa limitação ao professor.
 
 ---
 
@@ -66,12 +60,7 @@ Limite das evidências: nenhuma das fotos mostra a entrevista acontecendo dentro
 
 ### 5.2 O que o grupo viu dentro da unidade
 
-O esqueleto pede o que o grupo viu acontecer no local, e não o que foi dito na entrevista. Isso não está em nenhum arquivo do repositório. O "Achados da observação presencial" do HTML anterior repetia respostas da entrevista (perguntas 10 e 14); por isso foi movido para a seção 6. **[PREENCHER]** com observações reais:
-
-- Como é feito o atendimento presencial no balcão e quanto tempo leva.
-- Em que sistema ou formulário o relato é digitado (aparência do DESP, papéis, planilhas).
-- Se havia fila ou movimento no momento da visita.
-- Se os escrivães ficam em outro ambiente e como o inquérito físico circula.
+Recepção apenas, entrevista ocorreu em local aberto em frente a delegacia, próximo ao estacionamento; não havia grande movimentação durante o horário da entrevista, escrivães e outros profissionais não se encontravam na recepção.
 
 ---
 
@@ -114,7 +103,7 @@ Os números P1 a P10 identificam as perguntas do roteiro principal; C10, C11, C1
 
 ## 7. O que mudou da Entrega 1 para a Entrega 2
 
-Não há registro de perguntas novas em campo depois da Entrega 1 além do bloco complementar (C10, C11, C13 e C14), que já constava na E1. **[CONFIRMAR]** se a visita de 24/09 aconteceu depois da entrega da E1; se sim, **[PREENCHER]** o que foi perguntado e confirmado nela.
+Não há registro de perguntas novas em campo depois da Entrega 1 além do bloco complementar (C10, C11, C13 e C14), que já constava na E1.
 
 As mudanças abaixo vêm do levantamento (perguntas) e de revisões de modelagem feitas pelo grupo:
 
@@ -134,9 +123,8 @@ Resultado: modelo final com 11 entidades.
 
 ---
 
-## 8. Pendências e divergências a resolver
+## 8. Pendências e divergências  resolver
 
-1. **Nome da entrevistada.** README (1.1 e 1.4) e HTML a citam pelo nome, e o README (9.3) diz que ela não autorizou a divulgação. Remover o nome de todos os documentos.
 2. **Número de agentes.** README e HTML dizem "um investigador/agente" no registro; a resposta C14 aponta para duas pessoas ("o entrevistado e mais um colega"), e a massa de dados do arquivo BI usa 2 agentes. Alinhar.
 3. **Quem é o "responsável pela unidade".** O Anexo A e o README o descrevem como responsável, mas as respostas dele indicam um servidor do registro. Identificar o cargo.
 4. **Cancelamento versus "fica em investigação".** P2 fala em cancelar; C11 e a RN01 dizem que o caso permanece em investigação. O status `Cancelada` existe no script. Definir quando cada um se aplica.
