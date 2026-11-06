@@ -338,11 +338,8 @@ O modelo conceitual foi desenvolvido considerando as seguintes 11 entidades:
 
 O DER representa graficamente as entidades, os atributos, as especializações e os relacionamentos identificados durante a modelagem conceitual.
 
-![Diagrama Entidade-Relacionamento do 52º Distrito Policial](Der.png)
+<p align="center"><a href="DER Modelo Conceitual.png"><img src="DER Modelo Conceitual.png" alt="Diagrama Entidade-Relacionamento - 52º DP" width="100%"></a></p>
 
-[Visualizar o DER](Der.png)
-
----
 
 ## 8. Justificativa técnica
 
