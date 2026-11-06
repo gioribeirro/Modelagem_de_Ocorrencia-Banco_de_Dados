@@ -433,8 +433,8 @@ Essa sequência permitirá verificar a estrutura do banco, os relacionamentos en
 
 A pesquisa de campo foi realizada no 52º Distrito Policial em duas ocasiões:
 
-- 04/09/2026, às 5h10.
-- 24/09/2026, às 4h09.
+- 04/09/2026, às 17h10.
+- 24/09/2026, às 16h09.
 
 O segundo encontro teve como objetivo complementar as informações levantadas inicialmente.
 
