@@ -56,11 +56,9 @@ Relatório Técnico Final — Entrega 2 (modelo lógico, implementação SQL e d
 
 **Justificativa da escolha.** O 52º DP é uma instituição pública com processos definidos (registro, conversão, instrução, conclusão), com acesso presencial a servidores da unidade e com volume de informação que sustenta um modelo relacional de várias entidades. Os registros do grupo não declaram vínculo de integrantes com a unidade.
 
-**Evidências da organização.** Endereço e localização acima; fotografias da visita em [Relato da entrevista](#relato-da-entrevista).
-
 #### Relato da entrevista
 
-O levantamento completo está em [levantamento.md](levantamento.md). Resumo:
+O levantamento completo está em [levantamento.md](SegundaParteDoTrabalho/levantamento.md). Resumo:
 
 | Item | Registro |
 |---|---|
@@ -87,7 +85,7 @@ O levantamento completo está em [levantamento.md](levantamento.md). Resumo:
 
 **Evidências fotográficas e de áudio.**
 
-![Fachada do 52º DP](Registro%201.jpeg)
+[localização no Google Maps](https://maps.app.goo.gl/KpnnQxBFQmJx874c8)
 
 <p>
   <img src="PrimeiraParteDoTrabalho/Registro 1.jpeg" width="40%" alt="Registro 1 da entrevista">
@@ -183,7 +181,7 @@ RF01 a RF06 e RF10 correspondem a estruturas de armazenamento implementadas no s
 
 #### Revisão e alterações conceituais
 
-A correção original da Entrega 1 não consta dos materiais do grupo. A tabela abaixo reúne as alterações comprovadas entre a Entrega 1 e a versão final, registradas no [Dicionário de Dados](Dicionario_de_Dados_52_DP.html) (seção 11), no [levantamento](levantamento.md) e no histórico do grupo.
+A correção original da Entrega 1 não consta dos materiais do grupo. A tabela abaixo reúne as alterações comprovadas entre a Entrega 1 e a versão final, registradas no [Dicionário de Dados](PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html) (seção 11), no [levantamento](SegundaParteDoTrabalho/levantamento.md) e no histórico do grupo.
 
 | Alteração | O que mudou | Por quê |
 |---|---|---|
@@ -220,7 +218,7 @@ A correção original da Entrega 1 não consta dos materiais do grupo. A tabela 
 | PESSOA – DEPOIMENTO | 1:0..N |
 | SERVIDOR – MOVIMENTACAO | 1:0..N |
 
-**DER.** O DER final foi desenvolvido por etapas: Draw.io e DBDesigner no início e brModelo na versão final, conduzida por Enzo Freire dos Santos. A imagem arquivada no repositório, DER Modelo Conceitual mostra uma versão anterior do conceitual, ainda com a entidade `Especialização` e os relacionamentos `Defesa` e `Defende`, sem a generalização de PESSOA. A estrutura vigente é a descrita nas tabelas acima e no [Dicionário de Dados](Dicionario_de_Dados_52_DP.html).
+**DER.** O DER final foi desenvolvido por etapas: Draw.io e DBDesigner no início e brModelo na versão final, conduzida por Enzo Freire dos Santos. A imagem arquivada no repositório, DER Modelo Conceitual mostra uma versão anterior do conceitual, ainda com a entidade `Especialização` e os relacionamentos `Defesa` e `Defende`, sem a generalização de PESSOA. A estrutura vigente é a descrita nas tabelas acima e no [Dicionário de Dados](PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html).
 
 <p align="center">
   <a href="PrimeiraParteDoTrabalho/DER Modelo Conceitual.png">
@@ -234,7 +232,7 @@ A correção original da Entrega 1 não consta dos materiais do grupo. A tabela 
 
 ### 1.2 Conversão do Modelo Conceitual para o Modelo Lógico
 
-A conversão está documentada em [Modelo_Logico_Documentacao.html](Modelo_Logico_Documentacao.html) e implementada em [db_52dp.sql](db_52dp.sql).
+A conversão está documentada em [Modelo_Logico_Documentacao.html](SegundaParteDoTrabalho/Modelo_Logico_Documentacao.html) e implementada em [db_52dp.sql](SegundaParteDoTrabalho/db_52dp.sql).
 
 - **Entidades → tabelas.** Cada uma das 11 entidades virou uma tabela com o mesmo nome, em maiúsculas (UNIDADE_POLICIAL, PESSOA, SERVIDOR, ADVOGADO, NATUREZA_FATO, OCORRENCIA, ENVOLVIMENTO, INQUERITO, DEPOIMENTO, EVIDENCIA, MOVIMENTACAO).
 - **Atributos → colunas.** Texto curto: `VARCHAR`. Relato dos fatos: `TEXT`. Data e hora do registro da ocorrência: `DATETIME`. Demais datas: `DATE`. Identificadores: `INTEGER AUTO_INCREMENT`, exceto `ADVOGADO.id_oab`, que é `VARCHAR(20)`. A obrigatoriedade virou `NOT NULL`; atributos opcionais ficaram com `DEFAULT NULL`.
@@ -412,11 +410,11 @@ A verificação foi feita sobre as 11 tabelas, a partir das dependências funcio
 
 ## 2. Modelo Lógico Relacional
 
-![Modelo lógico relacional do 52º DP](modelo_logico.png)
+![Modelo lógico relacional do 52º DP](PrimeiraParteDoTrabalho/modelo_logico.png)
 
-O diagrama mostra as 11 tabelas, as PKs e FKs e as cardinalidades `(mín, máx)`. Ele foi elaborado no brModelo, conforme informado pelo grupo. A documentação textual completa, com tipos, obrigatoriedade e restrições de cada coluna, está em [Modelo_Logico_Documentacao.html](Modelo_Logico_Documentacao.html).
+O diagrama mostra as 11 tabelas, as PKs e FKs e as cardinalidades `(mín, máx)`. Ele foi elaborado no brModelo, conforme informado pelo grupo. A documentação textual completa, com tipos, obrigatoriedade e restrições de cada coluna, está em [Modelo_Logico_Documentacao.html](SegundaParteDoTrabalho/Modelo_Logico_Documentacao.html).
 
-**Diferenças entre o diagrama e o script.** Segundo o grupo, as divergências decorrem de limitações do brModelo na representação do diagrama, e não de mudanças na estrutura implementada. O diagrama mostra `id_oab` como `INT` (no script é `VARCHAR(20)`), `relatos_fatos` como `VARCHAR` (no script é `relato_fatos TEXT`) e `resumo` (no script é `resumo_ficticio VARCHAR(255)`); os tipos `VARCHAR` não trazem tamanho. Para tipos e nomes, vale o script `db_52dp.sql` e a documentação do modelo lógico. As restrições `NOT NULL`, `UNIQUE`, `CHECK` e `DEFAULT` não aparecem no diagrama e estão no [dicionário de dados](Dicionario_de_Dados_52_DP.html) e no script.
+**Diferenças entre o diagrama e o script.** Segundo o grupo, as divergências decorrem de limitações do brModelo na representação do diagrama, e não de mudanças na estrutura implementada. O diagrama mostra `id_oab` como `INT` (no script é `VARCHAR(20)`), `relatos_fatos` como `VARCHAR` (no script é `relato_fatos TEXT`) e `resumo` (no script é `resumo_ficticio VARCHAR(255)`); os tipos `VARCHAR` não trazem tamanho. Para tipos e nomes, vale o script `db_52dp.sql` e a documentação do modelo lógico. As restrições `NOT NULL`, `UNIQUE`, `CHECK` e `DEFAULT` não aparecem no diagrama e estão no [dicionário de dados](PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html) e no script.
 
 Estrutura: PESSOA no centro das especializações (SERVIDOR, ADVOGADO) e da associativa ENVOLVIMENTO; OCORRENCIA ligada a UNIDADE_POLICIAL, NATUREZA_FATO e SERVIDOR; INQUERITO ligado a OCORRENCIA (1:0..1); DEPOIMENTO, EVIDENCIA e MOVIMENTACAO ligados a INQUERITO.
 
@@ -448,7 +446,7 @@ Estrutura: PESSOA no centro das especializações (SERVIDOR, ADVOGADO) e da asso
 
 ## 4. Massa de Dados
 
-A massa está em [db_52dp.sql](db_52dp.sql) (seção 2 do arquivo). Todos os dados são **fictícios** (`nome_ficticio`, `documento_ficticio`, `contato_ficticio`, `matricula_ficticia`, `resumo_ficticio`, inscrições `OAB-FICT-nnn`) e foram elaborados para fins acadêmicos, de modo a exercitar o modelo, as consultas e as verificações. Eles não reproduzem o volume nem as estatísticas reais do 52º DP, e nenhum dado real de pessoas foi usado.
+A massa está em [db_52dp.sql](SegundaParteDoTrabalho/db_52dp.sql) (seção 2 do arquivo). Todos os dados são **fictícios** (`nome_ficticio`, `documento_ficticio`, `contato_ficticio`, `matricula_ficticia`, `resumo_ficticio`, inscrições `OAB-FICT-nnn`) e foram elaborados para fins acadêmicos, de modo a exercitar o modelo, as consultas e as verificações. Eles não reproduzem o volume nem as estatísticas reais do 52º DP, e nenhum dado real de pessoas foi usado.
 
 **Quantidade de registros, contada nos `INSERT`.**
 
@@ -489,17 +487,17 @@ A massa está em [db_52dp.sql](db_52dp.sql) (seção 2 do arquivo). Todos os dad
 | Artefato | Arquivo |
 |---|---|
 | Relatório Técnico Final | [README.md](README.md) |
-| Dicionário de Dados (11 entidades, 56 atributos) | [Dicionario_de_Dados_52_DP.html](Dicionario_de_Dados_52_DP.html) |
-| DER conceitual (versão arquivada) | [DER Modelo Conceitual.png](DER%20Modelo%20Conceitual.png) |
-| Modelo lógico (diagrama) | [modelo_logico.png](modelo_logico.png) |
-| Documentação do modelo lógico e da normalização | [Modelo_Logico_Documentacao.html](Modelo_Logico_Documentacao.html) |
-| Convenções de prefixos dos atributos | [prefixos_dicionario_52_dp .html](prefixos_dicionario_52_dp%20.html) |
-| Modelo conceitual e levantamento (Entrega 1) | [modelo-conceitual-e-levantamento.html](modelo-conceitual-e-levantamento.html) |
-| Levantamento de campo | [levantamento.md](levantamento.md) |
-| Script SQL principal | [db_52dp.sql](db_52dp.sql) |
-| Script SQL alternativo (testes de `UPDATE` e `DELETE`) | [Script_SQL_52DP.sql](Script_SQL_52DP.sql) |
-| Fotografias da visita | [Registro 1.jpeg](Registro%201.jpeg), [Registro 2.jpeg](Registro%202.jpeg), [Registro 3.jpeg](Registro%203.jpeg) |
-| Áudio da 2ª visita | [Audio da entrevista 1.mp4](Audio%20da%20entrevista%201.mp4) |
+| Dicionário de Dados (11 entidades, 56 atributos) | [Dicionario_de_Dados_52_DP.html](PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html) |
+| DER conceitual (versão arquivada) | [DER Modelo Conceitual.png](PrimeiraParteDoTrabalho/DERModeloConceitual.png) |
+| Modelo lógico (diagrama) | [modelo_logico.png](PrimeiraParteDoTrabalho/modelo_logico.png) |
+| Documentação do modelo lógico e da normalização | [Modelo_Logico_Documentacao.html](SegundaParteDoTrabalho/Modelo_Logico_Documentacao.html) |
+| Convenções de prefixos dos atributos | [prefixos_dicionario_52_dp .html](PrimeiraParteDoTrabalho/prefixos_dicionario_52_dp.html) |
+| Modelo conceitual e levantamento (Entrega 1) | [modelo-conceitual-e-levantamento.html](SegundaParteDoTrabalho/modelo-conceitual-e-levantamento.html) |
+| Levantamento de campo | [levantamento.md](SegundaParteDoTrabalho/levantamento.md) |
+| Script SQL principal | [db_52dp.sql](dSegundaParteDoTrabalho/db_52dp.sql) |
+| Script SQL alternativo (testes de `UPDATE` e `DELETE`) | [Script_SQL_52DP.sql](SegundaParteDoTrabalho/Script_SQL_52DP.sql) |
+| Fotografias da visita | [Registro 1.jpeg](PrimeiraParteDoTrabalho/Registro1.jpeg), [Registro 2.jpeg](PrimeiraParteDoTrabalho/Registro2.jpeg), [Registro 3.jpeg](PrimeiraParteDoTrabalho/Registro3.jpeg) |
+| Áudio da 2ª visita | [Audio da entrevista 1.mp4](PrimeiraParteDoTrabalho/Audiodaentrevista1.mp4) |
 
 **Contribuições individuais documentadas pelo grupo.**
 
@@ -508,7 +506,7 @@ A massa está em [db_52dp.sql](db_52dp.sql) (seção 2 do arquivo). Todos os dad
 | Eduardo Vinicius Ribeiro Costa | Revisão de prefixos e dicionários; testes de `UPDATE`, `INSERT` e `DELETE`; KPIs e comentários; reorganização do SQL. |
 | Enzo Freire dos Santos | Alterações no DER, incluindo as entidades de especialização e a entidade ADVOGADO; versão final no brModelo. |
 | Paulo Henrique Camilo de Pascoa Souza | Prefixos e ajustes no modelo lógico. |
-| Giovanna Ribeiro Souza | Elaboração das perguntas e condução da entrevista; criação do repositório; organização do README; comandos `DELETE` para viabilizar alterações no banco; início do DER (Draw.io e DBDesigner). |
+| Giovanna Ribeiro Souza | Elaboração das perguntas e condução da entrevista; criação do repositório; organização do README; comandos `DELETE` para viabilizar alterações no banco; início do DER (Draw.io e DBDesigner); direcionamento do grupo. |
 | João Victor da Costa Silva | Remoção da entidade VITIMA; PESSOA como superentidade; reorganização de ENVOLVIMENTO; `relato_fatos` e `canal_registro`; atualização de dicionário, normalização e chaves. |
 
 **Histórico de commits.** O histórico do GitHub não foi analisado na elaboração deste documento; por isso nenhuma afirmação é feita sobre o equilíbrio de commits entre os integrantes.
