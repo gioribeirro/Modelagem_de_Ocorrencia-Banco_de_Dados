@@ -89,17 +89,33 @@ O levantamento completo está em [levantamento.md](levantamento.md). Resumo:
 
 ![Fachada do 52º DP](Registro%201.jpeg)
 
-*Registro 1 — fachada do 52º Distrito Policial, com a placa e o brasão da Polícia Civil.*
+<p>
+  <img src="PrimeiraParteDoTrabalho/Registro 1.jpeg" width="40%" alt="Registro 1 da entrevista">
+  <br>
+  <a href="PrimeiraParteDoTrabalho/Registro 1.jpeg">Registro da Entrevista 1</a>
+</p>
 
-![Integrantes do grupo em frente ao banner da delegacia](Registro%202.jpeg)
+<br>
 
-*Registro 2 — integrantes do grupo na calçada, em frente ao banner da delegacia.*
+<p>
+  <img src="PrimeiraParteDoTrabalho/Registro 2.jpeg" width="40%" alt="Registro 2 da entrevista">
+  <br>
+  <a href="PrimeiraParteDoTrabalho/Registro 2.jpeg">Registro da Entrevista 2</a>
+</p>
 
-![Integrantes do grupo, outro enquadramento](Registro%203.jpeg)
+<br>
 
-*Registro 3 — mesma cena do Registro 2, em outro enquadramento.*
+<p>
+  <img src="PrimeiraParteDoTrabalho/Registro 3.jpeg" width="40%" alt="Registro 3 da entrevista">
+  <br>
+  <a href="PrimeiraParteDoTrabalho/Registro 3.jpeg">Registro da Entrevista 3</a>
+</p>
 
-Gravação da 2ª visita: [Audio da entrevista 1.mp4](Audio%20da%20entrevista%201.mp4). O áudio é evidência complementar; o texto de referência da pesquisa de campo é o [levantamento.md](levantamento.md).
+<a href="PrimeiraParteDoTrabalho/Audio da entrevista 1.mp4" target="_blank">
+  Registro em Áudio
+</a>
+<br>
+<br>. O áudio e evidência complementar; o texto de referência da pesquisa de campo é o [levantamento.md](levantamento.md).
 
 #### Processos de negócio
 
@@ -204,9 +220,17 @@ A correção original da Entrega 1 não consta dos materiais do grupo. A tabela 
 | PESSOA – DEPOIMENTO | 1:0..N |
 | SERVIDOR – MOVIMENTACAO | 1:0..N |
 
-**DER.** O DER final foi desenvolvido por etapas: Draw.io e DBDesigner no início e brModelo na versão final, conduzida por Enzo Freire dos Santos. A imagem arquivada no repositório, [DER Modelo Conceitual.png](DER%20Modelo%20Conceitual.png), mostra uma versão anterior do conceitual, ainda com a entidade `Especialização` e os relacionamentos `Defesa` e `Defende`, sem a generalização de PESSOA. A estrutura vigente é a descrita nas tabelas acima e no [Dicionário de Dados](Dicionario_de_Dados_52_DP.html).
+**DER.** O DER final foi desenvolvido por etapas: Draw.io e DBDesigner no início e brModelo na versão final, conduzida por Enzo Freire dos Santos. A imagem arquivada no repositório, DER Modelo Conceitual mostra uma versão anterior do conceitual, ainda com a entidade `Especialização` e os relacionamentos `Defesa` e `Defende`, sem a generalização de PESSOA. A estrutura vigente é a descrita nas tabelas acima e no [Dicionário de Dados](Dicionario_de_Dados_52_DP.html).
 
-![DER arquivado (versão anterior do conceitual)](DER%20Modelo%20Conceitual.png)
+<p align="center">
+  <a href="PrimeiraParteDoTrabalho/DER Modelo Conceitual.png">
+    <img
+      src="PrimeiraParteDoTrabalho/DER Modelo Conceitual.png"
+      alt="Diagrama Entidade-Relacionamento - 52º DP"
+      width="100%"
+    >
+  </a>
+</p>
 
 ### 1.2 Conversão do Modelo Conceitual para o Modelo Lógico
 
