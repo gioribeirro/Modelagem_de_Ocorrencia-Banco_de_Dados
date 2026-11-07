@@ -1,6 +1,6 @@
 # Modelagem de Banco de Dados para o 52º Distrito Policial de São Paulo
 
-Relatório Técnico Final — Entrega 2 (modelo lógico, implementação SQL e documentação).
+Relatório Técnico Final — Entrega 2 (modelo lógico, implementação SQL e apresentação final).
 
 ## Integrantes
 
@@ -14,6 +14,21 @@ Relatório Técnico Final — Entrega 2 (modelo lógico, implementação SQL e d
 
 **Convenções de origem usadas neste documento:** *relatado* = dito na entrevista; *documentado* = registrado pelo grupo nos artefatos; *modelado* = decisão de modelagem; *implementado* = presente no script `db_52dp.sql`; *fictício* = dado da massa de testes, sem valor estatístico sobre a unidade.
 
+## Índice de artefatos
+
+| Artefato | Arquivo |
+|---|---|
+| Levantamento de campo | [levantamento/levantamento.md](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/levantamento/levantamento.md) |
+| Evidências (fotos e áudio) | [Registro 1](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%201.jpeg), [Registro 2](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%202.jpeg), [Registro 3](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%203.jpeg), [Áudio](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Audio%20da%20entrevista%201.mp4) |
+| DER conceitual | [Der.png](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Der.png) |
+| Modelo lógico (diagrama) | [docs/modelo_logico.png](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/modelo_logico.png) |
+| Documentação do modelo lógico e da normalização | [docs/Modelo_Logico_Documentacao.html](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Modelo_Logico_Documentacao.html) |
+| Dicionário de Dados (11 entidades, 56 atributos) | [docs/Dicionario_de_Dados_52_DP.html](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Dicionario_de_Dados_52_DP.html) |
+| Script SQL complementar (massa de dados, consultas gerenciais G01–G19, verificações V01–V11, views de BI) | [docs/db_52dp.sql](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/db_52dp.sql) |
+| Script SQL unificado (estrutura, carga-base, consultas, `UPDATE` e `DELETE` com `ROLLBACK`) | [docs/Script_SQL_52DP.sql](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Script_SQL_52DP.sql) |
+| Prefixos de nomenclatura dos atributos | [docs/prefixos_dicionario_52_dp.html](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/prefixos_dicionario_52_dp.html) |
+| Modelo conceitual e levantamento (Entrega 1) | [docs/modelo-conceitual-e-levantamento.html](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/modelo-conceitual-e-levantamento.html) |
+
 ---
 
 ## 1. Relatório Técnico Final
@@ -26,7 +41,7 @@ Relatório Técnico Final — Entrega 2 (modelo lógico, implementação SQL e d
 |---|---|
 | Organização | 52º Distrito Policial de São Paulo (Polícia Civil do Estado de São Paulo) |
 | Natureza | Instituição pública, sem fins lucrativos |
-| Endereço | R. Dr. Coryntho Baldoíno Costa, 400 – Vila Zilda, São Paulo – SP, 03069-070 ([localização no Google Maps](https://maps.app.goo.gl/KpnnQxBFQmJx874c8)) |
+| Endereço | [R. Dr. Coryntho Baldoíno Costa, 400 – Vila Zilda, São Paulo – SP, 03069-070](https://maps.app.goo.gl/KpnnQxBFQmJx874c8) (abre no Google Maps) |
 | Contato institucional | Telefone da unidade: (11) 2293-6036 |
 | Atividade | Registro de ocorrências e condução de inquéritos policiais (instrução, depoimentos, evidências, movimentações e conclusão) |
 | Canais de registro | Presencial e online (relatado) |
@@ -34,86 +49,79 @@ Relatório Técnico Final — Entrega 2 (modelo lógico, implementação SQL e d
 **Porte e volume (relatados na entrevista).**
 
 - **Escrivães:** 6, usados apenas em inquéritos.
-- **Registro de ocorrências:** feito pelo entrevistado e por mais um colega. Os escrivães não registram ocorrências.
+- **Registro de ocorrências:** feito pelo entrevistado e por mais um colega; os escrivães não registram ocorrências.
 - **Análise dos boletins:** o delegado titular analisa o boletim de ocorrência e instaura o inquérito.
-- **Carga:** 200 a 300 inquéritos por mês para cada delegado, "dependendo do lugar". O valor é preservado como foi relatado; não foi convertido em inquéritos abertos ou concluídos por mês.
+- **Carga:** 200 a 300 inquéritos por mês para cada delegado, "dependendo do lugar". O valor foi preservado como relatado, sem conversão em inquéritos abertos ou concluídos por mês.
 - **Ocorrências:** o número cresce a cada ano e não é previsível por mês, porque existem registro físico e online.
 
-**Limites do levantamento.** O levantamento não traz uma série mensal de boletins de ocorrência nem o quantitativo total de servidores da unidade. Por isso nenhum número foi atribuído a esses itens. O banco de dados de testes usa uma composição fictícia de 10 servidores (6 escrivães, 2 delegados e 2 investigadores/agentes), definida para exercitar as consultas, e não descreve a lotação real.
+**Limites do levantamento.** O levantamento não traz uma série mensal de boletins de ocorrência nem o total de servidores da unidade, por isso nenhum número foi atribuído a esses itens. O banco de testes usa uma composição fictícia de 10 servidores (6 escrivães, 2 delegados e 2 investigadores/agentes), definida para exercitar as consultas, e não descreve a lotação real.
 
 **Problemas e necessidades (Pxx).** Todos são problemas de gestão de informações e têm ao menos uma consulta gerencial na matriz da seção 1.6.
 
 | Código | Problema | Origem | Contribuição do modelo |
 |---|---|---|---|
-| P1 | O DESP, sistema estadual, cai com frequência e dificulta o registro e o acompanhamento. | Relatado (levantamento) | O banco proposto é uma base relacional autocontida, consultável sem depender do DESP. Ele não substitui nem corrige a instabilidade do DESP. |
+| P1 | O DESP, sistema estadual, cai com frequência e dificulta o registro e o acompanhamento. | Relatado | Base relacional autocontida e consultável sem depender do DESP. Não substitui nem corrige a instabilidade do DESP. |
 | P2 | Os casos precisam ser acompanhados do registro da ocorrência à abertura, à instrução e à conclusão do inquérito. | Relatado (P1, P6, P8, P9, C11) | Separa OCORRENCIA de INQUERITO e registra status, datas e movimentações. |
-| P3 | O volume de ocorrências cresce e não é previsível por mês, com dois canais de entrada. | Relatado (C10) | Registra `canal_registro` e `data_registro` e permite medir tendência e participação por canal. |
-| P4 | Há padrões de natureza que se repetem (estelionato, golpe do amor, falsa delegacia) e a unidade precisa enxergá-los. | Relatado (P5, P10) | `NATUREZA_FATO` classifica cada ocorrência, e `localidade` permite recortes por local. |
+| P3 | O volume de ocorrências cresce e não é previsível por mês, com dois canais de entrada. | Relatado (C10) | `canal_registro` e `data_registro` permitem medir tendência e participação por canal. |
+| P4 | Padrões de natureza se repetem (estelionato, golpe do amor, falsa delegacia) e a unidade precisa enxergá-los. | Relatado (P5, P10) | NATUREZA_FATO classifica cada ocorrência; `localidade` permite recortes por local. |
 | P5 | A carga de trabalho é alta (200 a 300 inquéritos por mês por delegado, 6 escrivães) e a distribuição entre servidores não é visível. | Relatado (C13, C14) | MOVIMENTACAO liga cada ato do inquérito ao servidor responsável. |
 | P6 | A instrução (depoimentos, evidências, movimentações) e o acompanhamento por vítima e por advogado do acusado precisam de controle estruturado. | Relatado (P8, P9) | DEPOIMENTO, EVIDENCIA e ENVOLVIMENTO (com `id_oab`) estruturam esses registros. |
 
 **Escopo do sistema.** O banco cobre todo o ciclo documentado na unidade: cadastro de unidade, servidores e pessoas; registro de ocorrências com natureza e envolvidos; abertura de inquérito; depoimentos, evidências, movimentações e conclusão. Não cobre autenticação, controle de acesso em tempo de execução, interface de usuário nem integração com o DESP.
 
-**Justificativa da escolha.** O 52º DP é uma instituição pública com processos definidos (registro, conversão, instrução, conclusão), com acesso presencial a servidores da unidade e com volume de informação que sustenta um modelo relacional de várias entidades. Os registros do grupo não declaram vínculo de integrantes com a unidade.
+**Justificativa da escolha.** O 52º DP é uma instituição pública com processos definidos (registro, conversão, instrução, conclusão), com acesso presencial a servidores da unidade e com volume de informação que sustenta um modelo relacional de várias entidades. Nenhum integrante declarou vínculo profissional ou familiar com a unidade.
+
+**Evidências da organização.** Fotos da fachada e da visita (arquivos JPG no repositório), localização no [Google Maps](https://maps.app.goo.gl/KpnnQxBFQmJx874c8), endereço completo e telefone institucional (tabela acima). Fotos e áudio estão na seção "Relato da entrevista".
+
+**Responsável pela organização.** A agente entrevistada não autorizou a divulgação do nome nem forneceu contato pessoal. Contato para confirmação: telefone institucional da unidade, (11) 2293-6036.
 
 #### Relato da entrevista
 
-O levantamento completo está em [levantamento.md](SegundaParteDoTrabalho/levantamento.md). Resumo:
+O levantamento completo está em [levantamento/levantamento.md](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/levantamento/levantamento.md). Resumo:
 
 | Item | Registro |
 |---|---|
-| Entrevistada principal | Agente da unidade, com 35 anos de atuação na área policial. A entrevistada não autorizou a divulgação do nome nem forneceu contato pessoal; por isso a identificação foi omitida. |
-| Complemento (C10, C11, C13, C14) | Servidor que atua no registro de ocorrências da unidade (a resposta C14 diz que as ocorrências "são feitas pelo entrevistado e mais um colega"). O nome não consta dos registros do grupo. |
-| Integrantes | Giovanna Ribeiro Souza elaborou as perguntas, conduziu a maior parte da entrevista e anotou as respostas. Três integrantes aparecem nas fotografias; os registros não identificam quais. |
-| 1ª visita | 04/09/2026, às 17h10, no 52º DP: entrevista principal (P1 a P10 e observações adicionais). |
-| 2ª visita | 24/09/2026, às 16h09, no 52º DP: complemento das informações (C10, C11, C13, C14). O áudio da 2ª visita foi gravado por volta das 17h22 e tem 2 min 36 s. |
-| Responsável pela organização | O nome do responsável não está documentado nem autorizado para divulgação. Contato: telefone institucional (11) 2293-6036. |
+| Quem | Agente da unidade, com 35 anos de atuação na área policial (nome não autorizado para divulgação). Complemento (C10, C11, C13, C14): servidor que atua no registro de ocorrências, cujo nome não consta dos registros do grupo. |
+| Integrantes presentes | Giovanna Ribeiro Souza elaborou as perguntas, conduziu a maior parte da entrevista e anotou as respostas em tempo real. Três integrantes aparecem nas fotografias; os registros não identificam quais. |
+| 1ª visita | 04/09/2026, no 52º DP: entrevista principal (P1 a P10 e observações adicionais). |
+| 2ª visita | 24/09/2026, no 52º DP: complemento das informações (C10, C11, C13, C14). Áudio de 2 min 36 s gravado por volta das 17h22. |
+| Horários registrados | 17h10 e 16h09. O levantamento não associa cada horário a uma visita. |
+| Onde | Ambiente do 52º DP; a entrevista ocorreu em local aberto, em frente à delegacia, próximo ao estacionamento. |
 
 **Achados das respostas (relatados).**
 
 - O inquérito serve para apurar os fatos, ouvir os dois lados e verificar a veracidade das informações (P1).
-- A ocorrência é registrada com imparcialidade, e anotam-se relatos e fatos, principalmente os ocorridos no momento da situação (P2, P3).
+- A ocorrência é registrada com imparcialidade; anotam-se relatos e fatos, principalmente os ocorridos no momento da situação (P2, P3).
 - Qualquer pessoa autorizada dentro da delegacia registra; quem comunica pode ser a vítima ou qualquer pessoa que conheça os fatos (P4).
 - Os registros são muito frequentes, principalmente de estelionato, com padrões fixos como golpe do amor e falsa delegacia (P5).
 - Só há conversão em inquérito com prova materializada; sem ela, o caso permanece em investigação (C11). O delegado titular analisa o boletim e instaura o inquérito ao identificar indícios de crime (P7, P10). Se a materialidade não for comprovada, o procedimento pode ser cancelado (P2).
 - Depoimentos e evidências são registrados no inquérito físico e no digital; escrivão e delegado são responsáveis (P8).
 - A vítima pode acompanhar o andamento; o acusado só por meio de advogado (P9).
 - O DESP abrange todo o estado e cai constantemente.
-- Opinião da agente sem efeito no modelo: algumas ocorrências não deveriam ir à delegacia e seria útil um espaço de apoio para relatos de menor gravidade.
+- Opinião da agente, sem efeito no modelo: algumas ocorrências não deveriam ir à delegacia e seria útil um espaço de apoio para relatos de menor gravidade.
 
-**Achados da observação presencial (separados das respostas).** O grupo viu apenas a recepção. A entrevista ocorreu em local aberto, em frente à delegacia, próximo ao estacionamento; não havia grande movimentação no horário e escrivães e outros profissionais não estavam na recepção. As fotografias mostram porta de vidro com balcão ao fundo, rampa com piso tátil e sinalização de acessibilidade, bancos de concreto e o banner da delegacia. Nenhum dos processos descritos neste relatório foi observado em execução: todos decorrem das respostas. Do levantamento anterior, a entrevistada também não forneceu dados sobre equipamentos ou sistemas além do DESP.
+**Achados da observação presencial (separados das respostas).** O grupo viu apenas a recepção. Não havia grande movimentação no horário, e escrivães e outros profissionais não estavam na recepção. As fotografias mostram porta de vidro com balcão ao fundo, rampa com piso tátil e sinalização de acessibilidade, bancos de concreto e o banner da delegacia. Nenhum dos processos descritos neste relatório foi observado em execução: todos decorrem das respostas.
 
-**Evidências fotográficas e de áudio.**
+**O que mudou da Entrega 1 para a Entrega 2.** Não houve perguntas novas em campo além do bloco complementar (C10, C11, C13, C14), que já constava na Entrega 1. As mudanças vieram das respostas e de revisões de modelagem (tabela "Revisão e alterações conceituais", mais abaixo).
 
-[localização no Google Maps](https://maps.app.goo.gl/KpnnQxBFQmJx874c8)
-
-<p>
-  <img src="PrimeiraParteDoTrabalho/Registro 1.jpeg" width="40%" alt="Registro 1 da entrevista">
-  <br>
-  <a href="PrimeiraParteDoTrabalho/Registro 1.jpeg">Registro da Entrevista 1</a>
-</p>
-
-<br>
+**Comprovação (fotos e áudio).**
 
 <p>
-  <img src="PrimeiraParteDoTrabalho/Registro 2.jpeg" width="40%" alt="Registro 2 da entrevista">
-  <br>
-  <a href="PrimeiraParteDoTrabalho/Registro 2.jpeg">Registro da Entrevista 2</a>
+  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%201.jpeg"><img src="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/raw/main/Registro%201.jpeg" width="40%" alt="Fachada do 52º DP, com a placa Polícia – 52º Distrito"></a><br>
+  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%201.jpeg">Registro 1 — fachada do 52º DP</a>
 </p>
-
-<br>
 
 <p>
-  <img src="PrimeiraParteDoTrabalho/Registro 3.jpeg" width="40%" alt="Registro 3 da entrevista">
-  <br>
-  <a href="PrimeiraParteDoTrabalho/Registro 3.jpeg">Registro da Entrevista 3</a>
+  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%202.jpeg"><img src="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/raw/main/Registro%202.jpeg" width="40%" alt="Integrantes do grupo em frente ao banner da delegacia"></a><br>
+  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%202.jpeg">Registro 2 — integrantes no local</a>
 </p>
 
-<a href="PrimeiraParteDoTrabalho/Audio da entrevista 1.mp4" target="_blank">
-  Registro em Áudio
-</a>
-<br>
-<br>. O áudio e evidência complementar; o texto de referência da pesquisa de campo é o [levantamento.md](levantamento.md).
+<p>
+  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%203.jpeg"><img src="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/raw/main/Registro%203.jpeg" width="40%" alt="Integrantes do grupo em frente ao banner da delegacia, outro enquadramento"></a><br>
+  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%203.jpeg">Registro 3 — integrantes no local</a>
+</p>
+
+🎧 [Ouvir o áudio da entrevista (2ª visita)](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Audio%20da%20entrevista%201.mp4). O texto de referência da pesquisa de campo é o [levantamento.md](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/levantamento/levantamento.md).
 
 #### Processos de negócio
 
@@ -121,7 +129,7 @@ Os processos abaixo foram levantados nas respostas da entrevista. Os dados citad
 
 | Processo | Etapas e dados envolvidos |
 |---|---|
-| **Registro de ocorrência** | Um servidor autorizado (Delegado ou Investigador/Agente, na prática descrita em C14) registra a ocorrência: unidade (`id_unidade`), natureza do fato (`id_natureza`), servidor (`id_servidor`), canal (`canal_registro`: Presencial ou Online), data e hora (`data_registro`), local do fato (`localidade`), situação (`status`) e relato imparcial (`relato_fatos`). |
+| **Registro de ocorrência** | Um servidor autorizado registra a ocorrência: unidade (`id_unidade`), natureza do fato (`id_natureza`), servidor (`id_servidor`), canal (`canal_registro`: Presencial ou Online), data e hora (`data_registro`), local do fato (`localidade`), situação (`status`) e relato imparcial (`relato_fatos`). Na prática descrita em C14, quem registra são o entrevistado e mais um colega. |
 | **Vínculo de pessoas** | Cada pessoa (nome, documento, contato e observação em PESSOA) é ligada à ocorrência com o papel que exerce (`papel` em ENVOLVIMENTO: Vítima, Testemunha, Acusado, Comunicante). Para o acusado, pode-se registrar o advogado vinculado (`id_oab`). |
 | **Análise e conversão** | O delegado analisa o boletim. Com prova materializada, a ocorrência passa a `Convertida em inquérito` e gera um INQUERITO (`data_abertura`, `status`, `prioridade`). Sem prova, permanece `Em investigação`; pode ficar `Em análise` ou ser `Cancelada`. |
 | **Instrução** | Escrivão e delegado registram depoimentos (pessoa, `data_depoimento`, `resumo_ficticio`) e evidências (`tipo_evidencia`, `descricao`, `data_apreensao`, `status_custodia`). |
@@ -129,7 +137,7 @@ Os processos abaixo foram levantados nas respostas da entrevista. Os dados citad
 | **Acompanhamento** | A vítima acompanha o andamento diretamente; o acusado, por meio de advogado. O banco guarda o vínculo `id_oab`; a concessão de acesso ocorre fora do banco. |
 | **Conclusão** | O inquérito é encerrado com `status` e `data_conclusao` (igual ou posterior a `data_abertura`). |
 
-**Processos típicos não incluídos.** O levantamento não registra outros processos além dos acima (por exemplo, gestão de custódia física de bens, escala de equipe ou comunicação com outros órgãos). Eles não foram modelados porque não foram levantados; o grupo não afirma que a unidade não os execute.
+**Processos típicos não incluídos.** Gestão de custódia física de bens, escala de equipe e comunicação com outros órgãos não foram modelados porque não foram levantados na entrevista. O grupo não afirma que a unidade não os execute.
 
 #### Requisitos funcionais
 
@@ -146,57 +154,68 @@ Os processos abaixo foram levantados nas respostas da entrevista. Os dados citad
 | RF09 | Atualizar a situação e a data de conclusão de um inquérito. | INQUERITO |
 | RF10 | Registrar o advogado vinculado a uma pessoa acusada em uma ocorrência. | ENVOLVIMENTO, ADVOGADO |
 
-RF01 a RF06 e RF10 correspondem a estruturas de armazenamento implementadas no script. RF07 e RF08 correspondem às consultas do script (G01 a G19 e views). RF09 é uma operação sobre colunas existentes; o script `db_52dp.sql` não contém o comando `UPDATE` que a exercite.
+RF01 a RF06 e RF10 correspondem a estruturas de armazenamento implementadas. RF07 e RF08 correspondem às consultas e views. RF09 é exercitado pelo teste de `UPDATE` do [script unificado](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Script_SQL_52DP.sql), na seção 7 do arquivo.
+
+**Requisitos típicos não incluídos.** Autenticação e perfis de acesso, integração com o DESP, notificações a vítimas e interface de usuário ficaram fora: são requisitos de aplicação, não de modelagem de dados, e não foram levantados com a unidade.
 
 #### Requisitos não funcionais
 
 | Código | Requisito | Situação |
 |---|---|---|
-| RNF01 | Disponibilidade contínua, para reduzir a dependência da instabilidade do DESP. | Requisito de projeto. Depende de infraestrutura e hospedagem; o script não o implementa. |
+| RNF01 | Disponibilidade contínua, para reduzir a dependência da instabilidade do DESP. | Requisito de projeto; depende de infraestrutura. O script não o implementa. |
 | RNF02 | Integridade dos registros, sem alterações retroativas sem rastreabilidade. | Integridade referencial e `CHECK` implementadas. Trilha de auditoria de alterações não implementada. |
 | RNF03 | Segurança e privacidade: acesso restrito e auditável a dados de vítimas, testemunhas e servidores. | Requisito de projeto. A matriz de acesso do dicionário é proposta; o script não cria perfis nem permissões. |
 | RNF04 | Rastreabilidade: toda movimentação registra data e servidor responsável. | Implementado com `data_movimentacao` (tipo `DATE`, sem hora) e `id_servidor`. |
 | RNF05 | Usabilidade: registro simples para qualquer servidor autorizado. | Requisito de interface; não há interface implementada. |
-| RNF06 | Escalabilidade para o crescimento anual do volume. | Modelo normalizado em InnoDB, com chaves e views de BI. Não houve teste de carga. |
+| RNF06 | Escalabilidade para o crescimento anual do volume. | Modelo normalizado em InnoDB, com chaves e views de BI. Sem teste de carga. |
 
 #### Regras de negócio
 
 | Código | Regra | Tipo | Como aparece no banco |
 |---|---|---|---|
 | RN01 | A ocorrência só é convertida em inquérito com prova materializada; sem ela, permanece em investigação. | Operacional (C11) | Domínio de `OCORRENCIA.status` (CHECK) e `UNIQUE(INQUERITO.id_ocorrencia)`. A existência de prova não é imposta pelo banco; é verificada por V01, V02 e V05. |
-| RN02 | Qualquer servidor autorizado pode registrar ocorrência; a atividade não é exclusiva dos escrivães. | Operacional (R1) | `OCORRENCIA.id_servidor` referencia SERVIDOR. Não há restrição de cargo no banco. |
-| RN03 | Os escrivães atuam exclusivamente em inquéritos (depoimentos, evidências e movimentações). | Organizacional (C14) | Verificado por V03 e V04. A regra de cargo para movimentações é imposta por trigger (RN09). |
+| RN02 | Qualquer servidor autorizado pode registrar ocorrência; a atividade não é exclusiva dos escrivães. | Operacional | `OCORRENCIA.id_servidor` referencia SERVIDOR. Sem restrição de cargo no banco. |
+| RN03 | Os escrivães atuam exclusivamente em inquéritos (depoimentos, evidências e movimentações). | Organizacional (C14) | Verificado por V03 e V04. |
 | RN04 | A vítima acompanha diretamente o andamento; o acusado, por meio de advogado, respeitadas as condições legais. | Operacional e legal (P9) | Modelado por ENVOLVIMENTO (`papel`, `id_oab`). A concessão de acesso é decisão da aplicação. |
 | RN05 | A data de conclusão do inquérito é igual ou posterior à de abertura. | Operacional | `CHECK chk_datas_inquerito`. |
 | RN06 | Toda ocorrência possui relato dos fatos. | Operacional (P3) | `relato_fatos TEXT NOT NULL`. |
 | RN07 | O canal de registro é obrigatório: Presencial ou Online. | Operacional (C10) | `canal_registro NOT NULL` e `CHECK chk_ocorrencia_canal`. |
-| RN08 | A pessoa acusada pode ter advogado vinculado, registrado em campo separado do papel. | Modelagem (R8, R9, R10) | `ENVOLVIMENTO.id_oab` (FK opcional) e `CHECK papel <> 'Advogado'`. V07 verifica que só acusados têm advogado. |
+| RN08 | A pessoa acusada pode ter advogado vinculado, registrado em campo separado do papel. | Modelagem (P9) | `ENVOLVIMENTO.id_oab` (FK opcional) e `CHECK papel <> 'Advogado'`. V07 verifica que só acusados têm advogado. |
 | RN09 | Somente Delegado ou Escrivão responde por movimentação. | Organizacional (C14) | Triggers `trg_movimentacao_cargo_bi`, `trg_movimentacao_cargo_bu` e `trg_servidor_cargo_bu`. |
 
-**Observações sobre as regras.**
+**Observações.**
 
-- No levantamento da Entrega 1, a regra do relato e a do canal formavam uma só (RN06). Na versão atual elas estão separadas em RN06 e RN07, e os códigos RN01 a RN09 são os desta tabela. A numeração R1 a R14 do Dicionário de Dados é independente de RNxx e é citada pelo nome "R" quando necessário.
-- **Restrições legais consideradas pelo dicionário:** Súmula Vinculante 14 do STF e art. 7º, XIV e §§ 10 e 11, da Lei nº 8.906/1994 (acesso do advogado, contextual e limitado à representação registrada); art. 4º, III, da Lei nº 13.709/2018 (LGPD), que exclui do seu âmbito geral o tratamento para fins de investigação e repressão de infrações penais, sem autorizar uso irrestrito de dados pessoais. O campo `id_oab` não comprova procuração nem a regularidade da inscrição (R11).
-- **Regras típicas não incluídas:** prazos legais de inquérito, retenção de dados e política de anonimização não foram levantados com a unidade e não estão no modelo.
+- Na Entrega 1, a regra do relato e a do canal formavam uma só (RN06); na versão atual estão separadas em RN06 e RN07. A numeração R1 a R14 do Dicionário de Dados é independente de RNxx.
+- **Restrições legais consideradas pelo dicionário:** Súmula Vinculante 14 do STF e art. 7º, XIV e §§ 10 e 11, da Lei nº 8.906/1994 (acesso do advogado, contextual e limitado à representação registrada); art. 4º, III, da Lei nº 13.709/2018 (LGPD), que exclui do seu âmbito geral o tratamento para fins de investigação e repressão de infrações penais, sem autorizar uso irrestrito de dados pessoais. O campo `id_oab` não comprova procuração nem regularidade da inscrição.
+- **Regras típicas não incluídas:** prazos legais de inquérito, retenção de dados e política de anonimização não foram levantados com a unidade.
+
+#### Notação e software do DER
+
+O DER conceitual foi construído por etapas: Draw.io e DBDesigner no início e **brModelo** na versão final, conduzida por Enzo Freire dos Santos. O modelo lógico foi elaborado no brModelo. O DER não exibe chaves estrangeiras, que aparecem só no modelo lógico (seção 2).
 
 #### Revisão e alterações conceituais
 
-A correção original da Entrega 1 não consta dos materiais do grupo. A tabela abaixo reúne as alterações comprovadas entre a Entrega 1 e a versão final, registradas no [Dicionário de Dados](PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html) (seção 11), no [levantamento](SegundaParteDoTrabalho/levantamento.md) e no histórico do grupo.
+A tabela reúne as alterações comprovadas entre a Entrega 1 e a versão final, registradas no [Dicionário de Dados](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Dicionario_de_Dados_52_DP.html) (seção 11), no [levantamento](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/levantamento/levantamento.md) e no histórico do grupo.
 
-| Alteração | O que mudou | Por quê |
+| Apontamento / alteração | O que mudou no trabalho | Por quê |
 |---|---|---|
-| Entidade VITIMA removida | A vítima passou a ser um `papel` em ENVOLVIMENTO. | Vítima é uma função da pessoa na ocorrência, não um tipo de entidade. |
-| PESSOA como superentidade | Nome, documento, observação e contato ficam só em PESSOA. | Evita repetir dados comuns em servidores, advogados e envolvidos. |
-| SERVIDOR como especialização | `SERVIDOR.id_pessoa` (FK, UNIQUE); `nome_ficticio` removido de SERVIDOR. | Um servidor é uma pessoa. |
-| ADVOGADO como especialização | Nova entidade (`id_oab`, `id_pessoa` UNIQUE). Não é cargo de SERVIDOR. | Resposta P9: o acusado acompanha o inquérito por advogado. |
-| ENVOLVIMENTO como entidade associativa | Passou a ter PK composta (`id_pessoa`, `id_ocorrencia`), `papel` e `id_oab` opcional. O nome anterior era ENVOLVIMENTO_OCORRENCIA. | A mesma pessoa pode ter papéis diferentes em ocorrências diferentes. |
-| Campo "Id pessoa" retirado | Retirado da estrutura anterior. | Considerado inadequado após orientação do professor (registro do grupo). |
-| OCORRENCIA e INQUERITO separados | INQUERITO tem `UNIQUE(id_ocorrencia)`: cardinalidade 1:0..1. | Nem toda ocorrência vira inquérito (C11). |
-| `canal_registro` e `relato_fatos` | `canal_registro` (Presencial ou Online) e `relato_fatos` obrigatório (TEXT). | Respostas P3 e C10. |
-| Valor `Cancelada` no `status` | Incluído no domínio de OCORRENCIA.status. | Resposta P2. |
-| Padronização de `id_servidor` | Substituiu `id_servidor_registro`. | Nome único para a FK de SERVIDOR. |
-| DEPOIMENTO corrigido | Passou a ter PK simples `id_depoimento`; não é associativa. | Tem atributos próprios e duas FKs; a associativa do modelo é ENVOLVIMENTO. |
-| Cardinalidades e UNIQUE | Cardinalidades inferidas a partir das FKs e das regras; UNIQUE em `SERVIDOR.id_pessoa`, `ADVOGADO.id_pessoa` e `INQUERITO.id_ocorrencia`. | A fonte original não declarava cardinalidades. |
+| Entidade VITIMA | Removida; a vítima passou a ser um `papel` em ENVOLVIMENTO. | Vítima é função da pessoa na ocorrência, não um tipo de entidade. |
+| Dados de pessoa repetidos | PESSOA como superentidade; nome, documento, observação e contato ficam só nela. | Evita repetir dados comuns em servidores, advogados e envolvidos. |
+| SERVIDOR | Especialização de PESSOA: `SERVIDOR.id_pessoa` (FK, UNIQUE); `nome_ficticio` removido de SERVIDOR. | Um servidor é uma pessoa. |
+| Advogado do acusado | Nova entidade ADVOGADO (`id_oab`, `id_pessoa` UNIQUE), não é cargo de SERVIDOR. | Resposta P9: o acusado acompanha o inquérito por advogado. |
+| N:M PESSOA–OCORRENCIA | ENVOLVIMENTO como entidade associativa, PK composta (`id_pessoa`, `id_ocorrencia`), `papel` e `id_oab` opcional (antes ENVOLVIMENTO_OCORRENCIA). | A mesma pessoa pode ter papéis diferentes em ocorrências diferentes. |
+| Campo "Id pessoa" | Retirado da estrutura anterior. | Considerado inadequado após orientação do professor (registro do grupo). |
+| OCORRENCIA e INQUERITO | Separados, com `UNIQUE(INQUERITO.id_ocorrencia)`: cardinalidade 1:0..1. | Nem toda ocorrência vira inquérito (C11). |
+| Campos de OCORRENCIA | `canal_registro` (Presencial ou Online) e `relato_fatos` obrigatório. | Respostas P3 e C10. |
+| Situação `Cancelada` | Incluída no domínio de `OCORRENCIA.status`. | Resposta P2. |
+| FK de servidor | `id_servidor` substituiu `id_servidor_registro`. | Nome único para a FK de SERVIDOR. |
+| DEPOIMENTO | PK simples `id_depoimento`; não é associativa. | Tem atributos próprios e duas FKs; a associativa do modelo é ENVOLVIMENTO. |
+| Cardinalidades | Inferidas das FKs e das regras; UNIQUE em `SERVIDOR.id_pessoa`, `ADVOGADO.id_pessoa` e `INQUERITO.id_ocorrencia`. | A fonte original não declarava cardinalidades. |
+| Modelo lógico no README | Adicionados o modelo lógico (seção 2), a conversão conceitual→lógico (1.2), as chaves (1.3) e a normalização em 1FN, 2FN e 3FN (1.4). | Exigência da Entrega 2; a verificação mostra que as 11 tabelas atendem às três formas normais. |
+| Levantamento | `levantamento.md` atualizado. | Manter o levantamento alinhado ao modelo revisado e às respostas da entrevista. |
+| Script SQL | Script atualizado. | Manter a implementação alinhada ao modelo lógico revisado. |
+| KPIs e rastreabilidade | KPIs e matriz de rastreabilidade (seção 1.6) atualizados. | Ligar cada problema (P1 a P6) e cada KPI às tabelas e à consulta que o responde. |
+| Modelo lógico | Diagrama e documentação do modelo lógico atualizados. | Refletir a estrutura final de 11 tabelas. |
 | Modelo final | 11 entidades e 56 atributos. | Contagem do dicionário. |
 
 **Estrutura conceitual final.**
@@ -218,21 +237,17 @@ A correção original da Entrega 1 não consta dos materiais do grupo. A tabela 
 | PESSOA – DEPOIMENTO | 1:0..N |
 | SERVIDOR – MOVIMENTACAO | 1:0..N |
 
-**DER.** O DER final foi desenvolvido por etapas: Draw.io e DBDesigner no início e brModelo na versão final, conduzida por Enzo Freire dos Santos. A imagem arquivada no repositório, DER Modelo Conceitual mostra uma versão anterior do conceitual, ainda com a entidade `Especialização` e os relacionamentos `Defesa` e `Defende`, sem a generalização de PESSOA. A estrutura vigente é a descrita nas tabelas acima e no [Dicionário de Dados](PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html).
+**DER.** A estrutura vigente é a das tabelas acima e do [Dicionário de Dados](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Dicionario_de_Dados_52_DP.html).
 
 <p align="center">
-  <a href="PrimeiraParteDoTrabalho/DER Modelo Conceitual.png">
-    <img
-      src="PrimeiraParteDoTrabalho/DER Modelo Conceitual.png"
-      alt="Diagrama Entidade-Relacionamento - 52º DP"
-      width="100%"
-    >
+  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Der.png">
+    <img src="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/raw/main/Der.png" alt="Diagrama Entidade-Relacionamento - 52º DP" width="100%">
   </a>
 </p>
 
 ### 1.2 Conversão do Modelo Conceitual para o Modelo Lógico
 
-A conversão está documentada em [Modelo_Logico_Documentacao.html](SegundaParteDoTrabalho/Modelo_Logico_Documentacao.html) e implementada em [db_52dp.sql](SegundaParteDoTrabalho/db_52dp.sql).
+A conversão está documentada em [Modelo_Logico_Documentacao.html](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Modelo_Logico_Documentacao.html) e implementada em [db_52dp.sql](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/db_52dp.sql).
 
 - **Entidades → tabelas.** Cada uma das 11 entidades virou uma tabela com o mesmo nome, em maiúsculas (UNIDADE_POLICIAL, PESSOA, SERVIDOR, ADVOGADO, NATUREZA_FATO, OCORRENCIA, ENVOLVIMENTO, INQUERITO, DEPOIMENTO, EVIDENCIA, MOVIMENTACAO).
 - **Atributos → colunas.** Texto curto: `VARCHAR`. Relato dos fatos: `TEXT`. Data e hora do registro da ocorrência: `DATETIME`. Demais datas: `DATE`. Identificadores: `INTEGER AUTO_INCREMENT`, exceto `ADVOGADO.id_oab`, que é `VARCHAR(20)`. A obrigatoriedade virou `NOT NULL`; atributos opcionais ficaram com `DEFAULT NULL`.
@@ -323,7 +338,7 @@ A verificação foi feita sobre as 11 tabelas, a partir das dependências funcio
 
 **Decisões arquiteturais.**
 
-- Um banco único (`db_52dp`) com 11 tabelas, em MySQL 8.0.16 ou superior (necessário para a aplicação efetiva de `CHECK`), `InnoDB` e `utf8mb4`.
+- Um banco único (`db_52dp`) com 11 tabelas, em MySQL 8.0 (a partir da 8.0.16, que passou a aplicar `CHECK` de fato), `InnoDB` e `utf8mb4`.
 - OCORRENCIA e INQUERITO separados para representar ocorrências que não originam inquérito.
 - DEPOIMENTO, EVIDENCIA e MOVIMENTACAO ligados ao INQUERITO, porque pertencem à instrução e à tramitação.
 - O modelo não tem FK de INQUERITO para o delegado: a autoria da instauração é obtida em MOVIMENTACAO (tipo `Instauração`), limite declarado no script (G11).
@@ -358,7 +373,7 @@ A verificação foi feita sobre as 11 tabelas, a partir das dependências funcio
 | Carga por servidor | Inquéritos instaurados, distribuídos e movimentações por servidor | Total | G11, G12, G13 |
 | Evidências por custódia | Contagem por tipo e situação de custódia | Total | G15 |
 
-**Matriz de rastreabilidade.** Códigos e conteúdos conferidos diretamente em `db_52dp.sql`. As consultas de auditoria estão identificadas no script como V01 a V11, equivalentes, por ordem, a A01 a A11 na convenção solicitada pelo esqueleto da Entrega 2. A mudança do prefixo nos comentários do SQL ainda é necessária para atender literalmente a essa convenção. As verificações não são contabilizadas como KPIs.
+**Matriz de rastreabilidade.** Códigos e conteúdos conferidos em `db_52dp.sql`. As consultas de auditoria usam o prefixo V no script (V01 a V11), equivalentes, por ordem, a A01 a A11 do esqueleto da Entrega 2. As verificações não são contabilizadas como KPIs.
 
 | Problema ou KPI | Descrição | Tabelas | Consulta SQL | Utilidade gerencial |
 |---|---|---|---|---|
@@ -382,7 +397,7 @@ A verificação foi feita sobre as 11 tabelas, a partir das dependências funcio
 | P6 | Ranking de advogados por acusados vinculados. | ENVOLVIMENTO, ADVOGADO, PESSOA | G17 | Mostra a concentração de representações. |
 | P6 | Pessoas com 2 ou mais ocorrências. | ENVOLVIMENTO, PESSOA | G18 | Identifica recorrência de envolvidos. |
 
-**Verificações de regras (V01 a V11).** Cada uma deve retornar zero linhas. O script não cita códigos RNxx; a correspondência abaixo é por conteúdo.
+**Verificações de regras (V01 a V11).** Cada uma deve retornar zero linhas. A correspondência com as regras RNxx é por conteúdo.
 
 | Código | Verifica | Regra relacionada |
 |---|---|---|
@@ -408,13 +423,15 @@ A verificação foi feita sobre as 11 tabelas, a partir das dependências funcio
 
 ---
 
+---
+
 ## 2. Modelo Lógico Relacional
 
-![Modelo lógico relacional do 52º DP](PrimeiraParteDoTrabalho/modelo_logico.png)
+![Modelo lógico relacional do 52º DP](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/raw/main/docs/modelo_logico.png)
 
-O diagrama mostra as 11 tabelas, as PKs e FKs e as cardinalidades `(mín, máx)`. Ele foi elaborado no brModelo, conforme informado pelo grupo. A documentação textual completa, com tipos, obrigatoriedade e restrições de cada coluna, está em [Modelo_Logico_Documentacao.html](SegundaParteDoTrabalho/Modelo_Logico_Documentacao.html).
+O diagrama foi elaborado no **brModelo** e mostra as 11 tabelas, as PKs e FKs e as cardinalidades `(mín, máx)`. A documentação textual completa, com tipos, obrigatoriedade e restrições de cada coluna, está em [Modelo_Logico_Documentacao.html](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Modelo_Logico_Documentacao.html).
 
-**Diferenças entre o diagrama e o script.** Segundo o grupo, as divergências decorrem de limitações do brModelo na representação do diagrama, e não de mudanças na estrutura implementada. O diagrama mostra `id_oab` como `INT` (no script é `VARCHAR(20)`), `relatos_fatos` como `VARCHAR` (no script é `relato_fatos TEXT`) e `resumo` (no script é `resumo_ficticio VARCHAR(255)`); os tipos `VARCHAR` não trazem tamanho. Para tipos e nomes, vale o script `db_52dp.sql` e a documentação do modelo lógico. As restrições `NOT NULL`, `UNIQUE`, `CHECK` e `DEFAULT` não aparecem no diagrama e estão no [dicionário de dados](PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html) e no script.
+**Diferenças entre o diagrama e o script.** Segundo o grupo, decorrem de limitações do brModelo na representação, e não de mudanças na estrutura implementada. O diagrama mostra `id_oab` como `INT` (no script é `VARCHAR(20)`), `relatos_fatos` como `VARCHAR` (no script é `relato_fatos TEXT`) e `resumo` (no script é `resumo_ficticio VARCHAR(255)`); os `VARCHAR` não trazem tamanho. Para tipos e nomes, vale o script `db_52dp.sql` e a documentação do modelo lógico. As restrições `NOT NULL`, `UNIQUE`, `CHECK` e `DEFAULT` não aparecem no diagrama e estão no [dicionário de dados](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Dicionario_de_Dados_52_DP.html) e no script.
 
 Estrutura: PESSOA no centro das especializações (SERVIDOR, ADVOGADO) e da associativa ENVOLVIMENTO; OCORRENCIA ligada a UNIDADE_POLICIAL, NATUREZA_FATO e SERVIDOR; INQUERITO ligado a OCORRENCIA (1:0..1); DEPOIMENTO, EVIDENCIA e MOVIMENTACAO ligados a INQUERITO.
 
@@ -424,29 +441,28 @@ Estrutura: PESSOA no centro das especializações (SERVIDOR, ADVOGADO) e da asso
 
 | Item | Descrição |
 |---|---|
-| Script principal | [db_52dp.sql](db_52dp.sql) |
-| SGBD | MySQL 8.0.16 ou superior (`CHECK` aplicado, funções de janela, CTE e triggers com `SIGNAL`) |
+| Script unificado | [docs/Script_SQL_52DP.sql](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Script_SQL_52DP.sql): `CREATE DATABASE`, `DROP`, 11 tabelas com constraints, triggers, carga-base, consultas com `JOIN` (G10 a G12), consultas de auditoria e indicadores (G01 a G13), `UPDATE` e `DELETE` em transação com `ROLLBACK` e conferência final |
+| Script complementar | [docs/db_52dp.sql](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/db_52dp.sql): massa de dados completa, consultas gerenciais G01 a G19, verificações V01 a V11 e views de BI |
+| SGBD | MySQL 8.0 (script executado nessa versão; usa `CHECK` aplicado, funções de janela, CTE e triggers com `SIGNAL`) |
 | Banco | `db_52dp`, com `utf8mb4` e `utf8mb4_0900_ai_ci` |
 | Tabelas | 11, em `InnoDB`, com PKs, FKs, `NOT NULL`, `UNIQUE` e `CHECK` |
 | Triggers | 3: `trg_movimentacao_cargo_bi`, `trg_movimentacao_cargo_bu` e `trg_servidor_cargo_bu` |
 | Dados | `INSERT` de dados fictícios em ordem de dependência (seção 4) |
 | Consultas gerenciais | G01 a G19, com `JOIN`, agregações e funções de janela |
-| Verificações | V01 a V11 |
-| Operações `UPDATE` e `DELETE` | Testes controlados no [script alternativo](Script_SQL_52DP.sql), com `ROLLBACK` |
+| Consultas de auditoria | V01 a V11 (equivalem a A01 a A11 do esqueleto) |
 | Views para BI | `vw_bi_ocorrencias`, `vw_bi_inqueritos`, `vw_bi_kpis_mensais` e `vw_bi_demanda_agregada` |
-| Verificação estrutural | `SHOW TABLES` e contagem de linhas por tabela |
 
-**Execução.** O script é autocontido: cria o banco, as tabelas, os triggers, os dados, as consultas e as views. Deve ser executado uma única vez em um banco `db_52dp` vazio. Ele não contém `DROP`, e os `INSERT` e os triggers não são idempotentes. Não deve ser executado junto com os `INSERT` de `Script_SQL_52DP.sql`, porque os dois conjuntos reutilizam IDs com conteúdos diferentes. A consulta G10 usa `CURDATE()`, e seu resultado depende da data de execução.
+**Execução.** O `Script_SQL_52DP.sql` é autocontido: cria o banco, remove a estrutura anterior (`DROP`), recria as tabelas e os triggers, insere a carga-base de uma linha por tabela e executa consultas, `UPDATE` e `DELETE`. Os testes de `UPDATE` e `DELETE` rodam em `START TRANSACTION` e terminam em `ROLLBACK`, preservando a carga-base. O `db_52dp.sql` complementa o primeiro com a massa completa, as consultas G01 a G19 e as verificações V01 a V11; deve ser executado uma única vez em banco `db_52dp` com a estrutura criada e **sem** os `INSERT` do script unificado, porque os dois conjuntos reutilizam IDs com conteúdos diferentes. A consulta G10 do `db_52dp.sql` usa `CURDATE()`, e seu resultado depende da data de execução.
 
-**Script alternativo.** [Script_SQL_52DP.sql](Script_SQL_52DP.sql) é um arquivo SQL com `DROP`, as 11 tabelas, os triggers, uma carga mínima de uma linha por tabela, consultas iniciais, testes de `UPDATE` e `DELETE` com `ROLLBACK` e `SELECT` de conferência. Os códigos de consulta desse arquivo têm outro significado e não são os usados neste relatório. O `db_52dp.sql` não contém comandos independentes de `UPDATE` e `DELETE`; os testes dessas operações estão no arquivo alternativo.
+**Códigos de consulta.** Os códigos G01 a G13 do script unificado têm outro significado dos de G01 a G19 do `db_52dp.sql`. Neste relatório, a rastreabilidade (seção 1.6) usa os do `db_52dp.sql`.
 
-**Estado de validação.** O grupo confirma que realizou a execução completa do script `db_52dp.sql` em MySQL. Este README não reproduz os resultados das consultas nem anexa o log dessa execução. Também foi feita conferência estática dos `INSERT` de `db_52dp.sql`: não há PK duplicada, as FKs apontam para linhas existentes, as 98 ocorrências convertidas correspondem aos 98 inquéritos, o `CHECK` de datas e a regra de cargo das movimentações são respeitados, e as condições de V01 a V11 não encontram linhas. A conferência estática complementa o teste realizado em MySQL.
+**Estado de validação.** O grupo executou o script `db_52dp.sql` por completo em MySQL. A conferência estática dos `INSERT` confirma: sem PK duplicada, FKs apontando para linhas existentes, 98 ocorrências convertidas para 98 inquéritos, `CHECK` de datas e regra de cargo das movimentações respeitados, e V01 a V11 sem linhas.
 
 ---
 
 ## 4. Massa de Dados
 
-A massa está em [db_52dp.sql](SegundaParteDoTrabalho/db_52dp.sql) (seção 2 do arquivo). Todos os dados são **fictícios** (`nome_ficticio`, `documento_ficticio`, `contato_ficticio`, `matricula_ficticia`, `resumo_ficticio`, inscrições `OAB-FICT-nnn`) e foram elaborados para fins acadêmicos, de modo a exercitar o modelo, as consultas e as verificações. Eles não reproduzem o volume nem as estatísticas reais do 52º DP, e nenhum dado real de pessoas foi usado.
+A massa está em [db_52dp.sql](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/db_52dp.sql) (seção 2 do arquivo). Todos os dados são **fictícios** (`nome_ficticio`, `documento_ficticio`, `contato_ficticio`, `matricula_ficticia`, `resumo_ficticio`, inscrições `OAB-FICT-nnn`), elaborados para fins acadêmicos. Nenhum dado real de pessoas foi usado.
 
 **Quantidade de registros, contada nos `INSERT`.**
 
@@ -468,36 +484,34 @@ A massa está em [db_52dp.sql](SegundaParteDoTrabalho/db_52dp.sql) (seção 2 do
 **Cenários cobertos (fictícios).**
 
 - Ocorrências de janeiro a outubro de 2026, nos dois canais (171 online e 141 presencial) e em quatro situações: Em investigação (152), Convertida em inquérito (98), Cancelada (33) e Em análise (29).
-- 10 naturezas, incluindo estelionato, golpe do amor e falsa delegacia, com 10 localidades.
+- 10 naturezas, incluindo estelionato, golpe do amor e falsa delegacia, e 10 localidades.
 - Papéis dos envolvidos: Vítima (247), Acusado (174), Testemunha (154) e Comunicante (64). Advogado vinculado somente a acusados.
 - Inquéritos concluídos (58) e em investigação (40), nas prioridades Normal (65), Alta (25) e Baixa (8).
 - Evidências de 7 tipos e 4 situações de custódia; movimentações de 7 tipos (Oitiva, Distribuição, Instauração, Relatório final, Requisição de perícia, Juntada de evidência e Despacho).
-- Servidores: 6 escrivães, 2 delegados e 2 investigadores/agentes. Somente os 2 agentes registram ocorrências, e escrivães e delegados atuam nos inquéritos, conforme C14.
+- Servidores: 6 escrivães, 2 delegados e 2 investigadores/agentes. Somente os 2 agentes registram ocorrências; escrivães e delegados atuam nos inquéritos (C14).
 
-**Relação com os processos.** Cada ocorrência convertida tem um inquérito, com movimentações de distribuição e instauração. Os depoentes são pessoas envolvidas na ocorrência, e os inquéritos têm ao menos uma evidência até a data de abertura (prova materializada, C11).
+**Relação com os processos.** Cada ocorrência convertida tem um inquérito, com movimentações de distribuição e instauração. Os depoentes são pessoas envolvidas na ocorrência, e todo inquérito tem ao menos uma evidência até a data de abertura (prova materializada, C11).
 
-**Dimensionamento.** O levantamento não traz uma série quantitativa de boletins por mês nem o volume real de inquéritos concluídos; o valor de 200 a 300 inquéritos por delegado não foi usado para dimensionar a massa. O tamanho da amostra foi definido para dar variedade suficiente às consultas de tendência, conversão, carga e auditoria; ele é uma amostra reduzida e não representa o volume real da unidade.
+**Dimensionamento.** O levantamento informa crescimento anual do volume, 6 escrivães e 200 a 300 inquéritos por delegado por mês, mas não traz série mensal de boletins. A massa tem cerca de 31 ocorrências por mês, com crescimento ao longo do período e participação crescente do canal online (C10), e 98 inquéritos (31% das ocorrências), refletindo que só há conversão com prova materializada (C11). Os 10 servidores seguem a proporção de 6 escrivães (C14). A amostra é reduzida de propósito, para dar variedade às consultas de tendência, conversão, carga e auditoria, e não representa o volume real da unidade.
 
-**Limitações.** A massa não permite inferir produtividade, tempo de tramitação ou taxa de conversão reais do 52º DP. A composição de 10 servidores é uma premissa de teste. A unidade policial do script usa endereço fictício e a designação "Parque São Jorge", que não consta do levantamento de campo; o endereço real está na seção 1.1. A geração dos dados com ferramentas de IA está registrada na seção 6; os prompts exatos usados para gerar a massa não foram preservados.
+**Limitações.** A massa não permite inferir produtividade, tempo de tramitação ou taxa de conversão reais do 52º DP. A unidade do script usa endereço fictício e a designação "Parque São Jorge", que não consta do levantamento; o endereço real está na seção 1.1. A geração dos dados com IA está registrada na seção 6.
 
 ---
 
 ## 5. Repositório GitHub
 
-| Artefato | Arquivo |
-|---|---|
-| Relatório Técnico Final | [README.md](README.md) |
-| Dicionário de Dados (11 entidades, 56 atributos) | [Dicionario_de_Dados_52_DP.html](PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html) |
-| DER conceitual (versão arquivada) | [DER Modelo Conceitual.png](PrimeiraParteDoTrabalho/DERModeloConceitual.png) |
-| Modelo lógico (diagrama) | [modelo_logico.png](PrimeiraParteDoTrabalho/modelo_logico.png) |
-| Documentação do modelo lógico e da normalização | [Modelo_Logico_Documentacao.html](SegundaParteDoTrabalho/Modelo_Logico_Documentacao.html) |
-| Convenções de prefixos dos atributos | [prefixos_dicionario_52_dp .html](PrimeiraParteDoTrabalho/prefixos_dicionario_52_dp.html) |
-| Modelo conceitual e levantamento (Entrega 1) | [modelo-conceitual-e-levantamento.html](SegundaParteDoTrabalho/modelo-conceitual-e-levantamento.html) |
-| Levantamento de campo | [levantamento.md](SegundaParteDoTrabalho/levantamento.md) |
-| Script SQL principal | [db_52dp.sql](dSegundaParteDoTrabalho/db_52dp.sql) |
-| Script SQL alternativo (testes de `UPDATE` e `DELETE`) | [Script_SQL_52DP.sql](SegundaParteDoTrabalho/Script_SQL_52DP.sql) |
-| Fotografias da visita | [Registro 1.jpeg](PrimeiraParteDoTrabalho/Registro1.jpeg), [Registro 2.jpeg](PrimeiraParteDoTrabalho/Registro2.jpeg), [Registro 3.jpeg](PrimeiraParteDoTrabalho/Registro3.jpeg) |
-| Áudio da 2ª visita | [Audio da entrevista 1.mp4](PrimeiraParteDoTrabalho/Audiodaentrevista1.mp4) |
+Organização do repositório (branch `main`):
+
+```
+README.md                  Relatório Técnico Final
+Der.png                    DER conceitual
+Registro 1/2/3.jpeg        fotos da visita
+Audio da entrevista 1.mp4  áudio da entrevista
+docs/                      scripts SQL, dicionário, modelo lógico e documentações HTML
+levantamento/              levantamento.md
+```
+
+Os arquivos estão listados no índice de artefatos no início deste documento.
 
 **Contribuições individuais documentadas pelo grupo.**
 
@@ -509,8 +523,6 @@ A massa está em [db_52dp.sql](SegundaParteDoTrabalho/db_52dp.sql) (seção 2 do
 | Giovanna Ribeiro Souza | Elaboração das perguntas e condução da entrevista; criação do repositório; organização do README; comandos `DELETE` para viabilizar alterações no banco; início do DER (Draw.io e DBDesigner); direcionamento do grupo. |
 | João Victor da Costa Silva | Remoção da entidade VITIMA; PESSOA como superentidade; reorganização de ENVOLVIMENTO; `relato_fatos` e `canal_registro`; atualização de dicionário, normalização e chaves. |
 
-**Histórico de commits.** O histórico do GitHub não foi analisado na elaboração deste documento; por isso nenhuma afirmação é feita sobre o equilíbrio de commits entre os integrantes.
-
 ---
 
 ## 6. Uso de Inteligência Artificial
@@ -519,13 +531,13 @@ Ferramentas de IA apoiaram a organização, a elaboração e a revisão dos mate
 
 | Dimensão | Registro |
 |---|---|
-| **Ferramenta e etapa** | **Claude:** geração e organização do script SQL, conversão de documentos para HTML, elaboração inicial do README e consolidação final deste README com base nos artefatos do projeto. **ChatGPT:** apoio ao SQL, dúvidas, revisão textual e organização da documentação. **Gemini:** apoio à pesquisa, à organização de ideias e aos materiais. **Replit:** apoio ao desenvolvimento e à organização do DER e de seus relacionamentos. |
+| **Ferramenta e etapa** | **Claude:** geração e organização do script SQL, conversão de documentos para HTML, KPIs e rastreabilidade (seção 1.6), organização e consolidação do README com base nos artefatos do projeto. **ChatGPT:** apoio ao SQL, dúvidas, revisão textual e organização da documentação. **Gemini:** apoio ao script SQL e ao `levantamento.md`, usado para avaliar o estado do projeto, além de apoio à pesquisa e à organização de ideias. **Replit:** apoio ao desenvolvimento e à organização do DER e de seus relacionamentos, e apoio aos KPIs e à rastreabilidade. |
 | **Motivação** | Organizar as tabelas definidas a partir do dicionário de dados, produzir documentos HTML de apoio, esclarecer dúvidas de SQL, estruturar o README conforme o modelo da disciplina e revisar a consistência entre DER, modelo lógico, normalização, chaves e documentação. |
-| **Prompts** | Registrados literalmente pelo grupo: "Deixe esse documento em HTML.", "Deixe o fundo todo preto." e "Complete o README.". Os demais foram solicitações de revisão e organização do script SQL e de explicação e conferência de entidades, relacionamentos e dicionário, descritas em resumo; os textos exatos, inclusive os usados para gerar a massa de dados, não foram preservados. |
+| **Prompts** | **Literais:** "Deixe esse documento em HTML.", "Deixe o fundo todo preto.", "Complete o README." e, para a consolidação final do README, "Arrume o README conforme a documentação pede, com a estrutura do esqueleto; temos todas as infos." **Reconstituídos pelo grupo, com texto aproximado:** (Gemini, script SQL) "Revise este script SQL do banco do 52º DP em MySQL 8.0 e aponte erros de sintaxe ou inconsistências com o modelo lógico."; (Gemini, levantamento.md) "Leia o levantamento.md e o README e me diga como está o projeto em relação ao esqueleto da Entrega 2: o que falta ou está inconsistente."; (Claude, KPIs e rastreabilidade) "Com base no script SQL e nos problemas P1 a P6, proponha KPIs e monte a tabela de rastreabilidade ligando cada problema e cada KPI às tabelas e à consulta que o responde."; (Replit, KPIs e rastreabilidade) "Sugira indicadores gerenciais para o banco do 52º DP e relacione cada um às consultas SQL que os calculam."; (massa de dados) "Gere dados fictícios coerentes com o levantamento (6 escrivães, dois canais de registro, conversão em inquérito só com prova materializada), sem usar dados reais." Os demais pedidos (revisão textual, dúvidas de SQL, explicação de entidades e relacionamentos) não foram preservados e estão descritos em resumo. |
 | **Respostas recebidas** | Páginas HTML para consulta do script (DDL, `INSERT`, consultas, `UPDATE`, `DELETE` e relatórios gerenciais); rascunhos de documentação (caracterização, processos, requisitos, regras, dicionário, modelagem conceitual e justificativa); explicações sobre SQL, relacionamentos, normalização e estrutura do banco. |
-| **Fontes consultadas e verificadas** | As regras de negócio e os processos foram conferidos contra o levantamento e as respostas da entrevista. As referências legais (Lei nº 8.906/1994 e Súmula Vinculante 14) foram consultadas nas fontes oficiais: [Estatuto da Advocacia](https://www2.camara.leg.br/legin/fed/lei/1994/lei-8906-4-julho-1994-349751-normaatualizada-pl.html) e [Súmula Vinculante 14](https://portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=26%20&sumula=1230). |
+| **Fontes consultadas e verificadas** | Regras de negócio e processos foram conferidos contra o levantamento e as respostas da entrevista. As referências legais foram consultadas nas fontes oficiais: [Estatuto da Advocacia (Lei nº 8.906/1994)](https://www2.camara.leg.br/legin/fed/lei/1994/lei-8906-4-julho-1994-349751-normaatualizada-pl.html) e [Súmula Vinculante 14](https://portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=26%20&sumula=1230). |
 | **Trechos rejeitados ou corrigidos** | Eliminação da entidade VITIMA; PESSOA como superentidade com SERVIDOR e ADVOGADO como especializações; reorganização de ENVOLVIMENTO com PK composta e `id_oab`; atualização dos atributos de OCORRENCIA (`relato_fatos`, `canal_registro`); retirada do campo "Id pessoa"; correção de DEPOIMENTO, que não é associativa; revisão de prefixos, relacionamentos, regras, normalização e comandos SQL. |
-| **Justificativa da escolha final** | O conteúdo gerado foi mantido, adaptado ou descartado conforme a coerência com o levantamento e os requisitos do projeto. A maior parte da informação já havia sido obtida pelo grupo na entrevista e no dicionário; a IA foi usada sobretudo para organizar, revisar e estruturar. As decisões sobre entidades, atributos, cardinalidades e regras foram do grupo, com as orientações do professor. |
-| **Reflexão crítica** | As ferramentas produziram inconsistências entre versões do modelo (contagem de entidades, VITIMA, ADVOGADO), que o grupo corrigiu. Os scripts gerados exigiram revisão. O grupo realizou a execução completa do script principal em MySQL, embora este README não inclua o log desse teste. Dados fictícios gerados por IA não refletem o volume real da unidade. A validação e a responsabilidade final permanecem com os integrantes. |
+| **Justificativa da escolha final** | O conteúdo gerado foi mantido, adaptado ou descartado conforme a coerência com o levantamento e os requisitos do projeto. As decisões sobre entidades, atributos, cardinalidades e regras foram do grupo, com as orientações do professor. |
+| **Reflexão crítica** | As ferramentas produziram inconsistências entre versões do modelo (contagem de entidades, VITIMA, ADVOGADO), que o grupo corrigiu. Os scripts gerados exigiram revisão. Dados fictícios gerados por IA não refletem o volume real da unidade. A validação e a responsabilidade final permanecem com os integrantes. |
 
-**Uso de IA em etapas específicas.** Pesquisa de processos, requisitos e regras típicos de outras organizações: o grupo não registrou esse uso; processos, requisitos e regras partem do levantamento de campo. Geração da massa de dados: registrada acima, sem preservação dos prompts exatos.
+**Etapas sem uso de IA registrado.** Pesquisa de processos, requisitos e regras típicos de outras organizações: o grupo não registrou esse uso; processos, requisitos e regras partem do levantamento de campo.
