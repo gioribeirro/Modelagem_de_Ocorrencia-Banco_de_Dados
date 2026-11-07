@@ -1,7 +1,5 @@
 # Modelagem de Banco de Dados para o 52º Distrito Policial de São Paulo
 
-Relatório Técnico Final — Entrega 2 (modelo lógico, implementação SQL e apresentação final).
-
 ## Integrantes
 
 | Nome completo do aluno | RGM | Usuário do GitHub |
@@ -167,8 +165,6 @@ Os processos abaixo foram levantados nas respostas da entrevista. Os dados citad
 | RF10 | Registrar o advogado vinculado a uma pessoa acusada em uma ocorrência. | ENVOLVIMENTO, ADVOGADO |
 
 RF01 a RF06 e RF10 correspondem a estruturas de armazenamento implementadas. RF07 e RF08 correspondem às consultas e views. RF09 é exercitado pelo teste de `UPDATE` do [script unificado](SegundaParteDoTrabalho/Script_SQL_52DP.sql), na seção 7 do arquivo.
-
-**Requisitos típicos não incluídos.** Autenticação e perfis de acesso, integração com o DESP, notificações a vítimas e interface de usuário ficaram fora: são requisitos de aplicação, não de modelagem de dados, e não foram levantados com a unidade.
 
 #### Requisitos não funcionais
 
