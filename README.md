@@ -195,7 +195,6 @@ O grupo viu apenas a recepção. A entrevista ocorreu em local aberto, em frente
 ---
 
 ## 4. Regras de negócio
-*Registro 2 — integrantes do grupo na calçada, em frente ao banner da delegacia.*
 
 ### 4.1 Regras operacionais
 
@@ -222,7 +221,6 @@ O áudio é evidência complementar; o texto de referência da pesquisa de campo
 
 ## 5. Dicionário de dados conceitual
 
-O dicionário de dados apresenta as entidades, seus atributos e as respectivas regras de negócio.
 | Processo | Etapas e dados envolvidos |
 |---|---|
 | **Registro de ocorrência** | Um servidor autorizado (Delegado ou Investigador/Agente, na prática descrita em C14) registra a ocorrência: unidade (`id_unidade`), natureza do fato (`id_natureza`), servidor (`id_servidor`), canal (`canal_registro`: Presencial ou Online), data e hora (`data_registro`), local do fato (`localidade`), situação (`status`) e relato imparcial (`relato_fatos`). |
