@@ -3,7 +3,7 @@
 -- Banco de dados: db_52dp
 -- Modelo: 11 tabelas
 -- Dados: fictícios, utilizados exclusivamente para fins acadêmicos.
---
+--Banco de dados
 
 -- 1. CRIAÇÃO E SELEÇÃO DO BANCO DE DADOS
 CREATE DATABASE IF NOT EXISTS db_52dp
