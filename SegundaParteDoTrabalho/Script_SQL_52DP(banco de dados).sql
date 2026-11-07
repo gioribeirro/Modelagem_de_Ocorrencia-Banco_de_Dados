@@ -109,7 +109,7 @@ CREATE TABLE OCORRENCIA (
         REFERENCES SERVIDOR (id_servidor),
     CONSTRAINT chk_ocorrencia_canal CHECK (
         canal_registro IN ('Presencial', 'Online')
-    )
+    ),
     CONSTRAINT chk_ocorrencia_status CHECK (
         status IN (
             'Em análise', 'Em investigação',
