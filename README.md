@@ -92,8 +92,6 @@ Outro fator importante foi a possibilidade de acesso real a servidores da unidad
 
 ## 2. Processos de negócio
 
-A partir das informações levantadas na pesquisa de campo, foram identificados seis processos principais.
-
 ### 2.1 Registro de ocorrência
 
 Qualquer servidor autorizado pode registrar uma ocorrência, não sendo uma atividade exclusiva dos escrivães.
