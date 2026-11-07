@@ -18,16 +18,16 @@ Relatório Técnico Final — Entrega 2 (modelo lógico, implementação SQL e a
 
 | Artefato | Arquivo |
 |---|---|
-| Levantamento de campo | [levantamento/levantamento.md](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/levantamento/levantamento.md) |
-| Evidências (fotos e áudio) | [Registro 1](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%201.jpeg), [Registro 2](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%202.jpeg), [Registro 3](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%203.jpeg), [Áudio](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Audio%20da%20entrevista%201.mp4) |
-| DER conceitual | [Der.png](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Der.png) |
-| Modelo lógico (diagrama) | [docs/modelo_logico.png](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/modelo_logico.png) |
-| Documentação do modelo lógico e da normalização | [docs/Modelo_Logico_Documentacao.html](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Modelo_Logico_Documentacao.html) |
-| Dicionário de Dados (11 entidades, 56 atributos) | [docs/Dicionario_de_Dados_52_DP.html](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Dicionario_de_Dados_52_DP.html) |
-| Script SQL complementar (massa de dados, consultas gerenciais G01–G19, verificações V01–V11, views de BI) | [docs/db_52dp.sql](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/db_52dp.sql) |
-| Script SQL unificado (estrutura, carga-base, consultas, `UPDATE` e `DELETE` com `ROLLBACK`) | [docs/Script_SQL_52DP.sql](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Script_SQL_52DP.sql) |
-| Prefixos de nomenclatura dos atributos | [docs/prefixos_dicionario_52_dp.html](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/prefixos_dicionario_52_dp.html) |
-| Modelo conceitual e levantamento (Entrega 1) | [docs/modelo-conceitual-e-levantamento.html](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/modelo-conceitual-e-levantamento.html) |
+| Levantamento de campo | [SegundaParteDoTrabalho/levantamento.md](SegundaParteDoTrabalho/levantamento.md) |
+| Evidências (fotos e áudio) | [Registro 1](PrimeiraParteDoTrabalho/Registro%201.jpeg), [Registro 2](PrimeiraParteDoTrabalho/Registro%202.jpeg), [Registro 3](PrimeiraParteDoTrabalho/Registro%203.jpeg), [Áudio](PrimeiraParteDoTrabalho/Audio%20da%20entrevista%201.mp4) |
+| DER conceitual | [Der.png](PrimeiraParteDoTrabalho/DER%20Modelo%20Conceitual.png) |
+| Modelo lógico (diagrama) | [PrimeiraParteDoTrabalho/modelo_logico.png](PrimeiraParteDoTrabalho/modelo_logico.png) |
+| Documentação do modelo lógico e da normalização | [SegundaParteDoTrabalho/Modelo_Logico_Documentacao.html](SegundaParteDoTrabalho/Modelo_Logico_Documentacao.html) |
+| Dicionário de Dados (11 entidades, 56 atributos) | [PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html](PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html) |
+| Script SQL complementar (massa de dados, consultas gerenciais G01–G19, verificações V01–V11, views de BI) | [SegundaParteDoTrabalho/db_52dp.sql](SegundaParteDoTrabalho/db_52dp.sql) |
+| Script SQL unificado (estrutura, carga-base, consultas, `UPDATE` e `DELETE` com `ROLLBACK`) | [SegundaParteDoTrabalho/Script_SQL_52DP.sql](SegundaParteDoTrabalho/Script_SQL_52DP.sql) |
+| Prefixos de nomenclatura dos atributos | [PrimeiraParteDoTrabalho/prefixos_dicionario_52_dp%20.html](PrimeiraParteDoTrabalho/prefixos_dicionario_52_dp%20.html) |
+| Modelo conceitual e levantamento (Entrega 1) | [SegundaParteDoTrabalho/modelo-conceitual-e-levantamento.html](SegundaParteDoTrabalho/modelo-conceitual-e-levantamento.html) |
 
 ---
 
@@ -77,7 +77,7 @@ Relatório Técnico Final — Entrega 2 (modelo lógico, implementação SQL e a
 
 #### Relato da entrevista
 
-O levantamento completo está em [levantamento/levantamento.md](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/levantamento/levantamento.md). Resumo:
+O levantamento completo está em [SegundaParteDoTrabalho/levantamento.md](SegundaParteDoTrabalho/levantamento.md). Resumo:
 
 | Item | Registro |
 |---|---|
@@ -106,22 +106,34 @@ O levantamento completo está em [levantamento/levantamento.md](https://github.c
 
 **Comprovação (fotos e áudio).**
 
-<p>
-  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%201.jpeg"><img src="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/raw/main/Registro%201.jpeg" width="40%" alt="Fachada do 52º DP, com a placa Polícia – 52º Distrito"></a><br>
-  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%201.jpeg">Registro 1 — fachada do 52º DP</a>
+<a href="PrimeiraParteDoTrabalho/Audio%20da%20entrevista%201.mp4" target="_blank">
+  Registro em Áudio
+</a>
+<br>
+<br>
+<p align="center">
+  <img src="PrimeiraParteDoTrabalho/Registro%201.jpeg" width="40%" alt="Registro 1 da entrevista">
+  <br>
+  <a href="PrimeiraParteDoTrabalho/Registro%201.jpeg">Registro da Entrevista 1</a>
 </p>
 
-<p>
-  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%202.jpeg"><img src="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/raw/main/Registro%202.jpeg" width="40%" alt="Integrantes do grupo em frente ao banner da delegacia"></a><br>
-  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%202.jpeg">Registro 2 — integrantes no local</a>
+<br>
+
+<p align="center">
+  <img src="PrimeiraParteDoTrabalho/Registro%202.jpeg" width="40%" alt="Registro 2 da entrevista">
+  <br>
+  <a href="PrimeiraParteDoTrabalho/Registro%202.jpeg">Registro da Entrevista 2</a>
 </p>
 
-<p>
-  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%203.jpeg"><img src="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/raw/main/Registro%203.jpeg" width="40%" alt="Integrantes do grupo em frente ao banner da delegacia, outro enquadramento"></a><br>
-  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Registro%203.jpeg">Registro 3 — integrantes no local</a>
+<br>
+
+<p align="center">
+  <img src="PrimeiraParteDoTrabalho/Registro%203.jpeg" width="40%" alt="Registro 3 da entrevista">
+  <br>
+  <a href="PrimeiraParteDoTrabalho/Registro%203.jpeg">Registro da Entrevista 3</a>
 </p>
 
-🎧 [Ouvir o áudio da entrevista (2ª visita)](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Audio%20da%20entrevista%201.mp4). O texto de referência da pesquisa de campo é o [levantamento.md](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/levantamento/levantamento.md).
+O áudio é evidência complementar; o texto de referência da pesquisa de campo é o [levantamento.md](SegundaParteDoTrabalho/levantamento.md).
 
 #### Processos de negócio
 
@@ -154,7 +166,7 @@ Os processos abaixo foram levantados nas respostas da entrevista. Os dados citad
 | RF09 | Atualizar a situação e a data de conclusão de um inquérito. | INQUERITO |
 | RF10 | Registrar o advogado vinculado a uma pessoa acusada em uma ocorrência. | ENVOLVIMENTO, ADVOGADO |
 
-RF01 a RF06 e RF10 correspondem a estruturas de armazenamento implementadas. RF07 e RF08 correspondem às consultas e views. RF09 é exercitado pelo teste de `UPDATE` do [script unificado](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Script_SQL_52DP.sql), na seção 7 do arquivo.
+RF01 a RF06 e RF10 correspondem a estruturas de armazenamento implementadas. RF07 e RF08 correspondem às consultas e views. RF09 é exercitado pelo teste de `UPDATE` do [script unificado](SegundaParteDoTrabalho/Script_SQL_52DP.sql), na seção 7 do arquivo.
 
 **Requisitos típicos não incluídos.** Autenticação e perfis de acesso, integração com o DESP, notificações a vítimas e interface de usuário ficaram fora: são requisitos de aplicação, não de modelagem de dados, e não foram levantados com a unidade.
 
@@ -195,7 +207,7 @@ O DER conceitual foi construído por etapas: Draw.io e DBDesigner no início e *
 
 #### Revisão e alterações conceituais
 
-A tabela reúne as alterações comprovadas entre a Entrega 1 e a versão final, registradas no [Dicionário de Dados](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Dicionario_de_Dados_52_DP.html) (seção 11), no [levantamento](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/levantamento/levantamento.md) e no histórico do grupo.
+A tabela reúne as alterações comprovadas entre a Entrega 1 e a versão final, registradas no [Dicionário de Dados](PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html) (seção 11), no [levantamento](SegundaParteDoTrabalho/levantamento.md) e no histórico do grupo.
 
 | Apontamento / alteração | O que mudou no trabalho | Por quê |
 |---|---|---|
@@ -237,17 +249,21 @@ A tabela reúne as alterações comprovadas entre a Entrega 1 e a versão final,
 | PESSOA – DEPOIMENTO | 1:0..N |
 | SERVIDOR – MOVIMENTACAO | 1:0..N |
 
-**DER.** A estrutura vigente é a das tabelas acima e do [Dicionário de Dados](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Dicionario_de_Dados_52_DP.html).
+**DER.** A estrutura vigente é a das tabelas acima e do [Dicionário de Dados](PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html).
 
 <p align="center">
-  <a href="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/Der.png">
-    <img src="https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/raw/main/Der.png" alt="Diagrama Entidade-Relacionamento - 52º DP" width="100%">
+  <a href="PrimeiraParteDoTrabalho/DER%20Modelo%20Conceitual.png">
+    <img
+      src="PrimeiraParteDoTrabalho/DER%20Modelo%20Conceitual.png"
+      alt="Diagrama Entidade-Relacionamento - 52º DP"
+      width="100%"
+    >
   </a>
 </p>
 
 ### 1.2 Conversão do Modelo Conceitual para o Modelo Lógico
 
-A conversão está documentada em [Modelo_Logico_Documentacao.html](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Modelo_Logico_Documentacao.html) e implementada em [db_52dp.sql](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/db_52dp.sql).
+A conversão está documentada em [Modelo_Logico_Documentacao.html](SegundaParteDoTrabalho/Modelo_Logico_Documentacao.html) e implementada em [db_52dp.sql](SegundaParteDoTrabalho/db_52dp.sql).
 
 - **Entidades → tabelas.** Cada uma das 11 entidades virou uma tabela com o mesmo nome, em maiúsculas (UNIDADE_POLICIAL, PESSOA, SERVIDOR, ADVOGADO, NATUREZA_FATO, OCORRENCIA, ENVOLVIMENTO, INQUERITO, DEPOIMENTO, EVIDENCIA, MOVIMENTACAO).
 - **Atributos → colunas.** Texto curto: `VARCHAR`. Relato dos fatos: `TEXT`. Data e hora do registro da ocorrência: `DATETIME`. Demais datas: `DATE`. Identificadores: `INTEGER AUTO_INCREMENT`, exceto `ADVOGADO.id_oab`, que é `VARCHAR(20)`. A obrigatoriedade virou `NOT NULL`; atributos opcionais ficaram com `DEFAULT NULL`.
@@ -427,11 +443,11 @@ A verificação foi feita sobre as 11 tabelas, a partir das dependências funcio
 
 ## 2. Modelo Lógico Relacional
 
-![Modelo lógico relacional do 52º DP](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/raw/main/docs/modelo_logico.png)
+![Modelo lógico relacional do 52º DP](PrimeiraParteDoTrabalho/modelo_logico.png)
 
-O diagrama foi elaborado no **brModelo** e mostra as 11 tabelas, as PKs e FKs e as cardinalidades `(mín, máx)`. A documentação textual completa, com tipos, obrigatoriedade e restrições de cada coluna, está em [Modelo_Logico_Documentacao.html](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Modelo_Logico_Documentacao.html).
+O diagrama foi elaborado no **brModelo** e mostra as 11 tabelas, as PKs e FKs e as cardinalidades `(mín, máx)`. A documentação textual completa, com tipos, obrigatoriedade e restrições de cada coluna, está em [Modelo_Logico_Documentacao.html](SegundaParteDoTrabalho/Modelo_Logico_Documentacao.html).
 
-**Diferenças entre o diagrama e o script.** Segundo o grupo, decorrem de limitações do brModelo na representação, e não de mudanças na estrutura implementada. O diagrama mostra `id_oab` como `INT` (no script é `VARCHAR(20)`), `relatos_fatos` como `VARCHAR` (no script é `relato_fatos TEXT`) e `resumo` (no script é `resumo_ficticio VARCHAR(255)`); os `VARCHAR` não trazem tamanho. Para tipos e nomes, vale o script `db_52dp.sql` e a documentação do modelo lógico. As restrições `NOT NULL`, `UNIQUE`, `CHECK` e `DEFAULT` não aparecem no diagrama e estão no [dicionário de dados](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Dicionario_de_Dados_52_DP.html) e no script.
+**Diferenças entre o diagrama e o script.** Segundo o grupo, decorrem de limitações do brModelo na representação, e não de mudanças na estrutura implementada. O diagrama mostra `id_oab` como `INT` (no script é `VARCHAR(20)`), `relatos_fatos` como `VARCHAR` (no script é `relato_fatos TEXT`) e `resumo` (no script é `resumo_ficticio VARCHAR(255)`); os `VARCHAR` não trazem tamanho. Para tipos e nomes, vale o script `db_52dp.sql` e a documentação do modelo lógico. As restrições `NOT NULL`, `UNIQUE`, `CHECK` e `DEFAULT` não aparecem no diagrama e estão no [dicionário de dados](PrimeiraParteDoTrabalho/Dicionario_de_Dados_52_DP.html) e no script.
 
 Estrutura: PESSOA no centro das especializações (SERVIDOR, ADVOGADO) e da associativa ENVOLVIMENTO; OCORRENCIA ligada a UNIDADE_POLICIAL, NATUREZA_FATO e SERVIDOR; INQUERITO ligado a OCORRENCIA (1:0..1); DEPOIMENTO, EVIDENCIA e MOVIMENTACAO ligados a INQUERITO.
 
@@ -441,8 +457,8 @@ Estrutura: PESSOA no centro das especializações (SERVIDOR, ADVOGADO) e da asso
 
 | Item | Descrição |
 |---|---|
-| Script unificado | [docs/Script_SQL_52DP.sql](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/Script_SQL_52DP.sql): `CREATE DATABASE`, `DROP`, 11 tabelas com constraints, triggers, carga-base, consultas com `JOIN` (G10 a G12), consultas de auditoria e indicadores (G01 a G13), `UPDATE` e `DELETE` em transação com `ROLLBACK` e conferência final |
-| Script complementar | [docs/db_52dp.sql](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/db_52dp.sql): massa de dados completa, consultas gerenciais G01 a G19, verificações V01 a V11 e views de BI |
+| Script unificado | [SegundaParteDoTrabalho/Script_SQL_52DP.sql](SegundaParteDoTrabalho/Script_SQL_52DP.sql): `CREATE DATABASE`, `DROP`, 11 tabelas com constraints, triggers, carga-base, consultas com `JOIN` (G10 a G12), consultas de auditoria e indicadores (G01 a G13), `UPDATE` e `DELETE` em transação com `ROLLBACK` e conferência final |
+| Script complementar | [SegundaParteDoTrabalho/db_52dp.sql](SegundaParteDoTrabalho/db_52dp.sql): massa de dados completa, consultas gerenciais G01 a G19, verificações V01 a V11 e views de BI |
 | SGBD | MySQL 8.0 (script executado nessa versão; usa `CHECK` aplicado, funções de janela, CTE e triggers com `SIGNAL`) |
 | Banco | `db_52dp`, com `utf8mb4` e `utf8mb4_0900_ai_ci` |
 | Tabelas | 11, em `InnoDB`, com PKs, FKs, `NOT NULL`, `UNIQUE` e `CHECK` |
@@ -462,7 +478,7 @@ Estrutura: PESSOA no centro das especializações (SERVIDOR, ADVOGADO) e da asso
 
 ## 4. Massa de Dados
 
-A massa está em [db_52dp.sql](https://github.com/gioribeirro/Modelagem_de_Ocorrencia-Banco_de_Dados/blob/main/docs/db_52dp.sql) (seção 2 do arquivo). Todos os dados são **fictícios** (`nome_ficticio`, `documento_ficticio`, `contato_ficticio`, `matricula_ficticia`, `resumo_ficticio`, inscrições `OAB-FICT-nnn`), elaborados para fins acadêmicos. Nenhum dado real de pessoas foi usado.
+A massa está em [db_52dp.sql](SegundaParteDoTrabalho/db_52dp.sql) (seção 2 do arquivo). Todos os dados são **fictícios** (`nome_ficticio`, `documento_ficticio`, `contato_ficticio`, `matricula_ficticia`, `resumo_ficticio`, inscrições `OAB-FICT-nnn`), elaborados para fins acadêmicos. Nenhum dado real de pessoas foi usado.
 
 **Quantidade de registros, contada nos `INSERT`.**
 
@@ -504,11 +520,8 @@ Organização do repositório (branch `main`):
 
 ```
 README.md                  Relatório Técnico Final
-Der.png                    DER conceitual
-Registro 1/2/3.jpeg        fotos da visita
-Audio da entrevista 1.mp4  áudio da entrevista
-docs/                      scripts SQL, dicionário, modelo lógico e documentações HTML
-levantamento/              levantamento.md
+PrimeiraParteDoTrabalho/   fotos, áudio, DER, modelo lógico (imagem), dicionário de dados e prefixos
+SegundaParteDoTrabalho/    levantamento.md, scripts SQL e documentações HTML
 ```
 
 Os arquivos estão listados no índice de artefatos no início deste documento.
