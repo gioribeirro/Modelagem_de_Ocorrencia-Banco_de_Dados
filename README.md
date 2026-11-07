@@ -353,7 +353,15 @@ O modelo conceitual foi desenvolvido considerando as seguintes 11 entidades:
 
 O DER representa graficamente as entidades, os atributos, as especializações e os relacionamentos identificados durante a modelagem conceitual.
 
-<p align="center"><a href="DER Modelo Conceitual.png"><img src="DER Modelo Conceitual.png" alt="Diagrama Entidade-Relacionamento - 52º DP" width="100%"></a></p>
+<p align="center">
+  <a href="PrimeiraParteDoTrabalho/DER Modelo Conceitual.png">
+    <img
+      src="PrimeiraParteDoTrabalho/DER Modelo Conceitual.png"
+      alt="Diagrama Entidade-Relacionamento - 52º DP"
+      width="100%"
+    >
+  </a>
+</p>
 
 
 ## 8. Justificativa técnica
