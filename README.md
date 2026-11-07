@@ -166,15 +166,6 @@ O procedimento é encerrado com o registro de seu status e da respectiva data de
 ---
 
 ## 3. Requisitos do sistema
-- O inquérito serve para apurar os fatos, ouvir os dois lados e verificar a veracidade das informações (P1).
-- A ocorrência é registrada com imparcialidade, e anotam-se relatos e fatos, principalmente os ocorridos no momento da situação (P2, P3).
-- Qualquer pessoa autorizada dentro da delegacia registra; quem comunica pode ser a vítima ou qualquer pessoa que conheça os fatos (P4).
-- Os registros são muito frequentes, principalmente de estelionato, com padrões fixos como golpe do amor e falsa delegacia (P5).
-- Só há conversão em inquérito com prova materializada; sem ela, o caso permanece em investigação (C11). O delegado titular analisa o boletim e instaura o inquérito ao identificar indícios de crime (P7, P10). Se a materialidade não for comprovada, o procedimento pode ser cancelado (P2).
-- Depoimentos e evidências são registrados no inquérito físico e no digital; escrivão e delegado são responsáveis (P8).
-- A vítima pode acompanhar o andamento; o acusado só por meio de advogado (P9).
-- O DESP abrange todo o estado e cai constantemente.
-- Opinião da agente sem efeito no modelo: algumas ocorrências não deveriam ir à delegacia e seria útil um espaço de apoio para relatos de menor gravidade.
 
 ### 3.1 Requisitos funcionais (RF)
 O grupo viu apenas a recepção. A entrevista ocorreu em local aberto, em frente à delegacia, próximo ao estacionamento; não havia grande movimentação no horário e escrivães e outros profissionais não estavam na recepção. As fotografias mostram porta de vidro com balcão ao fundo, rampa com piso tátil e sinalização de acessibilidade, bancos de concreto e o banner da delegacia. Nenhum dos processos descritos neste relatório foi observado em execução: todos decorrem das respostas. Do levantamento anterior, a entrevistada também não forneceu dados sobre equipamentos ou sistemas além do DESP.
