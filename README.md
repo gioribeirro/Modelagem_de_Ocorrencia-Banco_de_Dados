@@ -60,7 +60,9 @@ Outro fator importante foi a possibilidade de acesso real a servidores da unidad
 
 **Registros da pesquisa de campo:**
 
-<a href="Audio da entrevista 1.mp4"> Registro em Audio</a>
+<a href="PrimeiraParteDoTrabalho/Audio da entrevista 1.mp4" target="_blank">
+  Registro em Áudio
+</a>
 <br>
 <br>
 
