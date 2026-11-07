@@ -1,12 +1,5 @@
 # Modelagem de Banco de Dados para o 52º Distrito Policial de São Paulo
 
-
-> **Nota sobre esta versão:** esta é uma consolidação conservadora. O conteúdo original foi preservado, incluindo explicações, exemplos, tabelas, listas, referências e registros que se repetem parcialmente. Foram ajustados apenas títulos que apareciam deslocados na hierarquia do documento, para que os blocos complementares não pareçam novas seções principais concorrentes. Quando duas passagens tratam do mesmo assunto com detalhes diferentes, ambas foram mantidas para evitar perda de informação.
-
-## Integrantes do grupo
-Relatório Técnico Final — Entrega 2 (modelo lógico, implementação SQL e documentação).
-
-| Nome | RGM | GitHub |
 ## Integrantes
 
 | Nome completo do aluno | RGM | Usuário do GitHub |
@@ -94,7 +87,6 @@ Outro fator importante foi a possibilidade de acesso real a servidores da unidad
   <br>
   <a href="PrimeiraParteDoTrabalho/Registro%203.jpeg">Registro da Entrevista 3</a>
 </p>
-**Convenções de origem usadas neste documento:** *relatado* = dito na entrevista; *documentado* = registrado pelo grupo nos artefatos; *modelado* = decisão de modelagem; *implementado* = presente no script `db_52dp.sql`; *fictício* = dado da massa de testes, sem valor estatístico sobre a unidade.
 
 ---
 
@@ -123,10 +115,9 @@ Quando não há essa comprovação, a ocorrência permanece em investigação e 
 | Endereço | R. Dr. Coryntho Baldoíno Costa, 400 – Vila Zilda, São Paulo – SP, 03069-070 ([localização no Google Maps](https://maps.app.goo.gl/KpnnQxBFQmJx874c8)) |
 | Contato institucional | Telefone da unidade: (11) 2293-6036 |
 | Atividade | Registro de ocorrências e condução de inquéritos policiais (instrução, depoimentos, evidências, movimentações e conclusão) |
-| Canais de registro | Presencial e online (relatado) |
+| Canais de registro | Presencial e online |
 
 ### 2.3 Instrução do inquérito
-**Porte e volume (relatados na entrevista).**
 
 A instrução envolve a coleta de depoimentos e evidências relacionadas ao procedimento.
 - **Escrivães:** 6, usados apenas em inquéritos.
@@ -159,9 +150,7 @@ Na unidade pesquisada, essas atividades são realizadas pelos seis escrivães ou
 
 ### 2.5 Acompanhamento do caso
 **Evidências da organização.** Endereço e localização acima; fotografias da visita em [Relato da entrevista](#relato-da-entrevista).
-
 A vítima pode acompanhar diretamente o andamento do inquérito. O acusado realiza esse acompanhamento por intermédio de advogado, observadas as regras legais de acesso aos autos.
-#### Relato da entrevista
 
 ### 2.6 Conclusão do inquérito
 O levantamento completo está em [levantamento.md](levantamento.md). Resumo:
@@ -177,7 +166,6 @@ O procedimento é encerrado com o registro de seu status e da respectiva data de
 | Responsável pela organização | O nome do responsável não está documentado nem autorizado para divulgação. Contato: telefone institucional (11) 2293-6036. |
 
 ---
-**Achados das respostas (relatados).**
 
 ## 3. Requisitos do sistema
 - O inquérito serve para apurar os fatos, ouvir os dois lados e verificar a veracidade das informações (P1).
@@ -191,7 +179,7 @@ O procedimento é encerrado com o registro de seu status e da respectiva data de
 - Opinião da agente sem efeito no modelo: algumas ocorrências não deveriam ir à delegacia e seria útil um espaço de apoio para relatos de menor gravidade.
 
 ### 3.1 Requisitos funcionais (RF)
-**Achados da observação presencial (separados das respostas).** O grupo viu apenas a recepção. A entrevista ocorreu em local aberto, em frente à delegacia, próximo ao estacionamento; não havia grande movimentação no horário e escrivães e outros profissionais não estavam na recepção. As fotografias mostram porta de vidro com balcão ao fundo, rampa com piso tátil e sinalização de acessibilidade, bancos de concreto e o banner da delegacia. Nenhum dos processos descritos neste relatório foi observado em execução: todos decorrem das respostas. Do levantamento anterior, a entrevistada também não forneceu dados sobre equipamentos ou sistemas além do DESP.
+O grupo viu apenas a recepção. A entrevista ocorreu em local aberto, em frente à delegacia, próximo ao estacionamento; não havia grande movimentação no horário e escrivães e outros profissionais não estavam na recepção. As fotografias mostram porta de vidro com balcão ao fundo, rampa com piso tátil e sinalização de acessibilidade, bancos de concreto e o banner da delegacia. Nenhum dos processos descritos neste relatório foi observado em execução: todos decorrem das respostas. Do levantamento anterior, a entrevistada também não forneceu dados sobre equipamentos ou sistemas além do DESP.
 
 - **RF01:** Permitir o registro de uma ocorrência, identificando a unidade policial, o servidor responsável, a natureza do fato, o canal de registro e o relato dos acontecimentos.
 - **RF02:** Permitir vincular uma ou mais pessoas a uma ocorrência, identificando o papel de cada uma.
@@ -206,7 +194,6 @@ O procedimento é encerrado com o registro de seu status e da respectiva data de
 **Evidências fotográficas e de áudio.**
 
 ### 3.2 Requisitos não funcionais (RNF)
-![Fachada do 52º DP](Registro%201.jpeg)
 
 - **Disponibilidade:** O sistema deve permanecer disponível de maneira contínua, reduzindo os problemas de instabilidade observados no DESP.
 - **Confiabilidade dos dados:** Os relatos devem ser registrados de forma íntegra e imparcial, sem alterações posteriores sem rastreabilidade.
@@ -217,13 +204,11 @@ O procedimento é encerrado com o registro de seu status e da respectiva data de
 *Registro 1 — fachada do 52º Distrito Policial, com a placa e o brasão da Polícia Civil.*
 
 ---
-![Integrantes do grupo em frente ao banner da delegacia](Registro%202.jpeg)
 
 ## 4. Regras de negócio
 *Registro 2 — integrantes do grupo na calçada, em frente ao banner da delegacia.*
 
 ### 4.1 Regras operacionais
-![Integrantes do grupo, outro enquadramento](Registro%203.jpeg)
 
 - **RN01:** Uma ocorrência somente pode ser convertida em inquérito quando houver prova materializada dos fatos. Caso contrário, permanece em investigação.
 - **RN02:** Qualquer servidor autorizado pode registrar uma ocorrência, não sendo essa atividade exclusiva dos escrivães.
@@ -237,7 +222,7 @@ O procedimento é encerrado com o registro de seu status e da respectiva data de
 *Registro 3 — mesma cena do Registro 2, em outro enquadramento.*
 
 ### 4.2 Restrições organizacionais
-Gravação da 2ª visita: [Audio da entrevista 1.mp4](Audio%20da%20entrevista%201.mp4). O áudio é evidência complementar; o texto de referência da pesquisa de campo é o [levantamento.md](levantamento.md).
+O áudio é evidência complementar; o texto de referência da pesquisa de campo é o [levantamento.md](levantamento.md).
 
 - A unidade utiliza um roteiro institucional de perguntas padronizado durante as entrevistas. Por esse motivo, o complemento do responsável pela unidade, referente às perguntas 10, 11, 13 e 14, foi registrado separadamente para evitar conflitos com a numeração da entrevista original.
 - A quantidade de seis escrivães e sua atuação exclusiva nos procedimentos de inquérito representam uma característica organizacional considerada na modelagem.
@@ -245,7 +230,6 @@ Gravação da 2ª visita: [Audio da entrevista 1.mp4](Audio%20da%20entrevista%20
 #### Processos de negócio
 
 ---
-Os processos abaixo foram levantados nas respostas da entrevista. Os dados citados são os atributos do script `db_52dp.sql`.
 
 ## 5. Dicionário de dados conceitual
 
@@ -291,8 +275,6 @@ Superentidade que representa as pessoas envolvidas no sistema, permitindo especi
 | RF09 | Atualizar a situação e a data de conclusão de um inquérito. | INQUERITO |
 | RF10 | Registrar o advogado vinculado a uma pessoa acusada em uma ocorrência. | ENVOLVIMENTO, ADVOGADO |
 
-RF01 a RF06 e RF10 correspondem a estruturas de armazenamento implementadas no script. RF07 e RF08 correspondem às consultas do script (G01 a G19 e views). RF09 é uma operação sobre colunas existentes; o script `db_52dp.sql` não contém o comando `UPDATE` que a exercite.
-
 #### Requisitos não funcionais
 
 | Código | Requisito | Situação |
@@ -336,8 +318,6 @@ Especialização de PESSOA, destinada à representação dos profissionais da un
 - **Regras típicas não incluídas:** prazos legais de inquérito, retenção de dados e política de anonimização não foram levantados com a unidade e não estão no modelo.
 
 #### Revisão e alterações conceituais
-
-A correção original da Entrega 1 não consta dos materiais do grupo. A tabela abaixo reúne as alterações comprovadas entre a Entrega 1 e a versão final, registradas no [Dicionário de Dados](Dicionario_de_Dados_52_DP.html) (seção 11), no [levantamento](levantamento.md) e no histórico do grupo.
 
 | Alteração | O que mudou | Por quê |
 |---|---|---|
@@ -392,13 +372,8 @@ Especialização de PESSOA, destinada à identificação dos advogados que repre
 | id_natureza | Identificador da natureza do fato | Chave primária |
 | descricao | Descrição da natureza, como furto e estelionato | Obrigatório |
 | gravidade | Nível de gravidade | Obrigatório |
-**DER.** O DER final foi desenvolvido por etapas: Draw.io e DBDesigner no início e brModelo na versão final, conduzida por Enzo Freire dos Santos. A imagem arquivada no repositório, [DER Modelo Conceitual.png](DER%20Modelo%20Conceitual.png), mostra uma versão anterior do conceitual, ainda com a entidade `Especialização` e os relacionamentos `Defesa` e `Defende`, sem a generalização de PESSOA. A estrutura vigente é a descrita nas tabelas acima e no [Dicionário de Dados](Dicionario_de_Dados_52_DP.html).
-
-O estelionato foi destacado durante a entrevista como uma das naturezas mais frequentes, incluindo golpes do amor e falsas delegacias.
-![DER arquivado (versão anterior do conceitual)](DER%20Modelo%20Conceitual.png)
 
 ### 5.6 OCORRENCIA
-#### Conversão do Modelo Conceitual para o Modelo Lógico
 
 | Atributo | Descrição | Regra associada |
 |---|---|---|
@@ -411,7 +386,6 @@ O estelionato foi destacado durante a entrevista como uma das naturezas mais fre
 | localidade | Local onde ocorreu o fato | Obrigatório |
 | status | Situação da ocorrência | Obrigatório |
 | relato_fatos | Descrição imparcial dos acontecimentos | Obrigatório |
-A conversão está documentada em [Modelo_Logico_Documentacao.html](Modelo_Logico_Documentacao.html) e implementada em [db_52dp.sql](db_52dp.sql).
 
 ### 5.7 ENVOLVIMENTO
 - **Entidades → tabelas.** Cada uma das 11 entidades virou uma tabela com o mesmo nome, em maiúsculas (UNIDADE_POLICIAL, PESSOA, SERVIDOR, ADVOGADO, NATUREZA_FATO, OCORRENCIA, ENVOLVIMENTO, INQUERITO, DEPOIMENTO, EVIDENCIA, MOVIMENTACAO).
@@ -423,7 +397,6 @@ A conversão está documentada em [Modelo_Logico_Documentacao.html](Modelo_Logic
 - **Identificação.** SERVIDOR tem PK própria `id_servidor`, referenciada por OCORRENCIA e MOVIMENTACAO; ADVOGADO usa `id_oab` como PK, referenciada por ENVOLVIMENTO.
 - **Cardinalidades mínimas.** Obrigatórias onde a FK é `NOT NULL`. Nulabilidade não declarada na fonte (‡): `OCORRENCIA.id_servidor`, `OCORRENCIA.status`, `SERVIDOR.cargo` e `MOVIMENTACAO.id_servidor` foram implementados como `DEFAULT NULL`.
 
-Entidade associativa responsável por relacionar as pessoas às ocorrências e registrar o papel de cada uma, incluindo a associação com o advogado quando aplicável.
 #### Definição de Chaves Primárias e Estrangeiras
 
 | Atributo | Descrição | Regra associada |
@@ -450,7 +423,6 @@ A chave primária composta é formada por `id_pessoa` e `id_ocorrencia`. O campo
 | MOVIMENTACAO | `id_movimentacao` | `id_inquerito` → INQUERITO; `id_servidor` → SERVIDOR (opcional) | — |
 
 ### 5.8 INQUERITO
-São 10 tabelas com PK simples e 1 com PK composta (ENVOLVIMENTO). Total: 15 FKs no script (2 + 2 + 1 + 3 + 3 + 1 + 2 + 1 + 2 = 17 colunas de FK, contando as de SERVIDOR, ADVOGADO, OCORRENCIA, ENVOLVIMENTO, INQUERITO, DEPOIMENTO, EVIDENCIA e MOVIMENTACAO).
 
 | Atributo | Descrição | Regra associada |
 |---|---|---|
@@ -463,7 +435,6 @@ São 10 tabelas com PK simples e 1 com PK composta (ENVOLVIMENTO). Total: 15 FKs
 #### Processo de Normalização (1FN, 2FN e 3FN)
 
 ### 5.9 DEPOIMENTO
-A verificação foi feita sobre as 11 tabelas, a partir das dependências funcionais (DFs) do dicionário. A documentação do grupo registra a verificação por tabela; as decomposições estruturais estão nas alterações da seção 1.1 (VITIMA eliminada, PESSOA como superentidade, ENVOLVIMENTO).
 
 | Atributo | Descrição | Regra associada |
 |---|---|---|
@@ -475,8 +446,6 @@ A verificação foi feita sobre as 11 tabelas, a partir das dependências funcio
 **1FN — atributos atômicos e sem grupos repetitivos.**
 
 ### 5.10 EVIDENCIA
-- Todos os atributos são atômicos. `contato_ficticio` é tratado como um único dado de comunicação; `relato_fatos` é um único relato.
-- Os conjuntos que se repetem viraram tabelas próprias: várias pessoas por ocorrência (ENVOLVIMENTO), vários depoimentos, evidências e movimentações por inquérito (DEPOIMENTO, EVIDENCIA, MOVIMENTACAO).
 
 | Atributo | Descrição | Regra associada |
 |---|---|---|
@@ -489,7 +458,6 @@ A verificação foi feita sobre as 11 tabelas, a partir das dependências funcio
 **2FN — sem dependência parcial.** Dez tabelas têm PK simples, e a 2FN é atendida automaticamente. Só ENVOLVIMENTO exige análise: `(id_pessoa, id_ocorrencia) → papel` e `(id_pessoa, id_ocorrencia) → id_oab`. O papel é da pessoa naquela ocorrência, e o advogado é o vinculado àquele envolvimento; nenhum dos dois é determinado apenas por `id_pessoa` ou apenas por `id_ocorrencia`.
 
 ### 5.11 MOVIMENTACAO
-**3FN — sem dependência transitiva.**
 
 | Atributo | Descrição | Regra associada |
 | Tabela | DFs principais | Observação |
@@ -500,8 +468,6 @@ A verificação foi feita sobre as 11 tabelas, a partir das dependências funcio
 | data_movimentacao | Data da movimentação | Obrigatório |
 | tipo_movimentacao | Tipo de movimentação | Obrigatório |
 | descricao | Descrição da movimentação | Obrigatório |
-
-**Observação:** a nomenclatura e os tipos definitivos dos atributos devem acompanhar o script SQL principal do projeto.
 
 ---
 
@@ -638,7 +604,6 @@ A normalização foi considerada para evitar redundâncias e dependências inade
 | Triggers de MOVIMENTACAO e SERVIDOR | RN09 | Bloqueiam responsável que não seja Delegado ou Escrivão e impedem mudar o cargo de servidor que já tem movimentação. |
 | `NOT NULL` nas demais colunas descritivas | Dicionário | Obrigatoriedade conforme a fonte. |
 
-**Regras que o banco não impõe.** Prova materializada para abrir inquérito (RN01), escrivão não registrar ocorrência (RN02 e RN03), acompanhamento por vítima e advogado (RN04) e restrição de acesso (RNF03) dependem da aplicação ou são auditadas por consultas V. Os domínios de `INQUERITO.status`, `INQUERITO.prioridade`, `NATUREZA_FATO.gravidade` e `EVIDENCIA.status_custodia` não têm `CHECK`, porque a fonte não os define.
 
 **Decisões arquiteturais.**
 
@@ -701,8 +666,6 @@ A normalização foi considerada para evitar redundâncias e dependências inade
 | P6 | Ranking de advogados por acusados vinculados. | ENVOLVIMENTO, ADVOGADO, PESSOA | G17 | Mostra a concentração de representações. |
 | P6 | Pessoas com 2 ou mais ocorrências. | ENVOLVIMENTO, PESSOA | G18 | Identifica recorrência de envolvidos. |
 
-**Verificações de regras (V01 a V11).** Cada uma deve retornar zero linhas. O script não cita códigos RNxx; a correspondência abaixo é por conteúdo.
-
 | Código | Verifica | Regra relacionada |
 |---|---|---|
 | V01 | Inquérito cuja ocorrência não está `Convertida em inquérito` | RN01 (C11) |
@@ -717,8 +680,6 @@ A normalização foi considerada para evitar redundâncias e dependências inade
 | V10 | Inquérito aberto antes do registro da ocorrência | Consistência entre tabelas |
 | V11 | Envolvimento com papel `Advogado` | RN08 (Dicionário R8) |
 
-**IA e análises futuras (não implementadas).**
-
 - Previsão de volume por mês, natureza, canal e localidade, a partir da view `vw_bi_demanda_agregada`.
 - Alertas de demora de inquérito, com validação histórica e revisão humana.
 - Classificação de textos de relato, somente em ambiente controlado, com minimização e redação de dados pessoais.
@@ -731,7 +692,7 @@ A normalização foi considerada para evitar redundâncias e dependências inade
 
 ### 9.1 Padronização do banco de dados e dos scripts
 
-Para eliminar divergências entre os arquivos do projeto, o grupo padronizou o nome do banco de dados como `db_52dp`. Essa nomenclatura também foi adotada no arquivo de BI, garantindo consistência entre os materiais desenvolvidos.
+Para eliminar divergências entre os arquivos do projeto, padronizou o nome do banco de dados como `db_52dp`. Essa nomenclatura também foi adotada no arquivo de BI, garantindo consistência entre os materiais desenvolvidos.
 
 A referência ao antigo "Script V3" foi removida, estabelecendo o script principal como referência para a criação da estrutura do banco.
 
@@ -747,9 +708,6 @@ Essa organização permite relacionar cada regra de negócio à respectiva consu
 
 Até a elaboração desta documentação, o grupo ainda não havia executado os scripts completos em uma instância MySQL. Portanto, a sintaxe e os resultados das consultas permanecem não verificados em uma execução integral.
 ### Modelo Lógico Relacional — documentação complementar
-
-A validação deverá ser realizada em um banco vazio, seguindo esta ordem:
-![Modelo lógico relacional do 52º DP](modelo_logico.png)
 
 1. Criação do banco de dados `db_52dp`.
 2. Criação das tabelas e respectivas restrições.
