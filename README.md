@@ -64,21 +64,27 @@ Outro fator importante foi a possibilidade de acesso real a servidores da unidad
 <br>
 <br>
 
-<!-- <p align="center"></p> -->
-  <img src="Registro 1.jpeg" width="40%">
+<p>
+  <img src="PrimeiraParteDoTrabalho/Registro%201.jpeg" width="40%" alt="Registro 1 da entrevista">
+  <br>
+  <a href="PrimeiraParteDoTrabalho/Registro%201.jpeg">Registro da Entrevista 1</a>
+</p>
 
-<a href="Registro 1"> Registro da Entrevista</a>
 <br>
-<br>
-<!-- <p align="center"></p> -->
-  <img src="Registro 2.jpeg" width="40%">
 
-<a href="Registro 2"> Registro da Entrevista</a>
+<p>
+  <img src="PrimeiraParteDoTrabalho/Registro%202.jpeg" width="40%" alt="Registro 2 da entrevista">
+  <br>
+  <a href="PrimeiraParteDoTrabalho/Registro%202.jpeg">Registro da Entrevista 2</a>
+</p>
+
 <br>
-<br>
-<!-- <p align="center"></p> -->
-  <img src="Registro 3.jpeg" width="40%">
-<a href="Registro 3" > Registro da Entrevista</a>
+
+<p>
+  <img src="PrimeiraParteDoTrabalho/Registro%203.jpeg" width="40%" alt="Registro 3 da entrevista">
+  <br>
+  <a href="PrimeiraParteDoTrabalho/Registro%203.jpeg">Registro da Entrevista 3</a>
+</p>
 
 ---
 
