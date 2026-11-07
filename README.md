@@ -704,10 +704,7 @@ Os códigos das consultas também foram padronizados:
 
 Essa organização permite relacionar cada regra de negócio à respectiva consulta de auditoria, facilitando a conferência e a manutenção do banco.
 
-### 9.2 Verificação da execução
-
-Até a elaboração desta documentação, o grupo ainda não havia executado os scripts completos em uma instância MySQL. Portanto, a sintaxe e os resultados das consultas permanecem não verificados em uma execução integral.
-### Modelo Lógico Relacional — documentação complementar
+### 9.2 Modelo Lógico Relacional — documentação complementar
 
 1. Criação do banco de dados `db_52dp`.
 2. Criação das tabelas e respectivas restrições.
@@ -719,7 +716,7 @@ Até a elaboração desta documentação, o grupo ainda não havia executado os 
 O diagrama mostra as 11 tabelas, as PKs e FKs e as cardinalidades `(mín, máx)`. O software usado para desenhá-lo não está registrado nos materiais do grupo. A documentação textual completa, com tipos, obrigatoriedade e restrições de cada coluna, está em [Modelo_Logico_Documentacao.html](Modelo_Logico_Documentacao.html).
 
 Essa sequência permitirá verificar a estrutura do banco, os relacionamentos entre as entidades e o funcionamento das consultas desenvolvidas.
-**Diferenças entre o diagrama e o script.** O diagrama mostra `id_oab` como `INT` (no script é `VARCHAR(20)`), `relatos_fatos` como `VARCHAR` (no script é `relato_fatos TEXT`) e `resumo` (no script é `resumo_ficticio VARCHAR(255)`); os tipos `VARCHAR` não trazem tamanho. Para tipos e nomes, vale o script `db_52dp.sql` e a documentação do modelo lógico. As restrições `NOT NULL`, `UNIQUE`, `CHECK` e `DEFAULT` não aparecem no diagrama e estão no [dicionário de dados](Dicionario_de_Dados_52_DP.html) e no script.
+**Diferenças entre o diagrama e o script.** O diagrama mostra `id_oab` como `INT` (no script é `VARCHAR(20)`), `relatos_fatos` como `VARCHAR` (no script é `relato_fatos TEXT`) e `resumo` (no script é `resumo_ficticio VARCHAR(255)`); os tipos `VARCHAR` não trazem tamanho. Para tipos e nomes, vale o script `db_52dp.sql` e a documentação do modelo lógico. 
 
 ### 9.3 Origem das informações e evidências da entrevista
 
@@ -930,8 +927,6 @@ O desenvolvimento deste projeto permitiu compreender e representar os principais
 | Paulo Henrique Camilo de Pascoa Souza | Prefixos e ajustes no modelo lógico. |
 | Giovanna Ribeiro Souza | Elaboração das perguntas e condução da entrevista; criação do repositório; organização do README; comandos `DELETE` para viabilizar alterações no banco; início do DER (Draw.io e DBDesigner). |
 | João Victor da Costa Silva | Remoção da entidade VITIMA; PESSOA como superentidade; reorganização de ENVOLVIMENTO; `relato_fatos` e `canal_registro`; atualização de dicionário, normalização e chaves. |
-
-A partir da pesquisa de campo, o grupo identificou necessidades relacionadas à organização das informações, à rastreabilidade dos procedimentos, à representação das pessoas envolvidas e à geração de indicadores gerenciais.
 **Histórico de commits.** O histórico do GitHub não foi analisado na elaboração deste documento; por isso nenhuma afirmação é feita sobre o equilíbrio de commits entre os integrantes.
 
 A modelagem conceitual foi revisada ao longo do desenvolvimento, incorporando novas entidades, especializações e relacionamentos para representar melhor as situações identificadas durante a entrevista.
@@ -940,10 +935,6 @@ A modelagem conceitual foi revisada ao longo do desenvolvimento, incorporando no
 O resultado é uma proposta de banco de dados relacional com 11 entidades, estruturada para representar as etapas do procedimento policial e apoiar futuras consultas e análises.
 ### Uso de Inteligência Artificial — registro complementar
 
-As limitações relacionadas à execução integral dos scripts e à disponibilidade de informações da unidade foram documentadas para garantir transparência sobre o estágio de validação do projeto.
-Ferramentas de IA apoiaram a organização, a elaboração e a revisão dos materiais. As informações sobre o funcionamento do 52º DP vêm da pesquisa de campo do grupo; nenhuma ferramenta teve acesso à unidade nem participou da entrevista, e nenhuma foi tratada como fonte primária.
-
-Dessa forma, o trabalho reúne os resultados do levantamento de requisitos, da modelagem conceitual e da documentação técnica, mantendo como referência as informações obtidas pelo grupo e as decisões tomadas durante o desenvolvimento.
 | Dimensão | Registro |
 |---|---|
 | **Ferramenta e etapa** | **Claude:** geração e organização do script SQL, conversão de documentos para HTML, elaboração inicial do README e consolidação final deste README com base nos artefatos do projeto. **ChatGPT:** apoio ao SQL, dúvidas, revisão textual e organização da documentação. **Gemini:** apoio à pesquisa, à organização de ideias e aos materiais. **Replit:** apoio ao desenvolvimento e à organização do DER e de seus relacionamentos. |
@@ -954,5 +945,3 @@ Dessa forma, o trabalho reúne os resultados do levantamento de requisitos, da m
 | **Trechos rejeitados ou corrigidos** | Eliminação da entidade VITIMA; PESSOA como superentidade com SERVIDOR e ADVOGADO como especializações; reorganização de ENVOLVIMENTO com PK composta e `id_oab`; atualização dos atributos de OCORRENCIA (`relato_fatos`, `canal_registro`); retirada do campo "Id pessoa"; correção de DEPOIMENTO, que não é associativa; revisão de prefixos, relacionamentos, regras, normalização e comandos SQL. |
 | **Justificativa da escolha final** | O conteúdo gerado foi mantido, adaptado ou descartado conforme a coerência com o levantamento e os requisitos do projeto. A maior parte da informação já havia sido obtida pelo grupo na entrevista e no dicionário; a IA foi usada sobretudo para organizar, revisar e estruturar. As decisões sobre entidades, atributos, cardinalidades e regras foram do grupo, com as orientações do professor. |
 | **Reflexão crítica** | As ferramentas produziram inconsistências entre versões do modelo (contagem de entidades, VITIMA, ADVOGADO), que o grupo corrigiu. Os scripts gerados exigem revisão: o arquivo alternativo ainda contém erro de sintaxe e a execução completa em MySQL não está registrada. Dados fictícios gerados por IA não refletem o volume real da unidade. A validação e a responsabilidade final permanecem com os integrantes. |
-
-**Uso de IA em etapas específicas.** Pesquisa de processos, requisitos e regras típicos de outras organizações: o grupo não registrou esse uso; processos, requisitos e regras partem do levantamento de campo. Geração da massa de dados: registrada acima, sem preservação dos prompts exatos.
